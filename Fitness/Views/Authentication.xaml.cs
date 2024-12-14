@@ -1,6 +1,4 @@
-﻿using Fitness.Views;
-using Fitness.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Fitness
+namespace Fitness.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Authentication.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Authentication : UserControl
     {
-        public MainWindow()
+        public Authentication()
         {
             InitializeComponent();
         }
-
-        private void StartWindowControl_Loaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
-    }
+    }   
 }

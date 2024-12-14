@@ -12,20 +12,9 @@ namespace Fitness.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Notify property change with CallerMemberName to automatically get the property name
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        // Helper method to set property and notify changes
-        protected bool SetProperty<T>(ref T backingField, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingField, value)) return false;
-
-            backingField = value;
-            OnPropertyChanged(propertyName);
-            return true;
         }
     }
 }

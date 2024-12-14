@@ -24,5 +24,12 @@ namespace Fitness.Views
         {
             InitializeComponent();
         }
+
+        public event EventHandler NavigateToAuthenticationRequested;
+
+        private void Start_btn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToAuthenticationRequested?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
