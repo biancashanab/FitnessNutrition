@@ -67,6 +67,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WeightHistory.cs" />
     <Compile Include="Models\WorkoutHistory.cs" />
+    <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\WelcomeVM.cs" />

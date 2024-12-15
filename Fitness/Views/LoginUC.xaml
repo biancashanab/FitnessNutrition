@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:Fitness.ViewModels"
              HorizontalAlignment="Left"
              VerticalAlignment="Top"
-             Width="800" Height="580">
+             Width="790" Height="580">
     <UserControl.DataContext>
         <vm:LoginVM/>
     </UserControl.DataContext>

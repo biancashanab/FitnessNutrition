@@ -8,7 +8,7 @@ using Fitness.Views;
 
 namespace Fitness.ViewModels
 {
-    public class WelcomeVM
+    public class WelcomeVM : BaseViewModel
     {
         public ICommand NavigateToLoginCommand { get; }
 

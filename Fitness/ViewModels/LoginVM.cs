@@ -11,7 +11,7 @@ using Fitness.Models;
 
 namespace Fitness.ViewModels
 {
-    public class LoginVM : INotifyPropertyChanged
+    public class LoginVM : BaseViewModel
     {
         private string _username;
         private string _password;
@@ -83,7 +83,6 @@ namespace Fitness.ViewModels
         }
 
 
-
         public void Signup()
         {
             try
@@ -109,13 +108,5 @@ namespace Fitness.ViewModels
                 MessageBox.Show($"Error during sign-in: {ex.Message}");
             }
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
-
 }
