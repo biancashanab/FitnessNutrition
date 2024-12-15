@@ -42,12 +42,12 @@ namespace Fitness
     partial void InsertPlanAlimentarIstoric(PlanAlimentarIstoric instance);
     partial void UpdatePlanAlimentarIstoric(PlanAlimentarIstoric instance);
     partial void DeletePlanAlimentarIstoric(PlanAlimentarIstoric instance);
-    partial void InsertUtilizatori(Utilizatori instance);
-    partial void UpdateUtilizatori(Utilizatori instance);
-    partial void DeleteUtilizatori(Utilizatori instance);
     partial void InsertRetete(Retete instance);
     partial void UpdateRetete(Retete instance);
     partial void DeleteRetete(Retete instance);
+    partial void InsertUtilizatori(Utilizatori instance);
+    partial void UpdateUtilizatori(Utilizatori instance);
+    partial void DeleteUtilizatori(Utilizatori instance);
     #endregion
 		
 		public FitnessDBDataContext() : 
@@ -112,19 +112,19 @@ namespace Fitness
 			}
 		}
 		
-		public System.Data.Linq.Table<Utilizatori> Utilizatoris
-		{
-			get
-			{
-				return this.GetTable<Utilizatori>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Retete> Retetes
 		{
 			get
 			{
 				return this.GetTable<Retete>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Utilizatori> Utilizatoris
+		{
+			get
+			{
+				return this.GetTable<Utilizatori>();
 			}
 		}
 	}
@@ -794,9 +794,9 @@ namespace Fitness
 		
 		private string _TipMasa;
 		
-		private EntityRef<Utilizatori> _Utilizatori;
-		
 		private EntityRef<Retete> _Retete;
+		
+		private EntityRef<Utilizatori> _Utilizatori;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -816,8 +816,8 @@ namespace Fitness
 		
 		public PlanAlimentarIstoric()
 		{
-			this._Utilizatori = default(EntityRef<Utilizatori>);
 			this._Retete = default(EntityRef<Retete>);
+			this._Utilizatori = default(EntityRef<Utilizatori>);
 			OnCreated();
 		}
 		
@@ -929,6 +929,40 @@ namespace Fitness
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Retete_PlanAlimentarIstoric", Storage="_Retete", ThisKey="RetetaID", OtherKey="ID", IsForeignKey=true)]
+		public Retete Retete
+		{
+			get
+			{
+				return this._Retete.Entity;
+			}
+			set
+			{
+				Retete previousValue = this._Retete.Entity;
+				if (((previousValue != value) 
+							|| (this._Retete.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Retete.Entity = null;
+						previousValue.PlanAlimentarIstorics.Remove(this);
+					}
+					this._Retete.Entity = value;
+					if ((value != null))
+					{
+						value.PlanAlimentarIstorics.Add(this);
+						this._RetetaID = value.ID;
+					}
+					else
+					{
+						this._RetetaID = default(int);
+					}
+					this.SendPropertyChanged("Retete");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Utilizatori_PlanAlimentarIstoric", Storage="_Utilizatori", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
 		public Utilizatori Utilizatori
 		{
@@ -963,37 +997,249 @@ namespace Fitness
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Retete1_PlanAlimentarIstoric", Storage="_Retete", ThisKey="RetetaID", OtherKey="ID", IsForeignKey=true)]
-		public Retete Retete
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Retete")]
+	public partial class Retete : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _Calorii;
+		
+		private decimal _Carbohidrati;
+		
+		private decimal _Proteine;
+		
+		private decimal _Grasimi;
+		
+		private string _Nume;
+		
+		private string _Ingrediente;
+		
+		private string _TipMasa;
+		
+		private EntitySet<PlanAlimentarIstoric> _PlanAlimentarIstorics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnCaloriiChanging(int value);
+    partial void OnCaloriiChanged();
+    partial void OnCarbohidratiChanging(decimal value);
+    partial void OnCarbohidratiChanged();
+    partial void OnProteineChanging(decimal value);
+    partial void OnProteineChanged();
+    partial void OnGrasimiChanging(decimal value);
+    partial void OnGrasimiChanged();
+    partial void OnNumeChanging(string value);
+    partial void OnNumeChanged();
+    partial void OnIngredienteChanging(string value);
+    partial void OnIngredienteChanged();
+    partial void OnTipMasaChanging(string value);
+    partial void OnTipMasaChanged();
+    #endregion
+		
+		public Retete()
+		{
+			this._PlanAlimentarIstorics = new EntitySet<PlanAlimentarIstoric>(new Action<PlanAlimentarIstoric>(this.attach_PlanAlimentarIstorics), new Action<PlanAlimentarIstoric>(this.detach_PlanAlimentarIstorics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
 		{
 			get
 			{
-				return this._Retete.Entity;
+				return this._ID;
 			}
 			set
 			{
-				Retete previousValue = this._Retete.Entity;
-				if (((previousValue != value) 
-							|| (this._Retete.HasLoadedOrAssignedValue == false)))
+				if ((this._ID != value))
 				{
+					this.OnIDChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Retete.Entity = null;
-						previousValue.PlanAlimentarIstorics.Remove(this);
-					}
-					this._Retete.Entity = value;
-					if ((value != null))
-					{
-						value.PlanAlimentarIstorics.Add(this);
-						this._RetetaID = value.ID;
-					}
-					else
-					{
-						this._RetetaID = default(int);
-					}
-					this.SendPropertyChanged("Retete");
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Calorii", DbType="Int NOT NULL")]
+		public int Calorii
+		{
+			get
+			{
+				return this._Calorii;
+			}
+			set
+			{
+				if ((this._Calorii != value))
+				{
+					this.OnCaloriiChanging(value);
+					this.SendPropertyChanging();
+					this._Calorii = value;
+					this.SendPropertyChanged("Calorii");
+					this.OnCaloriiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Carbohidrati", DbType="Decimal(5,2) NOT NULL")]
+		public decimal Carbohidrati
+		{
+			get
+			{
+				return this._Carbohidrati;
+			}
+			set
+			{
+				if ((this._Carbohidrati != value))
+				{
+					this.OnCarbohidratiChanging(value);
+					this.SendPropertyChanging();
+					this._Carbohidrati = value;
+					this.SendPropertyChanged("Carbohidrati");
+					this.OnCarbohidratiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proteine", DbType="Decimal(5,2) NOT NULL")]
+		public decimal Proteine
+		{
+			get
+			{
+				return this._Proteine;
+			}
+			set
+			{
+				if ((this._Proteine != value))
+				{
+					this.OnProteineChanging(value);
+					this.SendPropertyChanging();
+					this._Proteine = value;
+					this.SendPropertyChanged("Proteine");
+					this.OnProteineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Grasimi", DbType="Decimal(5,2) NOT NULL")]
+		public decimal Grasimi
+		{
+			get
+			{
+				return this._Grasimi;
+			}
+			set
+			{
+				if ((this._Grasimi != value))
+				{
+					this.OnGrasimiChanging(value);
+					this.SendPropertyChanging();
+					this._Grasimi = value;
+					this.SendPropertyChanged("Grasimi");
+					this.OnGrasimiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nume", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Nume
+		{
+			get
+			{
+				return this._Nume;
+			}
+			set
+			{
+				if ((this._Nume != value))
+				{
+					this.OnNumeChanging(value);
+					this.SendPropertyChanging();
+					this._Nume = value;
+					this.SendPropertyChanged("Nume");
+					this.OnNumeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ingrediente", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Ingrediente
+		{
+			get
+			{
+				return this._Ingrediente;
+			}
+			set
+			{
+				if ((this._Ingrediente != value))
+				{
+					this.OnIngredienteChanging(value);
+					this.SendPropertyChanging();
+					this._Ingrediente = value;
+					this.SendPropertyChanged("Ingrediente");
+					this.OnIngredienteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipMasa", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string TipMasa
+		{
+			get
+			{
+				return this._TipMasa;
+			}
+			set
+			{
+				if ((this._TipMasa != value))
+				{
+					this.OnTipMasaChanging(value);
+					this.SendPropertyChanging();
+					this._TipMasa = value;
+					this.SendPropertyChanged("TipMasa");
+					this.OnTipMasaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Retete_PlanAlimentarIstoric", Storage="_PlanAlimentarIstorics", ThisKey="ID", OtherKey="RetetaID")]
+		public EntitySet<PlanAlimentarIstoric> PlanAlimentarIstorics
+		{
+			get
+			{
+				return this._PlanAlimentarIstorics;
+			}
+			set
+			{
+				this._PlanAlimentarIstorics.Assign(value);
 			}
 		}
 		
@@ -1015,6 +1261,18 @@ namespace Fitness
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_PlanAlimentarIstorics(PlanAlimentarIstoric entity)
+		{
+			this.SendPropertyChanging();
+			entity.Retete = this;
+		}
+		
+		private void detach_PlanAlimentarIstorics(PlanAlimentarIstoric entity)
+		{
+			this.SendPropertyChanging();
+			entity.Retete = null;
 		}
 	}
 	
@@ -1329,264 +1587,6 @@ namespace Fitness
 		{
 			this.SendPropertyChanging();
 			entity.Utilizatori = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Retete")]
-	public partial class Retete : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _Calorii;
-		
-		private decimal _Carbohidrati;
-		
-		private decimal _Proteine;
-		
-		private decimal _Grasimi;
-		
-		private string _Nume;
-		
-		private string _Ingrediente;
-		
-		private string _TipMasa;
-		
-		private EntitySet<PlanAlimentarIstoric> _PlanAlimentarIstorics;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnCaloriiChanging(int value);
-    partial void OnCaloriiChanged();
-    partial void OnCarbohidratiChanging(decimal value);
-    partial void OnCarbohidratiChanged();
-    partial void OnProteineChanging(decimal value);
-    partial void OnProteineChanged();
-    partial void OnGrasimiChanging(decimal value);
-    partial void OnGrasimiChanged();
-    partial void OnNumeChanging(string value);
-    partial void OnNumeChanged();
-    partial void OnIngredienteChanging(string value);
-    partial void OnIngredienteChanged();
-    partial void OnTipMasaChanging(string value);
-    partial void OnTipMasaChanged();
-    #endregion
-		
-		public Retete()
-		{
-			this._PlanAlimentarIstorics = new EntitySet<PlanAlimentarIstoric>(new Action<PlanAlimentarIstoric>(this.attach_PlanAlimentarIstorics), new Action<PlanAlimentarIstoric>(this.detach_PlanAlimentarIstorics));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Calorii", DbType="Int NOT NULL")]
-		public int Calorii
-		{
-			get
-			{
-				return this._Calorii;
-			}
-			set
-			{
-				if ((this._Calorii != value))
-				{
-					this.OnCaloriiChanging(value);
-					this.SendPropertyChanging();
-					this._Calorii = value;
-					this.SendPropertyChanged("Calorii");
-					this.OnCaloriiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Carbohidrati", DbType="Decimal(5,2) NOT NULL")]
-		public decimal Carbohidrati
-		{
-			get
-			{
-				return this._Carbohidrati;
-			}
-			set
-			{
-				if ((this._Carbohidrati != value))
-				{
-					this.OnCarbohidratiChanging(value);
-					this.SendPropertyChanging();
-					this._Carbohidrati = value;
-					this.SendPropertyChanged("Carbohidrati");
-					this.OnCarbohidratiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proteine", DbType="Decimal(5,2) NOT NULL")]
-		public decimal Proteine
-		{
-			get
-			{
-				return this._Proteine;
-			}
-			set
-			{
-				if ((this._Proteine != value))
-				{
-					this.OnProteineChanging(value);
-					this.SendPropertyChanging();
-					this._Proteine = value;
-					this.SendPropertyChanged("Proteine");
-					this.OnProteineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Grasimi", DbType="Decimal(5,2) NOT NULL")]
-		public decimal Grasimi
-		{
-			get
-			{
-				return this._Grasimi;
-			}
-			set
-			{
-				if ((this._Grasimi != value))
-				{
-					this.OnGrasimiChanging(value);
-					this.SendPropertyChanging();
-					this._Grasimi = value;
-					this.SendPropertyChanged("Grasimi");
-					this.OnGrasimiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nume", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string Nume
-		{
-			get
-			{
-				return this._Nume;
-			}
-			set
-			{
-				if ((this._Nume != value))
-				{
-					this.OnNumeChanging(value);
-					this.SendPropertyChanging();
-					this._Nume = value;
-					this.SendPropertyChanged("Nume");
-					this.OnNumeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ingrediente", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Ingrediente
-		{
-			get
-			{
-				return this._Ingrediente;
-			}
-			set
-			{
-				if ((this._Ingrediente != value))
-				{
-					this.OnIngredienteChanging(value);
-					this.SendPropertyChanging();
-					this._Ingrediente = value;
-					this.SendPropertyChanged("Ingrediente");
-					this.OnIngredienteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipMasa", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string TipMasa
-		{
-			get
-			{
-				return this._TipMasa;
-			}
-			set
-			{
-				if ((this._TipMasa != value))
-				{
-					this.OnTipMasaChanging(value);
-					this.SendPropertyChanging();
-					this._TipMasa = value;
-					this.SendPropertyChanged("TipMasa");
-					this.OnTipMasaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Retete1_PlanAlimentarIstoric", Storage="_PlanAlimentarIstorics", ThisKey="ID", OtherKey="RetetaID")]
-		public EntitySet<PlanAlimentarIstoric> PlanAlimentarIstorics
-		{
-			get
-			{
-				return this._PlanAlimentarIstorics;
-			}
-			set
-			{
-				this._PlanAlimentarIstorics.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_PlanAlimentarIstorics(PlanAlimentarIstoric entity)
-		{
-			this.SendPropertyChanging();
-			entity.Retete = this;
-		}
-		
-		private void detach_PlanAlimentarIstorics(PlanAlimentarIstoric entity)
-		{
-			this.SendPropertyChanging();
-			entity.Retete = null;
 		}
 	}
 }

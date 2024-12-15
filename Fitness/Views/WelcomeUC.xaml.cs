@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace Fitness.Views
 {
     /// <summary>
-    /// Interaction logic for Authentication.xaml
+    /// Interaction logic for StartWindow.xaml
     /// </summary>
-    public partial class Authentication : UserControl
+    public partial class WelcomeUC : UserControl
     {
-        public Authentication()
+        public WelcomeUC()
         {
             InitializeComponent();
         }
-    }   
+    }
 }

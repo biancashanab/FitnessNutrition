@@ -16,20 +16,13 @@ using System.Windows.Shapes;
 namespace Fitness.Views
 {
     /// <summary>
-    /// Interaction logic for StartWindow.xaml
+    /// Interaction logic for MainUC.xaml
     /// </summary>
-    public partial class StartWindow : UserControl
+    public partial class MainUC : UserControl
     {
-        public StartWindow()
+        public MainUC()
         {
             InitializeComponent();
-        }
-
-        public event EventHandler NavigateToAuthenticationRequested;
-
-        private void Start_btn_Click(object sender, RoutedEventArgs e)
-        {
-            NavigateToAuthenticationRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }

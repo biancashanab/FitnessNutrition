@@ -26,8 +26,8 @@ namespace Fitness.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=desktop-6oa0842\\mssqlserver01;Initial Catalog=FitnessNutritieDB;Integ" +
-            "rated Security=True;Encrypt=False;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-6OA0842\\MSSQLSERVER01;Initial Catalog=FitnessNutritieDB;Integ" +
+            "rated Security=True;Encrypt=True;TrustServerCertificate=True")]
         public string FitnessNutritieDBConnectionString {
             get {
                 return ((string)(this["FitnessNutritieDBConnectionString"]));

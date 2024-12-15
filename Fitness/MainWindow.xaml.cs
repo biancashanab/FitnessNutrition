@@ -1,6 +1,4 @@
-﻿using Fitness.Views;
-using Fitness.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fitness.ViewModels;
+using Fitness.Views;
 
 namespace Fitness
 {
@@ -25,11 +25,12 @@ namespace Fitness
         public MainWindow()
         {
             InitializeComponent();
+            LoadWelcomeScreen();
         }
 
-        private void StartWindowControl_Loaded(object sender, RoutedEventArgs e)
+        private void LoadWelcomeScreen()
         {
-           
+            MainContent.Content = new WelcomeUC();
         }
     }
 }

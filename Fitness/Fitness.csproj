@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D8E1F3B-1267-4247-A65E-B1FA6B26BF61}</ProjectGuid>
+    <ProjectGuid>{9D5CE538-20C1-482D-88F3-EF9FA2DCA15F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Fitness</RootNamespace>
-    <AssemblyName>Fitness</AssemblyName>
+    <AssemblyName>WpfApp8</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -61,14 +61,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FitnessDB.dbml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AuthenticationViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\StartWindowViewModel.cs" />
-    <Compile Include="Views\Authentication.xaml.cs">
-      <DependentUpon>Authentication.xaml</DependentUpon>
+    <Compile Include="Models\Exercise.cs" />
+    <Compile Include="Models\MealPlanHistory.cs" />
+    <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WeightHistory.cs" />
+    <Compile Include="Models\WorkoutHistory.cs" />
+    <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\MainVM.cs" />
+    <Compile Include="ViewModels\WelcomeVM.cs" />
+    <Compile Include="Views\LoginUC.xaml.cs">
+      <DependentUpon>LoginUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StartWindow.xaml.cs">
-      <DependentUpon>StartWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainUC.xaml.cs">
+      <DependentUpon>MainUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeUC.xaml.cs">
+      <DependentUpon>WelcomeUC.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -82,22 +91,20 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Authentication.xaml">
+    <Page Include="Views\LoginUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StartWindow.xaml">
+    <Page Include="Views\MainUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WelcomeUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Exercise.cs" />
-    <Compile Include="Models\MealPlanHistory.cs" />
-    <Compile Include="Models\Recipe.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\WeightHistory.cs" />
-    <Compile Include="Models\WorkoutHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,10 +122,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="FitnessDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>FitnessDB.designer.cs</LastGenOutput>
@@ -127,9 +130,16 @@
     <None Include="FitnessDB.dbml.layout">
       <DependentUpon>FitnessDB.dbml</DependentUpon>
     </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Poze\img_contact.png" />
@@ -147,7 +157,17 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\logo.png" />
+    <Resource Include="Views\Start_btn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Poze\Start_btn.png" />
+    <Resource Include="Poze\Start_btn_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Poze\log_in_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\log_in_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

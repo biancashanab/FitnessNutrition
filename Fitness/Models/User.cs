@@ -30,12 +30,12 @@ namespace Fitness.Models
 
         public User GetUser(string name)
         {
-            var user = _context.Utilizatoris.First(us => us.Name == name);
+            var user = _context.Utilizatoris.FirstOrDefault(us => us.Name == name);
 
             if (user == null)
             {
-                throw new ArgumentNullException("There is no authors with that name!");
-            }
+                return null;
+             }
 
             return new User
             {
@@ -77,8 +77,8 @@ namespace Fitness.Models
                 HashedPassword = HashPasswordSHA256(password),
                 UserType = userType,
                 Sex = sex,
-                Height = (int)(height > 0 ? height : (decimal?)null),
-                Kilograms = (int)(kilograms > 0 ? kilograms : (decimal?)null),
+                Height = height,
+                Kilograms = kilograms,
                 PhysicalCondition = physicalCondition
             };
 

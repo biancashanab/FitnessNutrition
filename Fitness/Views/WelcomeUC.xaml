@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Fitness.Views.WelcomeUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Fitness.Views"
+             xmlns:vm="clr-namespace:Fitness.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800" Height="580">
+    <UserControl.DataContext>
+        <vm:WelcomeVM/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#3366ff" Offset="0.0" />
+                <GradientStop Color="White" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        
+        <Image x:Name="Start_Imag" HorizontalAlignment="Center" Height="422" Margin="0,10,0,0" VerticalAlignment="Top" Width="489" Source="/Views/logo.png"/>
+        <Button x:Name="Start_btn" HorizontalAlignment="Center"
+                Width="100" Margin="0,394,0,96" FontSize="16"
+                BorderThickness="0,0,0,0"
+                Command="{Binding NavigateToLoginCommand}">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <Image x:Name="ButtonImage" Source="/Poze/Start_btn.png"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Trigger pentru hover -->
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/Poze/Start_btn_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</UserControl>
