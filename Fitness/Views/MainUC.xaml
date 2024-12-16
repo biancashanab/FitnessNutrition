@@ -17,11 +17,14 @@
         <Style TargetType="Button" x:Key="NoHoverButtonStyle">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
+            <!--Setter Property="Width" Value="{Binding ActualWidth, ElementName=st_pnl}">
+                <Setter Property="Height" Value="{Binding ActualHeight, ElementName=st_pnl}"/-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  
+                                  Width="Auto" Height="Auto" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -47,17 +50,23 @@
 
     <Grid>
         <!--// Background Color //-->
-        <Grid x:Name="Fundal" Background="#FFC5EBF7" >
+        <Grid x:Name="Fundal" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="104*"/>
                 <RowDefinition Height="83*"/>
             </Grid.RowDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#80aaff" Offset="0.0" />
+                    <GradientStop Color="White" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
 
             <!--// Navigation Panel //-->
-            <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden" Background="#FFE8F9FF" Margin="75,10,10,10" Grid.RowSpan="2" />
+            <ContentControl x:Name="ContentFrame" Background="#FFE8F9FF" Margin="75,10,10,10" Grid.RowSpan="2" BorderBrush="Transparent" BorderThickness="0" Content="{Binding CurrentUC}" />
 
             <!--// Navigation Panel //-->
-            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="#2E333A" Grid.RowSpan="2">
+            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="#2E333A" Opacity="0.8" Grid.RowSpan="2">
 
                 <StackPanel x:Name="st_pnl" >
 
@@ -161,7 +170,10 @@
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_home" Content="Acasa" Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
-                            <Button Command ="{Binding Click_AcasaCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0" Foreground="Transparent">
+                            <Button Command ="{Binding Click_AcasaCommand}"  
+                                    Style="{StaticResource NoHoverButtonStyle}" 
+                                    Background="Transparent" BorderThickness="0" 
+                                    Foreground="Transparent" >
                                 <StackPanel Orientation="Horizontal" Width="230" >
                                     <Image Source="/Poze/img_home.png" Stretch="None" Margin="12,0,0,0"/>
                                     <TextBlock Text="Acasa" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
@@ -232,7 +244,8 @@
                             <ListViewItem.ToolTip>
                                 <ToolTip x:Name="tt_signout" Content="Deconectare"  Style="{StaticResource tt_style}"/>
                             </ListViewItem.ToolTip>
-                            <Button Command ="{Binding LogoutCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
+                            <Button Command ="{Binding LogoutCommand}"  Style="{StaticResource NoHoverButtonStyle}" 
+                                    Background="Transparent" BorderThickness="0">
                                 <StackPanel Orientation="Horizontal" Width="230" >
                                     <Image Source="/Poze/log_out.png" Stretch="Fill" Margin="12,0,0,0" Width="30" Height="30"/>
                                     <TextBlock Text="Sign Out" Margin="25,0,0,0" Style="{StaticResource font_style}"/>

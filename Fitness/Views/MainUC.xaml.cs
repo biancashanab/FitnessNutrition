@@ -44,5 +44,10 @@ namespace Fitness.Views
                 tt_settings.Visibility = Visibility.Visible;
             }
         }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as MainVM)?.Click_AcasaCommand.Execute(null);
+        }
     }
 }

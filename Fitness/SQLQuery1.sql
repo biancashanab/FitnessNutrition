@@ -233,3 +233,32 @@ GO
 SELECT * FROM Utilizatori;
 SELECT * FROM Exercitii;
 SELECT * FROM Retete;
+
+-- Drop the existing table if it exists
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'PlanAlimentarIstoric')
+BEGIN
+    DROP TABLE PlanAlimentarIstoric;
+END
+
+-- Create the table with 3 columns
+CREATE TABLE PlanAlimentarIstoric (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL FOREIGN KEY REFERENCES Utilizatori(ID),
+    RetetaID INT NOT NULL FOREIGN KEY REFERENCES Retete(ID)
+);
+GO
+
+-- Example insert statements
+INSERT INTO PlanAlimentarIstoric (UserID, RetetaID)
+VALUES 
+(1, 1),  -- User 1 has Reteta 1
+(1, 2),  -- User 1 has Reteta 2
+(2, 3),  -- User 2 has Reteta 3
+(2, 4);  -- User 2 has Reteta 4
+GO
+
+-- Query to get retete for a specific user
+SELECT R.* 
+FROM PlanAlimentarIstoric PAI
+JOIN Retete R ON PAI.RetetaID = R.ID
+WHERE PAI.UserID = 2;

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="Fitness.Views.UserUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Fitness.Views"
+             mc:Ignorable="d" 
+                      d:DesignHeight="450" d:DesignWidth="700">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="188" Margin="129,137,0,0" TextWrapping="Wrap" Text="User Page" VerticalAlignment="Top" Width="438" FontSize="48"/>
+
+    </Grid>
+</UserControl>

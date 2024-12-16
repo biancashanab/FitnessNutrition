@@ -15,6 +15,16 @@ namespace Fitness.ViewModels
 {
     public class MainVM : BaseViewModel
     {
+        private UserControl _currentUC;
+        public UserControl CurrentUC
+        {
+            get => _currentUC;
+            set
+            {
+                _currentUC = value;
+                OnPropertyChanged(nameof(CurrentUC));
+            }
+        }
 
         public ICommand LogoutCommand { get; }
         public ICommand Click_AcasaCommand { get; }
@@ -31,7 +41,7 @@ namespace Fitness.ViewModels
             Click_NotificariCommand = new RelayCommand(Click_Notificari);
             Click_UserCommand = new RelayCommand(Click_User);
 
-            //CurrentPage = new HomeUC(); // Assuming HomePage is a Page, not UserControl
+            CurrentUC = new HomeUC(); 
         }
 
         private void Logout()
@@ -42,22 +52,22 @@ namespace Fitness.ViewModels
 
         private void Click_Setari()
         {
-
+           // CurrentUC = new SetariUC();
         }
 
         private void Click_Notificari()
         {
-
+           // CurrentUC = new NotificariUC();
         }
 
         private void Click_User()
         {
-
+            CurrentUC = new UserUC();
         }
 
         private void Click_Acasa()
         {
-            
+            CurrentUC = new HomeUC();
         }
     }
 }

@@ -12,30 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Fitness.ViewModels;
-using Fitness.Views;
 
-namespace Fitness
+namespace Fitness.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserUC.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserUC : UserControl
     {
-        public MainWindow()
+        public UserUC()
         {
             InitializeComponent();
-            LoadWelcomeScreen();
         }
-
-        private void LoadWelcomeScreen()
-        {
-            MainContent.Content = new WelcomeUC();
-        }
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
     }
 }

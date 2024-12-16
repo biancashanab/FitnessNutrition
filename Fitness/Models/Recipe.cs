@@ -101,6 +101,63 @@ namespace Fitness.Models
             }
         }
 
+        public void CrearePlanAlimentar(int numarCalorii)
+        {
+            List<string> mealPlan = new List<string>();
+            int calorii_totale = 0;
+            const int eroare_acceptable = 100;
 
+            try
+            {
+                do
+                {
+                    calorii_totale = 0;
+                    mealPlan.Clear();
+                    var breakfastOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Mic Dejun" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var breakfast = breakfastOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (breakfast != null)
+                    {
+                        mealPlan.Add($"Mic Dejun: {breakfast.Ingrediente} ({breakfast.Calorii} Cal)");
+                        calorii_totale += breakfast.Calorii;
+                    }
+
+                    var lunchOptions = _context.Retetes
+                            .Where(r => r.TipMasa == "Pranz" && r.Calorii <= numarCalorii)
+                            .ToList();
+                    var lunch = lunchOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (lunch != null)
+                    {
+                        mealPlan.Add($"Pranz: {lunch.Ingrediente} ({lunch.Calorii} Cal)");
+                        calorii_totale += lunch.Calorii;
+                    }
+
+                    var dinnerOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Cina" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var dinner = dinnerOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (dinner != null)
+                    {
+                        mealPlan.Add($"Cina: {dinner.Ingrediente} ({dinner.Calorii} Cal)");
+                        calorii_totale += dinner.Calorii;
+                    }
+
+                } while (Math.Abs(calorii_totale - numarCalorii) > eroare_acceptable);
+
+                Console.WriteLine("\nPlan alimentar zilnic:");
+                Console.WriteLine($"Calorii totale: {calorii_totale}");
+                foreach (var meal in mealPlan)
+                {
+                    Console.WriteLine(meal);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Exception occurred: {ex.Message}");
+                Console.WriteLine("[ERROR] Stack Trace:");
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
     }
 }

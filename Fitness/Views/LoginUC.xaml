@@ -13,7 +13,7 @@
 
     <UserControl.Resources>
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#FE4568DC" Offset="0"/>
+            <GradientStop Color="#80aaff" Offset="0"/>
             <GradientStop Color="#FFB06AB3" Offset="1"/>
         </LinearGradientBrush>
         <Style x:Key="ModernButton" TargetType="Button">
