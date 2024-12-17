@@ -50,12 +50,6 @@
 
 
     <Grid Margin="0,0,0,0">
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                <GradientStop Color="#3366ff" Offset="0.0" />
-                <GradientStop Color="White" Offset="1.0" />
-            </LinearGradientBrush>
-        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -165,7 +159,7 @@
             <!-- Login Grid -->
             <Grid x:Name="LoginGrid" Visibility="Visible" HorizontalAlignment="Left">
                 <Border Width="400" Height="350" Background="DimGray" Opacity="0.2" CornerRadius="30" BorderThickness="2" />
-                <StackPanel VerticalAlignment="Center" Width="350" >
+                <StackPanel VerticalAlignment="Center" Width="300" >
                     <TextBlock Text="Log In" 
                            Style="{StaticResource EnhancedTextBlockStyle}"
                            Foreground="White" 
@@ -200,7 +194,7 @@
             <!-- Signup Grid -->
             <Grid x:Name="SignupGrid" Visibility="Collapsed" HorizontalAlignment="Left">
                 <Border Width="400" Height="350" Background="DimGray" Opacity="0.2" CornerRadius="30" BorderThickness="2" />
-                <StackPanel VerticalAlignment="Center" Width="350">
+                <StackPanel VerticalAlignment="Center" Width="300">
                     <TextBlock Text="Sign Up" 
                            FontSize="36" 
                            Style="{StaticResource EnhancedTextBlockStyle}"
@@ -233,7 +227,7 @@
                            MouseLeftButtonDown="SwitchToLogin"/>
                 </StackPanel>
             </Grid>
-            <Image HorizontalAlignment="Left" Height="402" Margin="345,33,0,0" VerticalAlignment="Top" Width="337" Source="/Views/log_in_icon.png" Stretch="UniformToFill"/>
+            <Image HorizontalAlignment="Left" Height="402" Margin="345,33,0,0" VerticalAlignment="Top" Width="337" Source="/Views/log_in_icon.png" Stretch="UniformToFill" RenderTransformOrigin="0.509,0.484"/>
         </Grid>
     </Grid>
 </UserControl>

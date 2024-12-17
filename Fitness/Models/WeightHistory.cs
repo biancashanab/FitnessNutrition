@@ -9,20 +9,19 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
-    public class WeightHistory: INotifyPropertyChanged
+    public class WeightHistory : INotifyPropertyChanged
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public DateTime Date { get; set; }
         public decimal Weight { get; set; }
+        private readonly FitnessDBDataContext _context;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public WeightHistory()
         {
             _context = new FitnessDBDataContext();
         }
-
-        private readonly FitnessDBDataContext _context;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         void addWeight(string username, DateTime date, decimal weight)
         {
@@ -71,6 +70,5 @@ namespace Fitness.Models
             }
             return history;
         }
-
     }
 }

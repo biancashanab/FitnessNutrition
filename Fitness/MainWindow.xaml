@@ -11,16 +11,18 @@
         WindowStyle="None" 
         AllowsTransparency="True" 
         Background="Transparent">
-
-    <Grid Background="White">
-        <DockPanel Height="36" VerticalAlignment="Top" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" >
-            <DockPanel.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#3366ff" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </DockPanel.Background>
-            <Button Content="X"
+    
+    <Border CornerRadius="20" BorderBrush="White" BorderThickness="0" Padding="8">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#3366ff" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid Background="Transparent">
+            <DockPanel Height="36" VerticalAlignment="Top" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown" >
+               
+                <Button Content="X"
                     FontWeight="ExtraBlack"
                     Width="35" 
                     Height="35"
@@ -33,11 +35,12 @@
                     Click="ExitButton_Click"
                     Padding="0"
                     Cursor="Hand"/>
-        </DockPanel>
-        <Border Margin="0,35,0,0" Background="Transparent">
-            <ContentControl x:Name="MainContent" 
+            </DockPanel>
+            <Border Margin="0,35,0,0" Background="Transparent">
+                <ContentControl x:Name="MainContent" 
                             HorizontalAlignment="Stretch" 
                             VerticalAlignment="Stretch"/>
-        </Border>
-    </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

@@ -1,102 +1,168 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 15.875" name="FitnessDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 16.125, 12.25" name="FitnessDB">
   <DataContextMoniker Name="/FitnessDBDataContext" />
   <nestedChildShapes>
-    <classShape Id="b9d7ab82-a886-4663-9a3f-35d3d57e6351" absoluteBounds="3.5, 8.875, 2, 2.09981530914704">
+    <classShape Id="b6015761-ebca-43fe-9371-1bc795ab9411" absoluteBounds="7.375, 10.125, 2, 1.9140649786591517">
+      <DataClassMoniker Name="/FitnessDBDataContext/AntrenamentSaptamanal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f2af9e82-a7f6-4dcc-87aa-2e49af4d00cb" absoluteBounds="7.3900000000000006, 10.585, 1.9700000000000002, 1.354064978659153" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ad4de33d-833f-4028-a176-a580ada23735" absoluteBounds="10.625, 10, 2, 1.1710636567076058">
+      <DataClassMoniker Name="/FitnessDBDataContext/AntrenamentSaptamanal_Zilnic" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0b93b03e-d381-448c-b91f-c72216f6d2c9" absoluteBounds="10.64, 10.46, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f0276824-8ead-4d30-8a05-be1e61dedbe6" absoluteBounds="6.75, 4.5, 2, 1.7283146481712652">
+      <DataClassMoniker Name="/FitnessDBDataContext/AntrenamentZilnic" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e29fd677-83cd-4309-b9c9-c8f65fe7b594" absoluteBounds="6.7650000000000006, 4.96, 1.9700000000000002, 1.1683146481712658" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8933c502-5916-4618-aa6c-613daf264789" absoluteBounds="13.75, 7.75, 2, 2.09981530914704">
       <DataClassMoniker Name="/FitnessDBDataContext/Exercitii" />
       <nestedChildShapes>
-        <elementListCompartment Id="11a691db-c13d-482c-afa3-42e08ee79b76" absoluteBounds="3.515, 9.335, 1.9700000000000002, 1.53981530914704" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="5f0d0507-e9be-41e5-a4b5-63ffe5615842" absoluteBounds="13.765, 8.21, 1.9700000000000002, 1.53981530914704" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b3800109-e154-4053-827a-ac0ace7a7d5b" absoluteBounds="3.5, 1.125, 2, 1.5425643176833788">
-      <DataClassMoniker Name="/FitnessDBDataContext/IstoricAntrenamente" />
+    <classShape Id="0ff0cd37-3ce6-4bef-9bd9-4bf94a5ed88f" absoluteBounds="10.125, 5.375, 2, 1.1710636567076058">
+      <DataClassMoniker Name="/FitnessDBDataContext/ExercitiiAntrenamentZilnic" />
       <nestedChildShapes>
-        <elementListCompartment Id="7d30c4dd-4398-4436-87f5-1e721c88b6f9" absoluteBounds="3.515, 1.585, 1.9700000000000002, 0.98256431768337893" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="838cebba-522e-4669-aa5e-ee5336f9996b" absoluteBounds="10.14, 5.835, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b185946a-7454-4dac-92d4-fd1608529f98" absoluteBounds="6.25, 1.375, 2, 1.1710636567076049">
-      <DataClassMoniker Name="/FitnessDBDataContext/IstoricAntrenamenteExercitii" />
-      <nestedChildShapes>
-        <elementListCompartment Id="81b33b5f-9cdb-4d21-bdd6-818702f729a9" absoluteBounds="6.265, 1.835, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="2d0aaa6c-5cb6-456e-9c6e-3eae06e4efa1" absoluteBounds="3.5, 3.375, 2, 1.5425643176833788">
+    <classShape Id="2abaa0d9-3c76-4627-ac80-67469da73959" absoluteBounds="1.25, 2.125, 2, 1.5425643176833788">
       <DataClassMoniker Name="/FitnessDBDataContext/IstoricGreutate" />
       <nestedChildShapes>
-        <elementListCompartment Id="eefe7a67-25ce-40dc-9500-b70b76fbfde7" absoluteBounds="3.515, 3.835, 1.9700000000000002, 0.98256431768337893" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="702c2c2d-55e4-4f55-87d5-b88c18b59932" absoluteBounds="1.2650000000000006, 2.585, 1.9700000000000002, 0.98256431768337893" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d6e3e1f6-32bb-4f1b-ba24-3cd38e060630" absoluteBounds="3.5, 5.75, 2, 1.5425643176833788">
-      <DataClassMoniker Name="/FitnessDBDataContext/PlanAlimentarIstoric" />
+    <classShape Id="c90a4984-0292-4ff9-a357-d99feb92e6ab" absoluteBounds="3.625, 7.5, 2, 1.728314648171267">
+      <DataClassMoniker Name="/FitnessDBDataContext/PlanAlimentarSaptamanal" />
       <nestedChildShapes>
-        <elementListCompartment Id="9199d0fe-3b2e-44d1-9213-b2a33c0030e8" absoluteBounds="3.515, 6.21, 1.9700000000000002, 0.98256431768337893" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c537181f-600f-4ef1-97e3-0bfcdc7dbcb9" absoluteBounds="3.6400000000000006, 7.9600000000000009, 1.9700000000000002, 1.1683146481712658" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="31dae82d-d41d-4572-8619-07c01d948e00" absoluteBounds="6.25, 5.875, 2, 1.171063656707604">
-      <DataClassMoniker Name="/FitnessDBDataContext/PlanAlimentarRetete" />
+    <classShape Id="6aabbbbf-6d6f-4a81-9e47-c9d5021507bf" absoluteBounds="10, 7.875, 2, 1.1710636567076058">
+      <DataClassMoniker Name="/FitnessDBDataContext/PlanAlimentarSaptamanal_Zilnic" />
       <nestedChildShapes>
-        <elementListCompartment Id="f6746d7b-15c1-46ef-8ec5-488bd2728c24" absoluteBounds="6.265, 6.335, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2f4dfc56-d69b-4ae4-9ce9-41c53e9edf2c" absoluteBounds="10.015, 8.335, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9b235412-adf8-4815-8127-2cc9d2b9c5f4" absoluteBounds="3.5, 13.375, 2, 2.2855656396349282">
+    <classShape Id="3c0bc3ea-e0e5-40f0-880f-a286fe4730aa" absoluteBounds="7.125, 1.875, 2, 1.5425643176833788">
+      <DataClassMoniker Name="/FitnessDBDataContext/PlanAlimentarZilnic" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8fef82f5-2464-4555-a7cc-b64199de0e4e" absoluteBounds="7.1400000000000006, 2.335, 1.9700000000000002, 0.98256431768337893" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b9c7c880-2bac-4360-bdee-0e04554c2c80" absoluteBounds="13.875, 3.625, 2, 2.2855656396349264">
       <DataClassMoniker Name="/FitnessDBDataContext/Retete" />
       <nestedChildShapes>
-        <elementListCompartment Id="7b3f9401-64ea-487a-85df-0262eeb593d4" absoluteBounds="3.515, 13.835, 1.9700000000000002, 1.7255656396349273" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2129c304-9520-400f-b19d-0c6ee8e6593c" absoluteBounds="13.89, 4.0850000000000009, 1.9700000000000002, 1.7255656396349273" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="fabd90d5-bca7-44e0-a43c-dccb5b6316d6" absoluteBounds="0.75, 3, 2, 2.2855656396349269">
+    <classShape Id="a6baed48-4db1-4c2f-bd7f-e858facfe26b" absoluteBounds="10.125, 3, 2, 1.1710636567076045">
+      <DataClassMoniker Name="/FitnessDBDataContext/RetetePlanAlimentarZilnic" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3bf1e2af-489e-4cc9-938d-ae61217d9a68" absoluteBounds="10.14, 3.46, 1.9700000000000002, 0.61106365670760465" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" absoluteBounds="4.625, 5.125, 2, 2.2855656396349282">
       <DataClassMoniker Name="/FitnessDBDataContext/Utilizatori" />
       <nestedChildShapes>
-        <elementListCompartment Id="fc4bcf0d-7604-4874-ac42-eda6bf14cc82" absoluteBounds="0.765, 3.46, 1.9700000000000002, 1.7255656396349273" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ede2b96c-b462-4016-ae54-40c0018a2370" absoluteBounds="4.64, 5.585, 1.9700000000000002, 1.7255656396349273" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 8.875); (5.875 : 8.5); (5.875 : 1.9605318283538); (6.25 : 1.9605318283538)]" fixedFrom="NotFixed" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/Exercitii/Exercitii_IstoricAntrenamenteExercitii" />
+    <associationConnector edgePoints="[(9.375 : 10.6480318283538); (10.625 : 10.6480318283538)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/AntrenamentSaptamanal/AntrenamentSaptamanal_AntrenamentSaptamanal_Zilnic" />
       <nodes>
-        <classShapeMoniker Id="b9d7ab82-a886-4663-9a3f-35d3d57e6351" />
-        <classShapeMoniker Id="b185946a-7454-4dac-92d4-fd1608529f98" />
+        <classShapeMoniker Id="b6015761-ebca-43fe-9371-1bc795ab9411" />
+        <classShapeMoniker Id="ad4de33d-833f-4028-a176-a580ada23735" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 1.6052659141769); (6.25 : 1.6052659141769)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/IstoricAntrenamente/IstoricAntrenamente_IstoricAntrenamenteExercitii" />
+    <associationConnector edgePoints="[(7.03125 : 6.22831464817127); (7.03125 : 10.03125); (10.625 : 10.03125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/AntrenamentZilnic/AntrenamentZilnic_AntrenamentSaptamanal_Zilnic" />
       <nodes>
-        <classShapeMoniker Id="b3800109-e154-4053-827a-ac0ace7a7d5b" />
-        <classShapeMoniker Id="b185946a-7454-4dac-92d4-fd1608529f98" />
+        <classShapeMoniker Id="f0276824-8ead-4d30-8a05-be1e61dedbe6" />
+        <classShapeMoniker Id="ad4de33d-833f-4028-a176-a580ada23735" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 6.4605318283538); (5.79166666666667 : 6.4605318283538 : JumpStart); (5.95833333333333 : 6.4605318283538 : JumpEnd); (6.25 : 6.4605318283538)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/PlanAlimentarIstoric/PlanAlimentarIstoric_PlanAlimentarRetete" />
+    <associationConnector edgePoints="[(8.75 : 5.80165732408563); (9.94791666666667 : 5.80165732408563 : JumpStart); (10.1145833333333 : 5.80165732408563 : JumpEnd); (10.125 : 5.80165732408563)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/AntrenamentZilnic/AntrenamentZilnic_ExercitiiAntrenamentZilnic" />
       <nodes>
-        <classShapeMoniker Id="d6e3e1f6-32bb-4f1b-ba24-3cd38e060630" />
-        <classShapeMoniker Id="31dae82d-d41d-4572-8619-07c01d948e00" />
+        <classShapeMoniker Id="f0276824-8ead-4d30-8a05-be1e61dedbe6" />
+        <classShapeMoniker Id="0ff0cd37-3ce6-4bef-9bd9-4bf94a5ed88f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 14.5177828198175); (7.25 : 14.5177828198175); (7.25 : 7.0460636567076)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/Retete/Retete_PlanAlimentarRetete" />
+    <associationConnector edgePoints="[(13.78125 : 7.75); (13.78125 : 6.25956464817127); (12.125 : 6.25956464817127)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Exercitii/Exercitii_ExercitiiAntrenamentZilnic" />
       <nodes>
-        <classShapeMoniker Id="9b235412-adf8-4815-8127-2cc9d2b9c5f4" />
-        <classShapeMoniker Id="31dae82d-d41d-4572-8619-07c01d948e00" />
+        <classShapeMoniker Id="8933c502-5916-4618-aa6c-613daf264789" />
+        <classShapeMoniker Id="0ff0cd37-3ce6-4bef-9bd9-4bf94a5ed88f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 3); (1.75 : 1.89628215884169); (3.5 : 1.89628215884169)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_IstoricAntrenamente" />
+    <associationConnector edgePoints="[(5.625 : 8.4605318283538); (6.07291666666667 : 8.4605318283538 : JumpStart); (6.23958333333333 : 8.4605318283538 : JumpEnd); (6.94791666666667 : 8.4605318283538 : JumpStart); (7.11458333333333 : 8.4605318283538 : JumpEnd); (10 : 8.4605318283538)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/PlanAlimentarSaptamanal/PlanAlimentarSaptamanal_PlanAlimentarSaptamanal_Zilnic" />
       <nodes>
-        <classShapeMoniker Id="fabd90d5-bca7-44e0-a43c-dccb5b6316d6" />
-        <classShapeMoniker Id="b3800109-e154-4053-827a-ac0ace7a7d5b" />
+        <classShapeMoniker Id="c90a4984-0292-4ff9-a357-d99feb92e6ab" />
+        <classShapeMoniker Id="6aabbbbf-6d6f-4a81-9e47-c9d5021507bf" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.14628215884169); (3.5 : 4.14628215884169)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(9.125 : 2.40625); (10.03125 : 2.40625); (10.03125 : 7.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/PlanAlimentarZilnic/PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic" />
+      <nodes>
+        <classShapeMoniker Id="3c0bc3ea-e0e5-40f0-880f-a286fe4730aa" />
+        <classShapeMoniker Id="6aabbbbf-6d6f-4a81-9e47-c9d5021507bf" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.125 : 3.20878215884169); (9.94791666666667 : 3.20878215884169 : JumpStart); (10.1145833333333 : 3.20878215884169 : JumpEnd); (10.125 : 3.20878215884169)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/PlanAlimentarZilnic/PlanAlimentarZilnic_RetetePlanAlimentarZilnic" />
+      <nodes>
+        <classShapeMoniker Id="3c0bc3ea-e0e5-40f0-880f-a286fe4730aa" />
+        <classShapeMoniker Id="a6baed48-4db1-4c2f-bd7f-e858facfe26b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.875 : 3.8980318283538); (12.125 : 3.8980318283538)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Retete/Retete_RetetePlanAlimentarZilnic" />
+      <nodes>
+        <classShapeMoniker Id="b9c7c880-2bac-4360-bdee-0e04554c2c80" />
+        <classShapeMoniker Id="a6baed48-4db1-4c2f-bd7f-e858facfe26b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.15625 : 7.41056563963493); (6.15625 : 11.0820324893296); (7.375 : 11.0820324893296)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_AntrenamentSaptamanal" />
+      <nodes>
+        <classShapeMoniker Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" />
+        <classShapeMoniker Id="b6015761-ebca-43fe-9371-1bc795ab9411" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.625 : 5.67665732408563); (6.75 : 5.67665732408563)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_AntrenamentZilnic" />
+      <nodes>
+        <classShapeMoniker Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" />
+        <classShapeMoniker Id="f0276824-8ead-4d30-8a05-be1e61dedbe6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.35937375 : 5.125); (5.35937375 : 2.88564107942084); (3.25 : 2.88564107942084)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_IstoricGreutate" />
       <nodes>
-        <classShapeMoniker Id="fabd90d5-bca7-44e0-a43c-dccb5b6316d6" />
-        <classShapeMoniker Id="2d0aaa6c-5cb6-456e-9c6e-3eae06e4efa1" />
+        <classShapeMoniker Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" />
+        <classShapeMoniker Id="2abaa0d9-3c76-4627-ac80-67469da73959" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 5.28556563963493); (1.75 : 6.52128215884169); (3.5 : 6.52128215884169)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_PlanAlimentarIstoric" />
+    <associationConnector edgePoints="[(5.125 : 7.41056563963493); (5.125 : 7.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_PlanAlimentarSaptamanal" />
       <nodes>
-        <classShapeMoniker Id="fabd90d5-bca7-44e0-a43c-dccb5b6316d6" />
-        <classShapeMoniker Id="d6e3e1f6-32bb-4f1b-ba24-3cd38e060630" />
+        <classShapeMoniker Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" />
+        <classShapeMoniker Id="c90a4984-0292-4ff9-a357-d99feb92e6ab" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.023439375 : 5.125); (6.023439375 : 2.38032053971042); (7.125 : 2.38032053971042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FitnessDBDataContext/Utilizatori/Utilizatori_PlanAlimentarZilnic" />
+      <nodes>
+        <classShapeMoniker Id="1258d0f8-dad8-47d6-b6db-0c5b8fc5a6ee" />
+        <classShapeMoniker Id="3c0bc3ea-e0e5-40f0-880f-a286fe4730aa" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

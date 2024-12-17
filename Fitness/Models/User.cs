@@ -35,7 +35,7 @@ namespace Fitness.Models
             if (user == null)
             {
                 return null;
-             }
+            }
 
             return new User
             {
@@ -61,8 +61,10 @@ namespace Fitness.Models
             }
         }
 
-        public void AddUser(string name, string password, string userType = "Utilizator", string sex = "Masculin", decimal height = 0, decimal kilograms = 0,string physicalCondition = "Unspecified")
-        {   
+        public void AddUser(string name, string password,
+            string userType = "Utilizator", string sex = "Masculin", decimal height = 0,
+            decimal kilograms = 0, string physicalCondition = "Unspecified")
+        {
             var existingUser = _context.Utilizatoris.FirstOrDefault(u => u.Name == name);
 
             if (existingUser != null)

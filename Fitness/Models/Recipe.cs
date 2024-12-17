@@ -18,8 +18,7 @@ namespace Fitness.Models
         public decimal Fats { get; set; }
         public string Name { get; set; }
         public string Ingredients { get; set; }
-        public string MealType { get; set; } // "Breakfast", "Lunch", "Dinner", "Snack"
-
+        public string MealType { get; set; }
 
         public Recipe()
         {
@@ -52,7 +51,9 @@ namespace Fitness.Models
             };
         }
 
-        public void AddRecipe(string name, string ingrediente, int calorii, decimal carbohidrati, decimal proteine, decimal grasimi)
+        public void AddRecipe(string name, string ingrediente,
+            int calorii, decimal carbohidrati,
+            decimal proteine, decimal grasimi)
         {
             var recipe = new Retete
             {

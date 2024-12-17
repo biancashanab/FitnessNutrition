@@ -49,5 +49,10 @@ namespace Fitness.Views
         {
             (DataContext as MainVM)?.Click_AcasaCommand.Execute(null);
         }
+
+        private void LV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

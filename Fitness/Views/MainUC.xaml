@@ -35,7 +35,7 @@
             <Setter Property="Height" Value="40"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="Margin" Value="20,0,0,0"/>
-            <Setter Property="Background" Value="#4A5668"/>
+            <Setter Property="Background" Value="LightBlue"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
@@ -49,215 +49,192 @@
     </UserControl.Resources>
 
     <Grid>
-        <!--// Background Color //-->
         <Grid x:Name="Fundal" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="104*"/>
+                <RowDefinition Height="174*"/>
                 <RowDefinition Height="83*"/>
             </Grid.RowDefinitions>
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#3366ff" Offset="0.0" />
-                    <GradientStop Color="DarkBlue" Offset="1.0" />
-                </LinearGradientBrush>
-            </Grid.Background>
-
-            <!--// Navigation Panel //-->
             <ContentControl x:Name="ContentFrame" Background="#FFE8F9FF" Margin="75,10,10,10" Grid.RowSpan="2" BorderBrush="Transparent" BorderThickness="0" Content="{Binding CurrentUC}" />
+            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="Transparent"  Grid.RowSpan="2" Margin="16,24,0,60">
+                <Border UseLayoutRounding="True" BorderBrush="#3366ff" BorderThickness="0" Background= "#5EB5B9" Opacity="0.90" CornerRadius="30,30,30,30" Margin="0,0,0,0">
+                    <StackPanel x:Name="st_pnl" Margin="0,0,0,30">
 
-            <!--// Navigation Panel //-->
-            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="#3366ff" Opacity="0.8" Grid.RowSpan="2">
+                        <Grid x:Name="btn_toogle" Height="90">
 
-                <StackPanel x:Name="st_pnl" >
-
-                    <!--// Grid for the Menu Toggle Button //-->
-                    <Grid x:Name="btn_toogle" Height="90">
-
-                        <!--// Menu title text //-->
-                        <TextBlock  Grid.Row="1" Grid.Column="0" Margin="73,-20,0,0" Text="M E N I U" 
+                            <!--// Menu title text //-->
+                            <TextBlock  Grid.Row="1" Grid.Column="0" Margin="73,-20,0,0" Text="M E N I U" 
                                     Foreground="White" FontSize="22" Background="Transparent" 
                                     HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource font_style}">
                             
                             <!--// Shadow Effect //-->
-                            <TextBlock.Effect>
-                                <DropShadowEffect  BlurRadius="10" ShadowDepth="1" Direction="-90" Color="White"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
+                                <TextBlock.Effect>
+                                    <DropShadowEffect  BlurRadius="10" ShadowDepth="1" Direction="-90" Color="White"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
 
-                        <!--// Toggle Button //-->
-                        <ToggleButton x:Name="Tg_Btn" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                            <!--// Toggle Button //-->
+                            <ToggleButton x:Name="Tg_Btn" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" 
                                       Margin="18,-20,0,0" Height="30" Width="30" BorderThickness="0">
-                            <ToggleButton.Template>
-                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                    <Border BorderThickness="0" Background="Transparent">
-                                        <!-- Imaginea butonului -->
-                                        <Image x:Name="ToggleImage" Stretch="Fill" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <!-- Starea Unchecked -->
-                                        <Trigger Property="IsChecked" Value="False">
-                                            <Setter TargetName="ToggleImage" Property="Source" Value="/Poze/toogle_menu.png" />
-                                        </Trigger>
-                                        <!-- Starea Checked -->
-                                        <Trigger Property="IsChecked" Value="True">
-                                            <Setter TargetName="ToggleImage" Property="Source" Value="/Poze/toogle_menu.png" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border BorderThickness="0" Background="Transparent">
+                                            <!-- Imaginea butonului -->
+                                            <Image x:Name="ToggleImage" Stretch="Fill" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <!-- Starea Unchecked -->
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter TargetName="ToggleImage" Property="Source" Value="/Poze/toogle_menu.png" />
+                                            </Trigger>
+                                            <!-- Starea Checked -->
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ToggleImage" Property="Source" Value="/Poze/toogle_menu.png" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
 
-                            <!--// Toggle Button - Checked, Unchecked events //-->
-                            <ToggleButton.Triggers>
-                                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
-                                    <BeginStoryboard>
-                                        <Storyboard x:Name="HideStackPanel">
-                                            <DoubleAnimation Storyboard.TargetName="nav_pnl" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="65" Duration="0:0:0.2"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
+                                <!--// Toggle Button - Checked, Unchecked events //-->
+                                <ToggleButton.Triggers>
+                                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                                        <BeginStoryboard>
+                                            <Storyboard x:Name="HideStackPanel">
+                                                <DoubleAnimation Storyboard.TargetName="nav_pnl" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="230" To="65" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
 
-                                <EventTrigger RoutedEvent="ToggleButton.Checked">
-                                    <BeginStoryboard>
-                                        <Storyboard x:Name="ShowStackPanel">
-                                            <DoubleAnimation Storyboard.TargetName="nav_pnl" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="65" To="230" Duration="0:0:0.3"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </ToggleButton.Triggers>
-                        </ToggleButton>
-                    </Grid>
+                                    <EventTrigger RoutedEvent="ToggleButton.Checked">
+                                        <BeginStoryboard>
+                                            <Storyboard x:Name="ShowStackPanel">
+                                                <DoubleAnimation Storyboard.TargetName="nav_pnl" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="65" To="230" Duration="0:0:0.3"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </ToggleButton.Triggers>
+                            </ToggleButton>
+                        </Grid>
 
-                    <!--// ListView with menu list items //-->
-                    <ListView  x:Name="LV" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="470">
+                        <!--// ListView with menu list items //-->
+                        <ListView  x:Name="LV" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="510">
 
-                        <!--// Listview items style template //-->
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <!--// Listview items style template //-->
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
 
-                                            <Border x:Name="Bd" Height="50" BorderBrush="{TemplateBinding BorderBrush}" 
+                                                <Border x:Name="Bd" Height="50" BorderBrush="{TemplateBinding BorderBrush}" 
                                                     BorderThickness="{TemplateBinding BorderThickness}" 
                                                     Background="{TemplateBinding Background}" 
                                                     Padding="{TemplateBinding Padding}" 
                                                     SnapsToDevicePixels="True">
-                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                            </Border>
+                                                </Border>
 
-                                            <ControlTemplate.Triggers>
-                                                <MultiTrigger>
-                                                    <MultiTrigger.Conditions>
-                                                        <Condition Property="IsMouseOver" Value="True"/>
-                                                    </MultiTrigger.Conditions>
-                                                    <Setter Property="Background" TargetName="Bd" Value="#404D5B"/>
-                                                    <Setter Property="BorderBrush" TargetName="Bd" Value="#404D5B"/>
-                                                </MultiTrigger>
-                                            </ControlTemplate.Triggers>
+                                                <ControlTemplate.Triggers>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsMouseOver" Value="True"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter Property="Background" TargetName="Bd" Value="#19f"/>
+                                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#19f"/>
+                                                    </MultiTrigger>
+                                                </ControlTemplate.Triggers>
 
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
 
-                        <!--// Home //-->
-                        <ListViewItem x:Name="Acasa" HorizontalAlignment="Left" Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
+                            <!--// Home //-->
+                            <ListViewItem x:Name="Acasa" HorizontalAlignment="Left" Margin="0,0,0,0" MouseEnter="ListViewItem_MouseEnter" Height="60">
 
-                            <!--// Tooltip //-->
-                            <ListViewItem.ToolTip>
-                                <ToolTip x:Name="tt_home" Content="Acasa" Style="{StaticResource tt_style}"/>
-                            </ListViewItem.ToolTip>
-                            <Button Command ="{Binding Click_AcasaCommand}"  
+                                <!--// Tooltip //-->
+                                <ListViewItem.ToolTip>
+                                    <ToolTip x:Name="tt_home" Content="Acasa" Style="{StaticResource tt_style}"/>
+                                </ListViewItem.ToolTip>
+                                <Button Command ="{Binding Click_AcasaCommand}"  
                                     Style="{StaticResource NoHoverButtonStyle}" 
                                     Background="Transparent" BorderThickness="0" 
                                     Foreground="Transparent" >
-                                <StackPanel Orientation="Horizontal" Width="230" >
-                                    <Image Source="/Poze/img_home.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Home" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
+                                    <StackPanel Orientation="Horizontal" Width="230" >
+                                        <Image Source="/Poze/img_home.png" Stretch="None" Margin="12,0,0,0"/>
+                                        <TextBlock Text="Home" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
 
-                        <!--// User //-->
-                        <ListViewItem x:Name="Utilizator" HorizontalAlignment="Left" Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter">
+                            <!--// User //-->
+                            <ListViewItem x:Name="Utilizator" HorizontalAlignment="Left" Margin="0,0,0,0" MouseEnter="ListViewItem_MouseEnter" Height="60">
 
-                            <!--// Tooltip //-->
-                            <ListViewItem.ToolTip>
-                                <ToolTip x:Name="tt_contacts" Content="Utilizator" Style="{StaticResource tt_style}"/>
-                            </ListViewItem.ToolTip>
-                            <Button Command ="{Binding Click_UserCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
-                                <StackPanel Orientation="Horizontal" Width="230">
-                                    <Image Source="/Poze/img_contact.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="User" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
+                                <!--// Tooltip //-->
+                                <ListViewItem.ToolTip>
+                                    <ToolTip x:Name="tt_contacts" Content="Utilizator" Style="{StaticResource tt_style}"/>
+                                </ListViewItem.ToolTip>
+                                <Button Command ="{Binding Click_UserCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal" Width="230">
+                                        <Image Source="/Poze/img_contact.png" Stretch="None" Margin="12,0,0,0"/>
+                                        <TextBlock Text="User" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
 
-                        <!--// Messages //-->
-                        <ListViewItem x:Name="Notificari" HorizontalAlignment="Left" Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" >
+                            <!--// Messages //-->
+                            <ListViewItem x:Name="Notificari" HorizontalAlignment="Left" Margin="0,0,0,0" MouseEnter="ListViewItem_MouseEnter" Height="60" >
 
-                            <!--// Tooltip //-->
-                            <ListViewItem.ToolTip>
-                                <ToolTip x:Name="tt_messages" Content="Notificari" Style="{StaticResource tt_style}"/>
-                            </ListViewItem.ToolTip>
-                            <Button Command ="{Binding Click_NotificariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
-                                <StackPanel Orientation="Horizontal" Width="230">
-                                    <Image Source="/Poze/img_message.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Notifications" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
+                                <!--// Tooltip //-->
+                                <ListViewItem.ToolTip>
+                                    <ToolTip x:Name="tt_messages" Content="Notificari" Style="{StaticResource tt_style}"/>
+                                </ListViewItem.ToolTip>
+                                <Button Command ="{Binding Click_NotificariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal" Width="230">
+                                        <Image Source="/Poze/img_message.png" Stretch="None" Margin="12,0,0,0"/>
+                                        <TextBlock Text="Notifications" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
 
-                        <!--// Settings //-->
-                        <ListViewItem x:Name="Setari" HorizontalAlignment="Left" Margin="0,0,0,0" MouseEnter="ListViewItem_MouseEnter" >
+                            <!--// Settings //-->
+                            <ListViewItem x:Name="Setari" Margin="0,0,0,0" MouseEnter="ListViewItem_MouseEnter" Height="60" >
 
-                            <!--// Tooltip //-->
-                            <ListViewItem.ToolTip>
-                                <ToolTip x:Name="tt_settings" Content="Setari" Style="{StaticResource tt_style}"/>
-                            </ListViewItem.ToolTip>
+                                <!--// Tooltip //-->
+                                <ListViewItem.ToolTip>
+                                    <ToolTip x:Name="tt_settings" Content="Setari" Style="{StaticResource tt_style}"/>
+                                </ListViewItem.ToolTip>
 
-                            <Button Command ="{Binding Click_SetariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0" >
-                                <StackPanel Orientation="Horizontal" Width="230">
-                                    <Image Source="/Poze/img_setting.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Settings" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
+                                <Button Command ="{Binding Click_SetariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0" >
+                                    <StackPanel Orientation="Horizontal" Width="230">
+                                        <Image Source="/Poze/img_setting.png" Stretch="None" Margin="12,0,0,0"/>
+                                        <TextBlock Text="Settings" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
 
-                        <!--// Spatiu intre ultimele 2 butoane //-->
-                        <ListViewItem x:Name="Spatiu_GOL" Margin="0,0,0,15" Height="140">
-                            <ListViewItem.Template>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Border Background="Transparent">
-                                        <ContentPresenter />
-                                    </Border>
-                                </ControlTemplate>
-                            </ListViewItem.Template>
-                        </ListViewItem>
-                        <!--// Sign Out //-->
-                        <ListViewItem x:Name="Deconectare" Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" Height="50" >
+                            <!--// Sign Out //-->
+                            <ListViewItem x:Name="Deconectare" Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" Height="60" >
 
-                            <!--// Tooltip //-->
-                            <ListViewItem.ToolTip>
-                                <ToolTip x:Name="tt_signout" Content="Deconectare"  Style="{StaticResource tt_style}"/>
-                            </ListViewItem.ToolTip>
-                            <Button Command ="{Binding LogoutCommand}"  Style="{StaticResource NoHoverButtonStyle}" 
-                                    Background="Transparent" BorderThickness="0">
-                                <StackPanel Orientation="Horizontal" Width="230" >
-                                    <Image Source="/Poze/log_out.png" Stretch="Fill" Margin="12,0,0,0" Width="30" Height="30"/>
-                                    <TextBlock Text="Sign Out" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
+                                <!--// Tooltip //-->
+                                <ListViewItem.ToolTip>
+                                    <ToolTip x:Name="tt_signout" Content="Deconectare"  Style="{StaticResource tt_style}"/>
+                                </ListViewItem.ToolTip>
+                                <Button Command ="{Binding LogoutCommand}"  Style="{StaticResource NoHoverButtonStyle}" 
+                                    Background="Transparent" BorderThickness="0" Height="50" RenderTransformOrigin="0.463,0.37">
+                                    <StackPanel Orientation="Horizontal" Width="230" >
+                                        <Image Source="/Poze/log_out.png" Stretch="Fill" Margin="12,0,0,0" Width="30" Height="30"/>
+                                        <TextBlock Text="Sign Out" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
 
-                    </ListView>
-                </StackPanel>
+                        </ListView>
+                    </StackPanel>
+                </Border>
             </Grid>
-
-            <!-- Content area to display different pages -->
 
         </Grid>
     </Grid>

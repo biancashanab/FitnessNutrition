@@ -61,12 +61,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FitnessDB.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DailyWorkout.cs" />
     <Compile Include="Models\Exercise.cs" />
-    <Compile Include="Models\MealPlanHistory.cs" />
+    <Compile Include="Models\DailyMeanPlan.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\WeeklyMealPlan.cs" />
+    <Compile Include="Models\WeeklyWorkout.cs" />
     <Compile Include="Models\WeightHistory.cs" />
-    <Compile Include="Models\WorkoutHistory.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
@@ -184,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Poze\sport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQLQuery1.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
