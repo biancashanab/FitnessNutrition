@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FitnessNutritieDB" Class="FitnessDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-6OA0842\MSSQLSERVER01;Initial Catalog=FitnessNutritieDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Fitness.Properties.Settings" SettingsPropertyName="FitnessNutritieDBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SPIRIDUSUL;Initial Catalog=FitnessNutritieDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Fitness.Properties.Settings" SettingsPropertyName="FitnessNutritieDBConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Exercitii" Member="Exercitiis">
     <Type Name="Exercitii">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -9,18 +9,25 @@
       <Column Name="Seturi" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Descriere" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="TimpEstimareExecutie" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Exercitii_IstoricAntrenamente" Member="IstoricAntrenamentes" ThisKey="ID" OtherKey="ExercitiuID" Type="IstoricAntrenamente" />
+      <Association Name="Exercitii_IstoricAntrenamenteExercitii" Member="IstoricAntrenamenteExercitiis" ThisKey="ID" OtherKey="ExercitiuID" Type="IstoricAntrenamenteExercitii" />
     </Type>
   </Table>
   <Table Name="dbo.IstoricAntrenamente" Member="IstoricAntrenamentes">
     <Type Name="IstoricAntrenamente">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ExercitiuID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DataExecutie" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="OraExecutie" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
-      <Association Name="Exercitii_IstoricAntrenamente" Member="Exercitii" ThisKey="ExercitiuID" OtherKey="ID" Type="Exercitii" IsForeignKey="true" />
+      <Association Name="IstoricAntrenamente_IstoricAntrenamenteExercitii" Member="IstoricAntrenamenteExercitiis" ThisKey="ID" OtherKey="IstoricAntrenamentID" Type="IstoricAntrenamenteExercitii" />
       <Association Name="Utilizatori_IstoricAntrenamente" Member="Utilizatori" ThisKey="UserID" OtherKey="ID" Type="Utilizatori" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IstoricAntrenamenteExercitii" Member="IstoricAntrenamenteExercitiis">
+    <Type Name="IstoricAntrenamenteExercitii">
+      <Column Name="IstoricAntrenamentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ExercitiuID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Exercitii_IstoricAntrenamenteExercitii" Member="Exercitii" ThisKey="ExercitiuID" OtherKey="ID" Type="Exercitii" IsForeignKey="true" />
+      <Association Name="IstoricAntrenamente_IstoricAntrenamenteExercitii" Member="IstoricAntrenamente" ThisKey="IstoricAntrenamentID" OtherKey="ID" Type="IstoricAntrenamente" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.IstoricGreutate" Member="IstoricGreutates">
@@ -36,11 +43,18 @@
     <Type Name="PlanAlimentarIstoric">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="RetetaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="TipMasa" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Retete_PlanAlimentarIstoric" Member="Retete" ThisKey="RetetaID" OtherKey="ID" Type="Retete" IsForeignKey="true" />
+      <Association Name="PlanAlimentarIstoric_PlanAlimentarRetete" Member="PlanAlimentarRetetes" ThisKey="ID" OtherKey="PlanAlimentarID" Type="PlanAlimentarRetete" />
       <Association Name="Utilizatori_PlanAlimentarIstoric" Member="Utilizatori" ThisKey="UserID" OtherKey="ID" Type="Utilizatori" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlanAlimentarRetete" Member="PlanAlimentarRetetes">
+    <Type Name="PlanAlimentarRetete">
+      <Column Name="PlanAlimentarID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RetetaID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="PlanAlimentarIstoric_PlanAlimentarRetete" Member="PlanAlimentarIstoric" ThisKey="PlanAlimentarID" OtherKey="ID" Type="PlanAlimentarIstoric" IsForeignKey="true" />
+      <Association Name="Retete_PlanAlimentarRetete" Member="Retete" ThisKey="RetetaID" OtherKey="ID" Type="Retete" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Retete" Member="Retetes">
@@ -53,7 +67,7 @@
       <Column Name="Nume" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="Ingrediente" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="TipMasa" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Association Name="Retete_PlanAlimentarIstoric" Member="PlanAlimentarIstorics" ThisKey="ID" OtherKey="RetetaID" Type="PlanAlimentarIstoric" />
+      <Association Name="Retete_PlanAlimentarRetete" Member="PlanAlimentarRetetes" ThisKey="ID" OtherKey="RetetaID" Type="PlanAlimentarRetete" />
     </Type>
   </Table>
   <Table Name="dbo.Utilizatori" Member="Utilizatoris">
@@ -71,4 +85,47 @@
       <Association Name="Utilizatori_PlanAlimentarIstoric" Member="PlanAlimentarIstorics" ThisKey="ID" OtherKey="UserID" Type="PlanAlimentarIstoric" />
     </Type>
   </Table>
+  <Function Name="dbo.AddAntrenamenteIstoric" Method="AddAntrenamenteIstoric">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DataExecutie" Parameter="dataExecutie" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="OraExecutie" Parameter="oraExecutie" Type="System.TimeSpan" DbType="Time" />
+    <Parameter Name="ExercitiiIDs" Parameter="exercitiiIDs" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.AddPlanAlimentarIstoric" Method="AddPlanAlimentarIstoric">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Data" Parameter="data" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="TipMasa" Parameter="tipMasa" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="RetetaIDs" Parameter="retetaIDs" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetIstoricAntrenamenteForUser" Method="GetIstoricAntrenamenteForUser" IsComposable="true">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetIstoricAntrenamenteForUserResult">
+      <Column Name="AntrenamentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DataExecutie" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="OraExecutie" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="ExercitiuID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DenumireExercitiu" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Repetari" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Seturi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GrupaMusculara" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Descriere" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetPlanAlimentarForUser" Method="GetPlanAlimentarForUser" IsComposable="true">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetPlanAlimentarForUserResult">
+      <Column Name="PlanAlimentarID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TipMasa" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="RetetaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RetetaNume" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Calorii" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Carbohidrati" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Proteine" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Grasimi" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Ingrediente" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

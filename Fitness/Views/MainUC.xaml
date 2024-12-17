@@ -56,9 +56,9 @@
                 <RowDefinition Height="83*"/>
             </Grid.RowDefinitions>
             <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#80aaff" Offset="0.0" />
-                    <GradientStop Color="White" Offset="1.0" />
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#3366ff" Offset="0.0" />
+                    <GradientStop Color="DarkBlue" Offset="1.0" />
                 </LinearGradientBrush>
             </Grid.Background>
 
@@ -66,7 +66,7 @@
             <ContentControl x:Name="ContentFrame" Background="#FFE8F9FF" Margin="75,10,10,10" Grid.RowSpan="2" BorderBrush="Transparent" BorderThickness="0" Content="{Binding CurrentUC}" />
 
             <!--// Navigation Panel //-->
-            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="#2E333A" Opacity="0.8" Grid.RowSpan="2">
+            <Grid x:Name="nav_pnl" HorizontalAlignment="Left" Width="65" Background="#3366ff" Opacity="0.8" Grid.RowSpan="2">
 
                 <StackPanel x:Name="st_pnl" >
 
@@ -176,7 +176,7 @@
                                     Foreground="Transparent" >
                                 <StackPanel Orientation="Horizontal" Width="230" >
                                     <Image Source="/Poze/img_home.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Acasa" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    <TextBlock Text="Home" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -191,7 +191,7 @@
                             <Button Command ="{Binding Click_UserCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
                                 <StackPanel Orientation="Horizontal" Width="230">
                                     <Image Source="/Poze/img_contact.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Utilizator" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    <TextBlock Text="User" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -206,7 +206,7 @@
                             <Button Command ="{Binding Click_NotificariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0">
                                 <StackPanel Orientation="Horizontal" Width="230">
                                     <Image Source="/Poze/img_message.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Notificari" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    <TextBlock Text="Notifications" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
@@ -222,7 +222,7 @@
                             <Button Command ="{Binding Click_SetariCommand}"  Style="{StaticResource NoHoverButtonStyle}" Background="Transparent" BorderThickness="0" >
                                 <StackPanel Orientation="Horizontal" Width="230">
                                     <Image Source="/Poze/img_setting.png" Stretch="None" Margin="12,0,0,0"/>
-                                    <TextBlock Text="Setari" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
+                                    <TextBlock Text="Settings" Margin="25,0,0,0" Style="{StaticResource font_style}"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>

@@ -51,7 +51,7 @@
 
     <Grid Margin="0,0,0,0">
         <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                 <GradientStop Color="#3366ff" Offset="0.0" />
                 <GradientStop Color="White" Offset="1.0" />
             </LinearGradientBrush>
@@ -233,7 +233,7 @@
                            MouseLeftButtonDown="SwitchToLogin"/>
                 </StackPanel>
             </Grid>
-            <Image HorizontalAlignment="Left" Height="345" Margin="405,90,0,0" VerticalAlignment="Top" Width="277" Source="/Views/log_in_icon.png" Stretch="UniformToFill"/>
+            <Image HorizontalAlignment="Left" Height="402" Margin="345,33,0,0" VerticalAlignment="Top" Width="337" Source="/Views/log_in_icon.png" Stretch="UniformToFill"/>
         </Grid>
     </Grid>
 </UserControl>

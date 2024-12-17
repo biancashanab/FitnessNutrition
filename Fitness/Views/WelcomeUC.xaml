@@ -13,8 +13,8 @@
 
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#80aaff" Offset="0.0" />
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#3366ff" Offset="0.0" />
                 <GradientStop Color="White" Offset="1.0" />
             </LinearGradientBrush>
         </Grid.Background>
@@ -30,7 +30,6 @@
                         <Image x:Name="ButtonImage" Source="/Poze/Start_btn.png"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <!-- Trigger pentru hover -->
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="ButtonImage" Property="Source" Value="/Poze/Start_btn_hover.png"/>
                         </Trigger>

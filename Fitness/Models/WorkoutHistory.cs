@@ -42,7 +42,7 @@ namespace Fitness.Models
             var newIstoric = new IstoricAntrenamente
             {
                 UserID = userId,
-                ExercitiuID = exercitiuId,
+           //     ExercitiuID = exercitiuId,
                 DataExecutie = date,
                 OraExecutie = time
             };
@@ -70,7 +70,7 @@ namespace Fitness.Models
                 history.Add(new WorkoutHistory
                 {
                     UserID = a.UserID,
-                    ExerciseID = a.ExercitiuID,
+                //  ExerciseID = a.ExercitiuID,
                     ExecutionDate = a.DataExecutie,
                     ExecutionTime = a.OraExecutie
                 });

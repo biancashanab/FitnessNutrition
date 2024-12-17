@@ -40,7 +40,7 @@ namespace Fitness.Models
             var newIstoric = new PlanAlimentarIstoric
             {
                 UserID = userId,
-                RetetaID = MealPlanID,
+         //       RetetaID = MealPlanID,
                 Data = date,
                 TipMasa = type
             };
@@ -69,7 +69,7 @@ namespace Fitness.Models
                 {
                     ID = item.ID,
                     UserID = item.UserID,
-                    MealPlanID = item.RetetaID,
+               //     MealPlanID = item.RetetaID,
                     Date = item.Data,
                     MealType = item.TipMasa
                 });

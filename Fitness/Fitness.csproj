@@ -155,9 +155,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Poze\img_contact.png" />
     <Resource Include="Poze\img_home.png" />
     <Resource Include="Poze\img_message.png" />
