@@ -20,27 +20,17 @@ namespace Fitness.Models
         {
             _context = new FitnessDBDataContext();
         }
-
-        public void AddAntrenamentSaptamanal
-            (List<AntrenamentZilnic> antrenamenteZilnice, int userID)
+        
+        public void AddAntrenamentSaptamanal(List<AntrenamentZilnic> antrenamenteZilnice, int userID)
         {
-            var antrenamentSaptamanal = new AntrenamentSaptamanal
-            {
-                DenumireAntrenamentSaptamanal = $"Antrenament Săptămânal {DateTime.Now.ToShortDateString()}",
-                DataInceput = DateTime.Now,
-                DataSfarsit = DateTime.Now.AddDays(7),
-                UserID = userID,
-                Descriere = "Antrenament săptămânal nou"
-            };
-            _context.AntrenamentSaptamanals.InsertOnSubmit(antrenamentSaptamanal);
-            _context.SubmitChanges();
-            var antrenamenteLegatura = antrenamenteZilnice.Select(antrenament => new AntrenamentSaptamanal_Zilnic
-            {
-                AntrenamentSaptamanalID = antrenamentSaptamanal.ID,
-                AntrenamentZilnicID = antrenament.ID
-            });
-            _context.AntrenamentSaptamanal_Zilnics.InsertAllOnSubmit(antrenamenteLegatura);
-            _context.SubmitChanges();
+            string nume = $"Antrenament Săptămânal {DateTime.Now.ToShortDateString()}";
+            string planurileZilniceList = string.Join(",", antrenamenteZilnice.Select(a => a.ID));
+            _context.ExecuteCommand(
+                "EXEC addPlanAlimentarSaptamanal @UserID = {0}, @Nume = {1}, @PlanurileZilniceList = {2}",
+                userID,
+                nume,
+                planurileZilniceList
+            );
         }
 
         public List<AntrenamentZilnic> GetAntrenamentSaptamanal(int userID, DateTime data)

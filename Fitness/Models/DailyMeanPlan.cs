@@ -25,22 +25,15 @@ namespace Fitness.Models
 
         public void AddPlanAlimentarZilnic(List<Retete> retete, int userID)
         {
-            var planZilnic = new PlanAlimentarZilnic
-            {
-                Data = DateTime.Now,
-                Nume = $"Plan Zilnic {DateTime.Now.ToShortDateString()}",
-                UserID = userID
-            };
-            _context.PlanAlimentarZilnics.InsertOnSubmit(planZilnic);
-            _context.SubmitChanges();
-            var retetePlan = retete.Select(reteta => new RetetePlanAlimentarZilnic
-            {
-                ReteteID = reteta.ID,
-                PlanAlimentarZilnicID = planZilnic.ID
-            });
-
-            _context.RetetePlanAlimentarZilnics.InsertAllOnSubmit(retetePlan);
-            _context.SubmitChanges();
+            var reteteList = string.Join(",", retete.Select(r => r.ID));
+            var numePlanZilnic = $"Plan Zilnic {DateTime.Now.ToShortDateString()}";
+            _context.ExecuteCommand(
+                "EXEC addPlanAlimentarZilnic @UserID = {0}, @Data = {1}, @Nume = {2}, @ReteteList = {3}",
+                userID,
+                DateTime.Now,
+                numePlanZilnic,
+                reteteList
+            );
         }
 
         public List<Retete> GetPlanAlimentarZilnic(int userID, DateTime data)

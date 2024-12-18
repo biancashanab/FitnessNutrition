@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Cryptography;
@@ -24,26 +25,18 @@ namespace Fitness.Models
             _context = new FitnessDBDataContext();
         }
 
-        public void AddPlanAlimentarSaptamanal
-            (List<PlanAlimentarZilnic> planuriZilnice, int userID)
+        public void AddPlanAlimentarSaptamanal(List<PlanAlimentarZilnic> planuriZilnice, int userID)
         {
-            var planSaptamanal = new PlanAlimentarSaptamanal
-            {
-                Nume = $"Plan Săptămânal {DateTime.Now.ToShortDateString()}",
-                UserID = userID,
-                DataInceput = DateTime.Now,
-                DataSfarsit = DateTime.Now.AddDays(7)
-            };
-            _context.PlanAlimentarSaptamanals.InsertOnSubmit(planSaptamanal);
-            _context.SubmitChanges();
-            var planuriLegatura = planuriZilnice.Select(plan => new PlanAlimentarSaptamanal_Zilnic
-            {
-                PlanAlimentarSaptamanalID = planSaptamanal.ID,
-                PlanAlimentarZilnicID = plan.ID
-            });
-            _context.PlanAlimentarSaptamanal_Zilnics.InsertAllOnSubmit(planuriLegatura);
-            _context.SubmitChanges();
+            var planurileZilniceList = string.Join(",", planuriZilnice.Select(plan => plan.ID));
+            var numePlanSaptamanal = $"Plan Săptămânal {DateTime.Now.ToShortDateString()}";
+            _context.ExecuteCommand(
+                "EXEC addPlanAlimentarSaptamanal @UserID = {0}, @Nume = {1}, @PlanurileZilniceList = {2}",
+                userID,
+                numePlanSaptamanal,
+                planurileZilniceList
+            );
         }
+
 
         public List<PlanAlimentarZilnic> GetPlanAlimentarSaptamanal(int userID, DateTime data)
         {

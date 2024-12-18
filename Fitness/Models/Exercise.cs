@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
-    internal class Exercise
+    public class Exercise : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public string ExerciseName { get; set; }
@@ -17,7 +17,7 @@ namespace Fitness.Models
         public string MuscleGroup { get; set; }
         public int Sets { get; set; }
         public string Description { get; set; }
-        public int EstimatedExecutionTime { get; set; } // Time in minutes
+        public int EstimatedExecutionTime { get; set; }
 
         public Exercise()
         {

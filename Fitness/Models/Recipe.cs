@@ -30,11 +30,11 @@ namespace Fitness.Models
 
         public Recipe GetRecipe(string name)
         {
-            var recipe = _context.Retetes.First(r => r.Nume == name);
+            var recipe = _context.Retetes.FirstOrDefault(r => r.Nume == name);
 
             if (recipe == null)
             {
-                throw new ArgumentNullException("There is no recipe with that name!");
+                return null;
             }
 
             return new Recipe
@@ -51,7 +51,7 @@ namespace Fitness.Models
             };
         }
 
-        public void AddRecipe(string name, string ingrediente,
+        public void AddRecipe(string name, string ingrediente, string tipmasa,
             int calorii, decimal carbohidrati,
             decimal proteine, decimal grasimi)
         {
@@ -62,9 +62,8 @@ namespace Fitness.Models
                 Calorii = calorii,
                 Carbohidrati = carbohidrati,
                 Proteine = proteine,
-                Grasimi = grasimi
-
-
+                Grasimi = grasimi,
+                TipMasa = tipmasa
             };
 
             _context.Retetes.InsertOnSubmit(recipe);

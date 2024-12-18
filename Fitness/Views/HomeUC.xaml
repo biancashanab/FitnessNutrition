@@ -2,10 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Fitness.Views"
+             xmlns:vm="clr-namespace:Fitness.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
+    <UserControl.DataContext>
+        <vm:HomeVM/>
+    </UserControl.DataContext>
     <Grid Margin="15,0,0,0">
         <StackPanel>
             <TextBlock Text="Discover"
@@ -103,14 +108,8 @@
                         CornerRadius="10"
                         />
                 </StackPanel>
-
-
-
-
             </StackPanel>
-
-
         </StackPanel>
-        <Border HorizontalAlignment="Left" Width="685"/>
+
     </Grid>
 </UserControl>
