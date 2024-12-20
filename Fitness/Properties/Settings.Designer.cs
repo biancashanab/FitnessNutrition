@@ -26,6 +26,17 @@ namespace Fitness.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=desktop-6oa0842\\mssqlserver01;Initial Catalog=FitnessNutritieDB;Integ" +
+            "rated Security=True;Encrypt=False;TrustServerCertificate=True")]
+        public string FitnessNutritieDBConnectionString2 {
+            get {
+                return ((string)(this["FitnessNutritieDBConnectionString2"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-6OA0842\\MSSQLSERVER01;Initial Catalog=FitnessNutritieDB;Integ" +
             "rated Security=True;Encrypt=True;TrustServerCertificate=True")]
         public string FitnessNutritieDBConnectionString {
@@ -38,7 +49,7 @@ namespace Fitness.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SPIRIDUSUL;Initial Catalog=FitnessNutritieDB;Integrated Security=True" +
-            ";Encrypt=True;TrustServerCertificate=True")]
+            ";Encrypt=False;TrustServerCertificate=False;")]
         public string FitnessNutritieDBConnectionString1 {
             get {
                 return ((string)(this["FitnessNutritieDBConnectionString1"]));
@@ -48,11 +59,11 @@ namespace Fitness.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=desktop-6oa0842\\mssqlserver01;Initial Catalog=FitnessNutritieDB;Integ" +
-            "rated Security=True;Encrypt=False;TrustServerCertificate=True")]
-        public string FitnessNutritieDBConnectionString2 {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SPIRIDUSUL;Initial Catalog=FitnessNutritieDB;Integrated Security=True" +
+            ";TrustServerCertificate=True")]
+        public string FitnessNutritieDBConnectionString3 {
             get {
-                return ((string)(this["FitnessNutritieDBConnectionString2"]));
+                return ((string)(this["FitnessNutritieDBConnectionString3"]));
             }
         }
     }

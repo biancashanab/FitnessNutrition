@@ -29,13 +29,22 @@ namespace Fitness
 
 
             var wv = new WeeklyWorkout();
-            
-            if(wv.getSize() < 2)
+
+            if (wv.getSize() < 2)
             {
                 wv.CreareAntrenamentSaptamanal(3, 30, 1);
                 wv.CreareAntrenamentSaptamanal(6, 100, 1);
             }
-            //ExecuteFitnessWorkflow();
+
+            var wp = new WeeklyMealPlan();
+
+            if (wp.getSize() < 2)
+            {
+                wp.CrearePlanAlimentarSaptamanal(1500, 1);
+                wp.CrearePlanAlimentarSaptamanal(3000, 1);
+
+            }
+
         }
 
         private void LoadWelcomeScreen()

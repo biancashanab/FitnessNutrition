@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection.Emit;
@@ -25,16 +26,52 @@ namespace Fitness.Models
             _context = new FitnessDBDataContext();
         }
 
+        public static DateTime GetDateForDayInCurrentWeek(int dayOfWeek)
+        {
+            if (dayOfWeek < 0 || dayOfWeek > 6)
+            {
+                throw new ArgumentOutOfRangeException(nameof(dayOfWeek), "dayOfWeek must be between 0 (Monday) and 6 (Sunday).");
+            }
+            DateTime today = DateTime.Today;
+            int currentDayOfWeek = ((int)today.DayOfWeek + 6) % 7;
+            int daysDifference = dayOfWeek - currentDayOfWeek;
+            return today.AddDays(daysDifference);
+        }
+
+        public void CrearePlanAlimentarSaptamanal(int nrCalorii, int userID)
+        {
+            var p = new DailyMealPlan();
+            var planuriZilnice = new List<PlanAlimentarZilnic>();
+            for (int i = 0; i < 7; ++i)
+            {
+                var dailyMealPlan = p.AddPlanAlimentarZilnic(userID, nrCalorii, GetDateForDayInCurrentWeek(i));
+                planuriZilnice.Add(dailyMealPlan);
+            }
+            AddPlanAlimentarSaptamanal(planuriZilnice, userID);
+
+        }
+
         public void AddPlanAlimentarSaptamanal(List<PlanAlimentarZilnic> planuriZilnice, int userID)
         {
-            var planurileZilniceList = string.Join(",", planuriZilnice.Select(plan => plan.ID));
-            var numePlanSaptamanal = $"Plan Săptămânal {DateTime.Now.ToShortDateString()}";
-            _context.ExecuteCommand(
-                "EXEC addPlanAlimentarSaptamanal @UserID = {0}, @Nume = {1}, @PlanurileZilniceList = {2}",
-                userID,
-                numePlanSaptamanal,
-                planurileZilniceList
-            );
+            var nume = "Antrenament Săptămânal";
+            var planAlimentarSaptamanal = new PlanAlimentarSaptamanal
+            {
+                UserID = userID,
+                DataInceput = WeeklyWorkout.ClosestMondayFromPast(DateTime.Now),
+                DataSfarsit = WeeklyWorkout.ClosestSundayFromFuture(DateTime.Now),
+                Nume = nume,
+                PlanAlimentarSaptamanal_Zilnics = new EntitySet<PlanAlimentarSaptamanal_Zilnic>()
+            };
+            foreach (var planAlimentarZilnic in planuriZilnice)
+            {
+                planAlimentarSaptamanal.PlanAlimentarSaptamanal_Zilnics.Add(new PlanAlimentarSaptamanal_Zilnic
+                {
+                    PlanAlimentarZilnicID = planAlimentarZilnic.ID,
+                    PlanAlimentarSaptamanalID = planAlimentarSaptamanal.ID
+                });
+            }
+            _context.PlanAlimentarSaptamanals.InsertOnSubmit(planAlimentarSaptamanal);
+            _context.SubmitChanges();
         }
 
 
@@ -50,6 +87,11 @@ namespace Fitness.Models
                             && paz.Data >= data
                             && paz.Data <= endDate
                         select paz).ToList();
+        }
+
+        public int getSize()
+        {
+            return _context.PlanAlimentarSaptamanals.Count();
         }
 
     }

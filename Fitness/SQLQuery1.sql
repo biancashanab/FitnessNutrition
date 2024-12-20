@@ -289,7 +289,7 @@ VALUES
 ('Ramat cu gantere', 12, 'pull', 3, 'Exercitiu pentru dezvoltarea spatelui', 9),
 ('Indreptari cu bara', 8, 'pull', 4, 'Exercitiu pentru spate si hamstrings', 12),
 ('Flexii pentru biceps cu gantere', 12, 'pull', 3, 'Exercitiu pentru biceps si antebrat', 6),
-('Genuflexiuni cu greutati', 15, 'legs', 4, 'Exercitiu complet pentru coapse si fesieri', 10),d
+('Genuflexiuni cu greutati', 15, 'legs', 4, 'Exercitiu complet pentru coapse si fesieri', 10),
 ('Fandari cu gantere', 12, 'legs', 4, 'Exercitiu pentru picioare si fesieri', 8),
 ('Presa picioare', 15, 'legs', 4, 'Exercitiu pentru dezvoltarea muschilor picioarelor', 10),
 ('Indreptari romanesti', 10, 'legs', 3, 'Exercitiu pentru hamstrings si fesieri', 9),
@@ -509,9 +509,16 @@ DELETE AntrenamentSaptamanal_Zilnic;
 DELETE AntrenamentSaptamanal
 DELETE ExercitiiAntrenamentZilnic;
 DELETE AntrenamentZilnic;
+DELETE PlanAlimentarSaptamanal_Zilnic;
+DELETE PlanAlimentarSaptamanal;
+DELETE RetetePlanAlimentarZilnic;
+DELETE PlanAlimentarZilnic;
+
 
 SELECT * FROM AntrenamentZilnic;
 select * from AntrenamentSaptamanal;
+select * from PlanAlimentarZilnic;
+select * from PlanAlimentarSaptamanal;
 
 SELECT
     asw.ID AS AntrenamentSaptamanalID,
@@ -527,7 +534,7 @@ INNER JOIN AntrenamentSaptamanal asw ON asz.AntrenamentSaptamanalID = asw.ID
 INNER JOIN AntrenamentZilnic az ON asz.AntrenamentZilnicID = az.ID
 LEFT JOIN ExercitiiAntrenamentZilnic eaz ON az.ID = eaz.AntrenamentZilnicID
 LEFT JOIN Exercitii ex ON eaz.ExercitiuID = ex.ID
-WHERE asw.ID >= 26;
+WHERE asw.ID > 0;
 
 SELECT 
     u.Name,

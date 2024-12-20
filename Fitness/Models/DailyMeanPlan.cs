@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,17 +24,87 @@ namespace Fitness.Models
             _context = new FitnessDBDataContext();
         }
 
-        public void AddPlanAlimentarZilnic(List<Retete> retete, int userID)
+        public List<Retete>CrearePlanAlimentarZilnic(int numarCalorii, int userID, DateTime data)
         {
-            var reteteList = string.Join(",", retete.Select(r => r.ID));
-            var numePlanZilnic = $"Plan Zilnic {DateTime.Now.ToShortDateString()}";
-            _context.ExecuteCommand(
-                "EXEC addPlanAlimentarZilnic @UserID = {0}, @Data = {1}, @Nume = {2}, @ReteteList = {3}",
-                userID,
-                DateTime.Now,
-                numePlanZilnic,
-                reteteList
-            );
+            List<Retete> mealPlan = new List<Retete>();
+            int calorii_totale = 0;
+            const int eroare_acceptata = 0;
+
+            try
+            {
+                do
+                {
+                    calorii_totale = 0;
+                    mealPlan.Clear();
+                    var breakfastOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Mic Dejun" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var breakfast = breakfastOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (breakfast != null)
+                    {
+                        mealPlan.Add(breakfast);
+                        calorii_totale += breakfast.Calorii;
+                    }
+
+                    var lunchOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Pranz" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var lunch = lunchOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (lunch != null)
+                    {
+                        mealPlan.Add(lunch);
+                        calorii_totale += lunch.Calorii;
+                    }
+
+                    var dinnerOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Cina" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var dinner = dinnerOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+                    if (dinner != null)
+                    {
+                        mealPlan.Add(dinner);
+                        calorii_totale += dinner.Calorii;
+                    }
+
+                    var gustareOptions = _context.Retetes
+                        .Where(r => r.TipMasa == "Gustare" && r.Calorii <= numarCalorii)
+                        .ToList();
+                    var gustrae = gustareOptions.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+
+                } while (Math.Abs(calorii_totale - numarCalorii) > eroare_acceptata);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Exception occurred: {ex.Message}");
+                Console.WriteLine("[ERROR] Stack Trace:");
+                Console.WriteLine(ex.StackTrace);
+            }
+
+            return mealPlan;
+        }
+            
+        public PlanAlimentarZilnic AddPlanAlimentarZilnic(int userID, int numarCalorii, DateTime data)
+        {
+            var reteteList = CrearePlanAlimentarZilnic(numarCalorii, 1, data);
+            var numePlanZilnic = $"Plan Zilnic {data}";
+            var planAlimentar = new PlanAlimentarZilnic
+            {
+                UserID = userID,
+                Data = data,
+                Nume = numePlanZilnic
+            };
+            _context.PlanAlimentarZilnics.InsertOnSubmit(planAlimentar);
+            _context.SubmitChanges();
+
+            var retetePlanAlimentarZilnic = reteteList.Select(reteta => new RetetePlanAlimentarZilnic
+            {
+                PlanAlimentarZilnicID = planAlimentar.ID,
+                ReteteID = reteta.ID
+            }).ToList();
+
+            _context.RetetePlanAlimentarZilnics.InsertAllOnSubmit(retetePlanAlimentarZilnic);
+            _context.SubmitChanges();
+            return planAlimentar;
         }
 
         public List<Retete> GetPlanAlimentarZilnic(int userID, DateTime data)
@@ -50,6 +121,13 @@ namespace Fitness.Models
                     (retId, ret) => ret)
                 .ToList();
         }
-
+        public PlanAlimentarZilnic GetPlanAlimentarByDate(int userID, DateTime data)
+        {
+            var pln = (PlanAlimentarZilnic)_context.PlanAlimentarZilnics.FirstOrDefault(az => az.UserID == userID && az.Data == data.Date);
+            if (pln != null)
+                return pln;
+            else
+                return null;
+        }
     }
 }

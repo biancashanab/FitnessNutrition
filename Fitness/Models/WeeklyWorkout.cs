@@ -27,13 +27,13 @@ namespace Fitness.Models
             _context = new FitnessDBDataContext();
         }
 
-        public DateTime ClosestMondayFromPast(DateTime currentDate)
+        public static DateTime ClosestMondayFromPast(DateTime currentDate)
         {
             int daysSinceMonday = (7 + (currentDate.DayOfWeek - DayOfWeek.Monday)) % 7;
             return currentDate.AddDays(-daysSinceMonday);
         }
 
-        public DateTime ClosestSundayFromFuture(DateTime currentDate)
+        public static DateTime ClosestSundayFromFuture(DateTime currentDate)
         {
             int daysUntilSunday = (7 - (currentDate.DayOfWeek - DayOfWeek.Sunday)) % 7;
             return currentDate.AddDays(daysUntilSunday);
