@@ -22,20 +22,57 @@ namespace Fitness.Models
         private readonly FitnessDBDataContext _context;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void AddAntrenamentZilnic(List<Exercitii> exercitii, int userID)
+        public List<Exercitii> CreareAntrenamentZilnic(string grupaMusculara, int timpMaxim)
         {
-            var exercitiiList = string.Join(",", exercitii.Select(e => e.ID));
-            var denumireAntrenament = $"Antrenament {DateTime.Now.ToShortDateString()}";
-            var descriere = "Antrenament nou";
-            _context.ExecuteCommand(
-                "EXEC addAntrenamentZilnic @UserID = {0}, @Data = {1}, @DenumireAntrenament = {2}, @Descriere = {3}, @ExercitiiList = {4}",
-                userID,
-                DateTime.Now,
-                denumireAntrenament,
-                descriere,
-                exercitiiList
-            );
+            var exercitii = _context.Exercitiis
+                .Where(e => e.GrupaMusculara == grupaMusculara)
+                .OrderBy(x => Guid.NewGuid())
+                .ToList();
+
+            var workoutPlan = new List<Exercitii>();
+            int totalTimpEstimare = 0;
+
+            foreach (var exercitiu in exercitii)
+            {
+                if (totalTimpEstimare + exercitiu.TimpEstimareExecutie > timpMaxim)
+                {
+                    break;
+                }
+
+                workoutPlan.Add(exercitiu);
+                totalTimpEstimare += exercitiu.TimpEstimareExecutie.GetValueOrDefault();
+            }
+            return workoutPlan;
         }
+
+
+        public AntrenamentZilnic AddAntrenamentZilnic(int userID, DateTime day, string grupaMusculara, int timpMaxim)
+        {
+            var denumireAntrenament = $"Antrenament {day}";
+            var descriere = "Antrenament";
+            var exercitii = CreareAntrenamentZilnic(grupaMusculara, timpMaxim);
+            var antrenamentZilnic = new AntrenamentZilnic
+            {
+                UserID = userID,
+                Data = day,
+                DenumireAntrenament = denumireAntrenament,
+                Descriere = descriere,
+            };
+            _context.AntrenamentZilnics.InsertOnSubmit(antrenamentZilnic);
+            _context.SubmitChanges();
+            var exercitiiAntrenamentZilnic = exercitii.Select(exercitiu => new ExercitiiAntrenamentZilnic
+            {
+                AntrenamentZilnicID = antrenamentZilnic.ID,
+                ExercitiuID = exercitiu.ID
+            }).ToList();
+
+            _context.ExercitiiAntrenamentZilnics.InsertAllOnSubmit(exercitiiAntrenamentZilnic);
+            _context.SubmitChanges();
+
+            return antrenamentZilnic;
+        }
+
+
 
         public List<Exercitii> GetAntrenamentZilnic(int userID, DateTime data)
         {
@@ -52,5 +89,13 @@ namespace Fitness.Models
                 .ToList();
         }
        
+        public AntrenamentZilnic GetAntrenamentZilnicByDate(int userID, DateTime data)
+        {
+            var ant =  (AntrenamentZilnic)_context.AntrenamentZilnics.FirstOrDefault(az => az.UserID == userID && az.Data.Value.Date == data.Date);
+            if (ant != null)
+                return ant;
+            else
+                return null;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-CREATE TABLE Utilizatori (
+﻿CREATE TABLE Utilizatori (
     ID INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(100) NOT NULL,
     HashedPassword NVARCHAR(255) NOT NULL,
@@ -290,7 +289,7 @@ VALUES
 ('Ramat cu gantere', 12, 'pull', 3, 'Exercitiu pentru dezvoltarea spatelui', 9),
 ('Indreptari cu bara', 8, 'pull', 4, 'Exercitiu pentru spate si hamstrings', 12),
 ('Flexii pentru biceps cu gantere', 12, 'pull', 3, 'Exercitiu pentru biceps si antebrat', 6),
-('Genuflexiuni cu greutati', 15, 'legs', 4, 'Exercitiu complet pentru coapse si fesieri', 10),
+('Genuflexiuni cu greutati', 15, 'legs', 4, 'Exercitiu complet pentru coapse si fesieri', 10),d
 ('Fandari cu gantere', 12, 'legs', 4, 'Exercitiu pentru picioare si fesieri', 8),
 ('Presa picioare', 15, 'legs', 4, 'Exercitiu pentru dezvoltarea muschilor picioarelor', 10),
 ('Indreptari romanesti', 10, 'legs', 3, 'Exercitiu pentru hamstrings si fesieri', 9),
@@ -493,6 +492,7 @@ JOIN RetetePlanAlimentarZilnic rpaz ON paz.ID = rpaz.PlanAlimentarZilnicID
 JOIN Retete r ON rpaz.ReteteID = r.ID
 WHERE pas.UserID = 1;
 
+
 SELECT 
     az.DenumireAntrenament,
     az.Data,
@@ -505,18 +505,29 @@ JOIN Exercitii e ON eaz.ExercitiuID = e.ID
 WHERE az.UserID = 1
 ORDER BY az.Data;
 
-SELECT 
-    asap.DenumireAntrenamentSaptamanal,
-    az.DenumireAntrenament,
-    az.Data,
-    e.DenumireExercitiu
-FROM AntrenamentSaptamanal asap
-JOIN AntrenamentSaptamanal_Zilnic asz ON asap.ID = asz.AntrenamentSaptamanalID
-JOIN AntrenamentZilnic az ON asz.AntrenamentZilnicID = az.ID
-JOIN ExercitiiAntrenamentZilnic eaz ON az.ID = eaz.AntrenamentZilnicID
-JOIN Exercitii e ON eaz.ExercitiuID = e.ID
-WHERE asap.UserID = 1
-ORDER BY az.Data;
+DELETE AntrenamentSaptamanal_Zilnic;
+DELETE AntrenamentSaptamanal
+DELETE ExercitiiAntrenamentZilnic;
+DELETE AntrenamentZilnic;
+
+SELECT * FROM AntrenamentZilnic;
+select * from AntrenamentSaptamanal;
+
+SELECT
+    asw.ID AS AntrenamentSaptamanalID,
+    asw.DenumireAntrenamentSaptamanal,
+    asw.DataInceput,
+    asw.DataSfarsit,
+    az.DenumireAntrenament AS AntrenamentZilnicDenumire,
+    az.Data AS AntrenamentZilnicData,
+    ex.ID AS ExercitiuID,
+    ex.DenumireExercitiu AS ExercitiuNume
+FROM AntrenamentSaptamanal_Zilnic asz
+INNER JOIN AntrenamentSaptamanal asw ON asz.AntrenamentSaptamanalID = asw.ID
+INNER JOIN AntrenamentZilnic az ON asz.AntrenamentZilnicID = az.ID
+LEFT JOIN ExercitiiAntrenamentZilnic eaz ON az.ID = eaz.AntrenamentZilnicID
+LEFT JOIN Exercitii ex ON eaz.ExercitiuID = ex.ID
+WHERE asw.ID >= 26;
 
 SELECT 
     u.Name,

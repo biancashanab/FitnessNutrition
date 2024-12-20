@@ -54,12 +54,12 @@ namespace Fitness
     partial void InsertPlanAlimentarSaptamanal_Zilnic(PlanAlimentarSaptamanal_Zilnic instance);
     partial void UpdatePlanAlimentarSaptamanal_Zilnic(PlanAlimentarSaptamanal_Zilnic instance);
     partial void DeletePlanAlimentarSaptamanal_Zilnic(PlanAlimentarSaptamanal_Zilnic instance);
-    partial void InsertPlanAlimentarZilnic(PlanAlimentarZilnic instance);
-    partial void UpdatePlanAlimentarZilnic(PlanAlimentarZilnic instance);
-    partial void DeletePlanAlimentarZilnic(PlanAlimentarZilnic instance);
     partial void InsertRetete(Retete instance);
     partial void UpdateRetete(Retete instance);
     partial void DeleteRetete(Retete instance);
+    partial void InsertPlanAlimentarZilnic(PlanAlimentarZilnic instance);
+    partial void UpdatePlanAlimentarZilnic(PlanAlimentarZilnic instance);
+    partial void DeletePlanAlimentarZilnic(PlanAlimentarZilnic instance);
     partial void InsertRetetePlanAlimentarZilnic(RetetePlanAlimentarZilnic instance);
     partial void UpdateRetetePlanAlimentarZilnic(RetetePlanAlimentarZilnic instance);
     partial void DeleteRetetePlanAlimentarZilnic(RetetePlanAlimentarZilnic instance);
@@ -69,7 +69,7 @@ namespace Fitness
     #endregion
 		
 		public FitnessDBDataContext() : 
-				base(global::Fitness.Properties.Settings.Default.FitnessNutritieDBConnectionString1, mappingSource)
+				base(global::Fitness.Properties.Settings.Default.FitnessNutritieDBConnectionString2, mappingSource)
 		{
 			OnCreated();
 		}
@@ -162,19 +162,19 @@ namespace Fitness
 			}
 		}
 		
-		public System.Data.Linq.Table<PlanAlimentarZilnic> PlanAlimentarZilnics
-		{
-			get
-			{
-				return this.GetTable<PlanAlimentarZilnic>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Retete> Retetes
 		{
 			get
 			{
 				return this.GetTable<Retete>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PlanAlimentarZilnic> PlanAlimentarZilnics
+		{
+			get
+			{
+				return this.GetTable<PlanAlimentarZilnic>();
 			}
 		}
 		
@@ -192,34 +192,6 @@ namespace Fitness
 			{
 				return this.GetTable<Utilizatori>();
 			}
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.addAntrenamentSaptamanal")]
-		public int addAntrenamentSaptamanal([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DenumireAntrenamentSaptamanal", DbType="NVarChar(100)")] string denumireAntrenamentSaptamanal, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Descriere", DbType="NVarChar(255)")] string descriere, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DataInceput", DbType="Date")] System.Nullable<System.DateTime> dataInceput, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DataSfarsit", DbType="Date")] System.Nullable<System.DateTime> dataSfarsit, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="AntrenamenteZilniceList", DbType="NVarChar(MAX)")] string antrenamenteZilniceList)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, denumireAntrenamentSaptamanal, descriere, dataInceput, dataSfarsit, antrenamenteZilniceList);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.addAntrenamentZilnic")]
-		public int addAntrenamentZilnic([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Data", DbType="Date")] System.Nullable<System.DateTime> data, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DenumireAntrenament", DbType="NVarChar(100)")] string denumireAntrenament, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Descriere", DbType="NVarChar(255)")] string descriere, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ExercitiiList", DbType="NVarChar(MAX)")] string exercitiiList)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, data, denumireAntrenament, descriere, exercitiiList);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.addPlanAlimentarSaptamanal")]
-		public int addPlanAlimentarSaptamanal([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nume", DbType="NVarChar(100)")] string nume, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="PlanurileZilniceList", DbType="NVarChar(MAX)")] string planurileZilniceList)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, nume, planurileZilniceList);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.addPlanAlimentarZilnic")]
-		public int addPlanAlimentarZilnic([global::System.Data.Linq.Mapping.ParameterAttribute(Name="UserID", DbType="Int")] System.Nullable<int> userID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Data", DbType="Date")] System.Nullable<System.DateTime> data, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nume", DbType="NVarChar(100)")] string nume, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ReteteList", DbType="NVarChar(MAX)")] string reteteList)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), userID, data, nume, reteteList);
-			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -1869,237 +1841,6 @@ namespace Fitness
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlanAlimentarZilnic")]
-	public partial class PlanAlimentarZilnic : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.DateTime _Data;
-		
-		private string _Nume;
-		
-		private int _UserID;
-		
-		private EntitySet<PlanAlimentarSaptamanal_Zilnic> _PlanAlimentarSaptamanal_Zilnics;
-		
-		private EntitySet<RetetePlanAlimentarZilnic> _RetetePlanAlimentarZilnics;
-		
-		private EntityRef<Utilizatori> _Utilizatori;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnDataChanging(System.DateTime value);
-    partial void OnDataChanged();
-    partial void OnNumeChanging(string value);
-    partial void OnNumeChanged();
-    partial void OnUserIDChanging(int value);
-    partial void OnUserIDChanged();
-    #endregion
-		
-		public PlanAlimentarZilnic()
-		{
-			this._PlanAlimentarSaptamanal_Zilnics = new EntitySet<PlanAlimentarSaptamanal_Zilnic>(new Action<PlanAlimentarSaptamanal_Zilnic>(this.attach_PlanAlimentarSaptamanal_Zilnics), new Action<PlanAlimentarSaptamanal_Zilnic>(this.detach_PlanAlimentarSaptamanal_Zilnics));
-			this._RetetePlanAlimentarZilnics = new EntitySet<RetetePlanAlimentarZilnic>(new Action<RetetePlanAlimentarZilnic>(this.attach_RetetePlanAlimentarZilnics), new Action<RetetePlanAlimentarZilnic>(this.detach_RetetePlanAlimentarZilnics));
-			this._Utilizatori = default(EntityRef<Utilizatori>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Date NOT NULL")]
-		public System.DateTime Data
-		{
-			get
-			{
-				return this._Data;
-			}
-			set
-			{
-				if ((this._Data != value))
-				{
-					this.OnDataChanging(value);
-					this.SendPropertyChanging();
-					this._Data = value;
-					this.SendPropertyChanged("Data");
-					this.OnDataChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nume", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string Nume
-		{
-			get
-			{
-				return this._Nume;
-			}
-			set
-			{
-				if ((this._Nume != value))
-				{
-					this.OnNumeChanging(value);
-					this.SendPropertyChanging();
-					this._Nume = value;
-					this.SendPropertyChanged("Nume");
-					this.OnNumeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
-		public int UserID
-		{
-			get
-			{
-				return this._UserID;
-			}
-			set
-			{
-				if ((this._UserID != value))
-				{
-					if (this._Utilizatori.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._UserID = value;
-					this.SendPropertyChanged("UserID");
-					this.OnUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic", Storage="_PlanAlimentarSaptamanal_Zilnics", ThisKey="ID", OtherKey="PlanAlimentarZilnicID")]
-		public EntitySet<PlanAlimentarSaptamanal_Zilnic> PlanAlimentarSaptamanal_Zilnics
-		{
-			get
-			{
-				return this._PlanAlimentarSaptamanal_Zilnics;
-			}
-			set
-			{
-				this._PlanAlimentarSaptamanal_Zilnics.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlanAlimentarZilnic_RetetePlanAlimentarZilnic", Storage="_RetetePlanAlimentarZilnics", ThisKey="ID", OtherKey="PlanAlimentarZilnicID")]
-		public EntitySet<RetetePlanAlimentarZilnic> RetetePlanAlimentarZilnics
-		{
-			get
-			{
-				return this._RetetePlanAlimentarZilnics;
-			}
-			set
-			{
-				this._RetetePlanAlimentarZilnics.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Utilizatori_PlanAlimentarZilnic", Storage="_Utilizatori", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
-		public Utilizatori Utilizatori
-		{
-			get
-			{
-				return this._Utilizatori.Entity;
-			}
-			set
-			{
-				Utilizatori previousValue = this._Utilizatori.Entity;
-				if (((previousValue != value) 
-							|| (this._Utilizatori.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Utilizatori.Entity = null;
-						previousValue.PlanAlimentarZilnics.Remove(this);
-					}
-					this._Utilizatori.Entity = value;
-					if ((value != null))
-					{
-						value.PlanAlimentarZilnics.Add(this);
-						this._UserID = value.ID;
-					}
-					else
-					{
-						this._UserID = default(int);
-					}
-					this.SendPropertyChanged("Utilizatori");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_PlanAlimentarSaptamanal_Zilnics(PlanAlimentarSaptamanal_Zilnic entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlanAlimentarZilnic = this;
-		}
-		
-		private void detach_PlanAlimentarSaptamanal_Zilnics(PlanAlimentarSaptamanal_Zilnic entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlanAlimentarZilnic = null;
-		}
-		
-		private void attach_RetetePlanAlimentarZilnics(RetetePlanAlimentarZilnic entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlanAlimentarZilnic = this;
-		}
-		
-		private void detach_RetetePlanAlimentarZilnics(RetetePlanAlimentarZilnic entity)
-		{
-			this.SendPropertyChanging();
-			entity.PlanAlimentarZilnic = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Retete")]
 	public partial class Retete : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2355,6 +2096,237 @@ namespace Fitness
 		{
 			this.SendPropertyChanging();
 			entity.Retete = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlanAlimentarZilnic")]
+	public partial class PlanAlimentarZilnic : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.DateTime _Data;
+		
+		private string _Nume;
+		
+		private int _UserID;
+		
+		private EntitySet<PlanAlimentarSaptamanal_Zilnic> _PlanAlimentarSaptamanal_Zilnics;
+		
+		private EntitySet<RetetePlanAlimentarZilnic> _RetetePlanAlimentarZilnics;
+		
+		private EntityRef<Utilizatori> _Utilizatori;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnDataChanging(System.DateTime value);
+    partial void OnDataChanged();
+    partial void OnNumeChanging(string value);
+    partial void OnNumeChanged();
+    partial void OnUserIDChanging(int value);
+    partial void OnUserIDChanged();
+    #endregion
+		
+		public PlanAlimentarZilnic()
+		{
+			this._PlanAlimentarSaptamanal_Zilnics = new EntitySet<PlanAlimentarSaptamanal_Zilnic>(new Action<PlanAlimentarSaptamanal_Zilnic>(this.attach_PlanAlimentarSaptamanal_Zilnics), new Action<PlanAlimentarSaptamanal_Zilnic>(this.detach_PlanAlimentarSaptamanal_Zilnics));
+			this._RetetePlanAlimentarZilnics = new EntitySet<RetetePlanAlimentarZilnic>(new Action<RetetePlanAlimentarZilnic>(this.attach_RetetePlanAlimentarZilnics), new Action<RetetePlanAlimentarZilnic>(this.detach_RetetePlanAlimentarZilnics));
+			this._Utilizatori = default(EntityRef<Utilizatori>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Data", DbType="Date NOT NULL")]
+		public System.DateTime Data
+		{
+			get
+			{
+				return this._Data;
+			}
+			set
+			{
+				if ((this._Data != value))
+				{
+					this.OnDataChanging(value);
+					this.SendPropertyChanging();
+					this._Data = value;
+					this.SendPropertyChanged("Data");
+					this.OnDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nume", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string Nume
+		{
+			get
+			{
+				return this._Nume;
+			}
+			set
+			{
+				if ((this._Nume != value))
+				{
+					this.OnNumeChanging(value);
+					this.SendPropertyChanging();
+					this._Nume = value;
+					this.SendPropertyChanged("Nume");
+					this.OnNumeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
+		public int UserID
+		{
+			get
+			{
+				return this._UserID;
+			}
+			set
+			{
+				if ((this._UserID != value))
+				{
+					if (this._Utilizatori.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._UserID = value;
+					this.SendPropertyChanged("UserID");
+					this.OnUserIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic", Storage="_PlanAlimentarSaptamanal_Zilnics", ThisKey="ID", OtherKey="PlanAlimentarZilnicID")]
+		public EntitySet<PlanAlimentarSaptamanal_Zilnic> PlanAlimentarSaptamanal_Zilnics
+		{
+			get
+			{
+				return this._PlanAlimentarSaptamanal_Zilnics;
+			}
+			set
+			{
+				this._PlanAlimentarSaptamanal_Zilnics.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlanAlimentarZilnic_RetetePlanAlimentarZilnic", Storage="_RetetePlanAlimentarZilnics", ThisKey="ID", OtherKey="PlanAlimentarZilnicID")]
+		public EntitySet<RetetePlanAlimentarZilnic> RetetePlanAlimentarZilnics
+		{
+			get
+			{
+				return this._RetetePlanAlimentarZilnics;
+			}
+			set
+			{
+				this._RetetePlanAlimentarZilnics.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Utilizatori_PlanAlimentarZilnic", Storage="_Utilizatori", ThisKey="UserID", OtherKey="ID", IsForeignKey=true)]
+		public Utilizatori Utilizatori
+		{
+			get
+			{
+				return this._Utilizatori.Entity;
+			}
+			set
+			{
+				Utilizatori previousValue = this._Utilizatori.Entity;
+				if (((previousValue != value) 
+							|| (this._Utilizatori.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Utilizatori.Entity = null;
+						previousValue.PlanAlimentarZilnics.Remove(this);
+					}
+					this._Utilizatori.Entity = value;
+					if ((value != null))
+					{
+						value.PlanAlimentarZilnics.Add(this);
+						this._UserID = value.ID;
+					}
+					else
+					{
+						this._UserID = default(int);
+					}
+					this.SendPropertyChanged("Utilizatori");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PlanAlimentarSaptamanal_Zilnics(PlanAlimentarSaptamanal_Zilnic entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlanAlimentarZilnic = this;
+		}
+		
+		private void detach_PlanAlimentarSaptamanal_Zilnics(PlanAlimentarSaptamanal_Zilnic entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlanAlimentarZilnic = null;
+		}
+		
+		private void attach_RetetePlanAlimentarZilnics(RetetePlanAlimentarZilnic entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlanAlimentarZilnic = this;
+		}
+		
+		private void detach_RetetePlanAlimentarZilnics(RetetePlanAlimentarZilnic entity)
+		{
+			this.SendPropertyChanging();
+			entity.PlanAlimentarZilnic = null;
 		}
 	}
 	

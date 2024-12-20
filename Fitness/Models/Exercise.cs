@@ -94,5 +94,14 @@ namespace Fitness.Models
                 Console.WriteLine($"Eroare la stergerea exercitiului: {ex.Message}");
             }
         }
+
+        public List<Exercitii> GetExercisesForDay(int day)
+        {
+            var random = new Random();
+            var allExercises = _context.Exercitiis.ToList();
+            var randomExercises = allExercises.OrderBy(x => random.Next()).Take(5).ToList();
+
+            return randomExercises;
+        }
     }
 }

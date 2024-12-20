@@ -26,6 +26,15 @@ namespace Fitness
 
             InitializeComponent();
             LoadWelcomeScreen();
+
+
+            var wv = new WeeklyWorkout();
+            
+            if(wv.getSize() < 2)
+            {
+                wv.CreareAntrenamentSaptamanal(3, 30, 1);
+                wv.CreareAntrenamentSaptamanal(6, 100, 1);
+            }
             //ExecuteFitnessWorkflow();
         }
 
@@ -33,29 +42,19 @@ namespace Fitness
         {
             MainContent.Content = new WelcomeUC();
         }
+
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ButtonState == MouseButtonState.Pressed)
                 this.DragMove();
         }
 
-        void ExecuteFitnessWorkflow()
-        {
-            WeeklyWorkout weeklyWorkout = new WeeklyWorkout();
-                var dailyWorkout = new DailyWorkout();
-                var exercitii = new List<Exercitii>();
-                exercitii.Add(new Exercitii { ID = 1 });
-                int userID = 1;
-                dailyWorkout.AddAntrenamentZilnic(exercitii, userID);
-            List<AntrenamentZilnic> antrenamenteZilnice = new List<AntrenamentZilnic>();
-            antrenamenteZilnice.Add(new AntrenamentZilnic { ID = 1 });
-            weeklyWorkout.AddAntrenamentSaptamanal(antrenamenteZilnice, userID);
-            Console.WriteLine("Antrenament Săptămânal added successfully.");
-        }
+      
 
     }
 

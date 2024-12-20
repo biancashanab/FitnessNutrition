@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="FitnessNutritieDB" Class="FitnessDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=SPIRIDUSUL;Initial Catalog=FitnessNutritieDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Fitness.Properties.Settings" SettingsPropertyName="FitnessNutritieDBConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=desktop-6oa0842\mssqlserver01;Initial Catalog=FitnessNutritieDB;Integrated Security=True;Encrypt=False;Trust Server Certificate=True" SettingsObjectName="Fitness.Properties.Settings" SettingsPropertyName="FitnessNutritieDBConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AntrenamentSaptamanal" Member="AntrenamentSaptamanals">
     <Type Name="AntrenamentSaptamanal">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -80,17 +80,6 @@
       <Association Name="PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic" Member="PlanAlimentarZilnic" ThisKey="PlanAlimentarZilnicID" OtherKey="ID" Type="PlanAlimentarZilnic" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PlanAlimentarZilnic" Member="PlanAlimentarZilnics">
-    <Type Name="PlanAlimentarZilnic">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="Nume" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic" Member="PlanAlimentarSaptamanal_Zilnics" ThisKey="ID" OtherKey="PlanAlimentarZilnicID" Type="PlanAlimentarSaptamanal_Zilnic" />
-      <Association Name="PlanAlimentarZilnic_RetetePlanAlimentarZilnic" Member="RetetePlanAlimentarZilnics" ThisKey="ID" OtherKey="PlanAlimentarZilnicID" Type="RetetePlanAlimentarZilnic" />
-      <Association Name="Utilizatori_PlanAlimentarZilnic" Member="Utilizatori" ThisKey="UserID" OtherKey="ID" Type="Utilizatori" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Retete" Member="Retetes">
     <Type Name="Retete">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -102,6 +91,17 @@
       <Column Name="Ingrediente" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="TipMasa" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Association Name="Retete_RetetePlanAlimentarZilnic" Member="RetetePlanAlimentarZilnics" ThisKey="ID" OtherKey="ReteteID" Type="RetetePlanAlimentarZilnic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlanAlimentarZilnic" Member="PlanAlimentarZilnics">
+    <Type Name="PlanAlimentarZilnic">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Nume" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PlanAlimentarZilnic_PlanAlimentarSaptamanal_Zilnic" Member="PlanAlimentarSaptamanal_Zilnics" ThisKey="ID" OtherKey="PlanAlimentarZilnicID" Type="PlanAlimentarSaptamanal_Zilnic" />
+      <Association Name="PlanAlimentarZilnic_RetetePlanAlimentarZilnic" Member="RetetePlanAlimentarZilnics" ThisKey="ID" OtherKey="PlanAlimentarZilnicID" Type="RetetePlanAlimentarZilnic" />
+      <Association Name="Utilizatori_PlanAlimentarZilnic" Member="Utilizatori" ThisKey="UserID" OtherKey="ID" Type="Utilizatori" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.RetetePlanAlimentarZilnic" Member="RetetePlanAlimentarZilnics">
@@ -129,34 +129,4 @@
       <Association Name="Utilizatori_PlanAlimentarZilnic" Member="PlanAlimentarZilnics" ThisKey="ID" OtherKey="UserID" Type="PlanAlimentarZilnic" />
     </Type>
   </Table>
-  <Function Name="dbo.addAntrenamentSaptamanal" Method="addAntrenamentSaptamanal">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="DenumireAntrenamentSaptamanal" Parameter="denumireAntrenamentSaptamanal" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="Descriere" Parameter="descriere" Type="System.String" DbType="NVarChar(255)" />
-    <Parameter Name="DataInceput" Parameter="dataInceput" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="DataSfarsit" Parameter="dataSfarsit" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="AntrenamenteZilniceList" Parameter="antrenamenteZilniceList" Type="System.String" DbType="NVarChar(MAX)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.addAntrenamentZilnic" Method="addAntrenamentZilnic">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Data" Parameter="data" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="DenumireAntrenament" Parameter="denumireAntrenament" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="Descriere" Parameter="descriere" Type="System.String" DbType="NVarChar(255)" />
-    <Parameter Name="ExercitiiList" Parameter="exercitiiList" Type="System.String" DbType="NVarChar(MAX)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.addPlanAlimentarSaptamanal" Method="addPlanAlimentarSaptamanal">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Nume" Parameter="nume" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="PlanurileZilniceList" Parameter="planurileZilniceList" Type="System.String" DbType="NVarChar(MAX)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.addPlanAlimentarZilnic" Method="addPlanAlimentarZilnic">
-    <Parameter Name="UserID" Parameter="userID" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Data" Parameter="data" Type="System.DateTime" DbType="Date" />
-    <Parameter Name="Nume" Parameter="nume" Type="System.String" DbType="NVarChar(100)" />
-    <Parameter Name="ReteteList" Parameter="reteteList" Type="System.String" DbType="NVarChar(MAX)" />
-    <Return Type="System.Int32" />
-  </Function>
 </Database>

@@ -44,5 +44,16 @@ namespace Fitness.Properties {
                 return ((string)(this["FitnessNutritieDBConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=desktop-6oa0842\\mssqlserver01;Initial Catalog=FitnessNutritieDB;Integ" +
+            "rated Security=True;Encrypt=False;TrustServerCertificate=True")]
+        public string FitnessNutritieDBConnectionString2 {
+            get {
+                return ((string)(this["FitnessNutritieDBConnectionString2"]));
+            }
+        }
     }
 }

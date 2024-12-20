@@ -24,7 +24,7 @@
                     Margin="20,0,20,10">
                 <Border Width="400" 
                     Height="200">
-                    
+
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Color="LightGreen" Offset="0"/>
@@ -90,23 +90,82 @@
                         Height="150"
                         Background="#844eff"
                         CornerRadius="10"
-                        Margin="0"
-                        />
+                        Margin="0">
+                        <Button x:Name="meal_btn" HorizontalAlignment="Center"
+                            Width="150" Margin="0,10,0,10" FontSize="16"
+                            BorderThickness="0,0,0,0"
+                            Command="{Binding NavigateToMealCommand}" Content="">
+                            <Button.Background>
+                                <ImageBrush/>
+                            </Button.Background>
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border>
+                                        <Image x:Name="ButtonImage" Source="/Poze/meal.png"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="ButtonImage" Property="Source" Value="/Poze/meal_click.png"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Border>
                     <Border Width="150"
                         Height="150"
                         Background="#4e99ff"
-                        CornerRadius="10"
-                        />
+                        CornerRadius="10">
+                        <Button x:Name="meal_btn_Copy" HorizontalAlignment="Center"
+                            Width="150" Margin="0,10,0,10" FontSize="16"
+                            BorderThickness="0,0,0,0"
+                            Command="{Binding NavigateToWorkoutCommand}" Content="">
+                            <Button.Background>
+                                <ImageBrush/>
+                            </Button.Background>
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border>
+                                        <Image x:Name="ButtonImage" Source="/Poze/workout.png"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="ButtonImage" Property="Source" Value="/Poze/workout_click.png"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Border>
                     <Border Width="150"
                         Height="150"
                         Background="#4eff91"
-                        CornerRadius="10"
-                        />
+                        CornerRadius="10" />
                     <Border Width="150"
                         Height="150"
                         Background="#ecff4e"
-                        CornerRadius="10"
-                        />
+                        CornerRadius="10" >
+                        <Button x:Name="meal_btn_Copy1" HorizontalAlignment="Center"
+                            Width="150" Margin="0,10,0,10" FontSize="16"
+                            BorderThickness="0,0,0,0"
+                            Command="{Binding NavigateToSupplementsCommand}" Content="">
+                            <Button.Background>
+                                <ImageBrush/>
+                            </Button.Background>
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border>
+                                        <Image x:Name="ButtonImage" Source="/Poze/supplements.png"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="ButtonImage" Property="Source" Value="/Poze/supplements_click.png"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Border>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
