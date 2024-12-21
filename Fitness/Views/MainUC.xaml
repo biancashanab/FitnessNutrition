@@ -116,7 +116,7 @@
                         </Grid>
 
                         <!--// ListView with menu list items //-->
-                        <ListView  x:Name="LV" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="510">
+                        <ListView  x:Name="LV" Background="Transparent" BorderBrush="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="351">
 
                             <!--// Listview items style template //-->
                             <ListView.ItemContainerStyle>

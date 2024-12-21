@@ -56,7 +56,6 @@ namespace Fitness.ViewModels
 
         private void Login()
         {
-            // Replace with your actual authentication logic
             try
             {
                 User user = new User();
@@ -65,19 +64,16 @@ namespace Fitness.ViewModels
                 // Verificăm dacă parola introdusă corespunde cu parola din baza de date
                 if (dbUser != null && dbUser.Password == User.HashPasswordSHA256(Password))
                 {
-                    // Autentificare reușită
                     var mainWindow = Application.Current.MainWindow as MainWindow;
-                    mainWindow.MainContent.Content = new MainUC();
+                    mainWindow.MainContent.Content = new MainUC(dbUser);
                 }
                 else
                 {
-                    // Dacă nu există utilizator sau parola nu se potrivește
                     MessageBox.Show("Invalid credentials");
                 }
             }
             catch (Exception ex)
             {
-                // Manevrarea excepțiilor dacă utilizatorul nu există
                 MessageBox.Show(ex.Message);
             }
         }
@@ -101,7 +97,7 @@ namespace Fitness.ViewModels
                 MessageBox.Show("User successfully registered!");
 
                 var mainWindow = System.Windows.Application.Current.MainWindow as MainWindow;
-                mainWindow.MainContent.Content = new MainUC();
+                mainWindow.MainContent.Content = new MainUC(user);
             }
             catch (Exception ex)
             {

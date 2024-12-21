@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -8,19 +9,27 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
+    public struct WorkoutPlanItem
+    {
+        public string Day { get; set; }
+        public string Name { get; set; }
+        public string Repeat { get; set; }
+        public string Duration { get; set; }
+    };
+
     public class DailyWorkout : INotifyPropertyChanged
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public DateTime Date { get; set; }
 
+        private readonly FitnessDBDataContext _context;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public DailyWorkout()
         {
             _context = new FitnessDBDataContext();
         }
-
-        private readonly FitnessDBDataContext _context;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public List<Exercitii> CreareAntrenamentZilnic(string grupaMusculara, int timpMaxim)
         {
@@ -44,7 +53,6 @@ namespace Fitness.Models
             }
             return workoutPlan;
         }
-
 
         public AntrenamentZilnic AddAntrenamentZilnic(int userID, DateTime day, string grupaMusculara, int timpMaxim)
         {
@@ -72,8 +80,6 @@ namespace Fitness.Models
             return antrenamentZilnic;
         }
 
-
-
         public List<Exercitii> GetAntrenamentZilnic(int userID, DateTime data)
         {
             return _context.AntrenamentZilnics
@@ -88,7 +94,40 @@ namespace Fitness.Models
                     (exId, ex) => ex)
                 .ToList();
         }
-       
+
+        public ObservableCollection<WorkoutPlanItem> GetDailyWorkout(int userID, DateTime data)
+        {
+            var exercitii = GetAntrenamentZilnic(userID, data);
+            ObservableCollection<WorkoutPlanItem> workoutPlanItems = new ObservableCollection<WorkoutPlanItem>();
+
+            if (exercitii == null || exercitii.Count == 0)
+            {
+                var noWorkoutItem = new WorkoutPlanItem
+                {
+                    Day = data.ToString("dddd, dd MMM yyyy"),
+                    Name = "N/A", // Nu sunt antrenamente
+                    Repeat = "N/A",
+                    Duration = "N/A"
+                };
+                workoutPlanItems.Add(noWorkoutItem);
+            }
+            else
+            {
+                foreach (var exercitiu in exercitii)
+                {
+                    var workoutPlanItem = new WorkoutPlanItem
+                    {
+                        Day = data.ToString("dddd, dd MMM yyyy"),
+                        Name = exercitiu.DenumireExercitiu,
+                        Repeat = exercitiu.Repetari.ToString(),
+                        Duration = exercitiu.TimpEstimareExecutie?.ToString() + " min"
+                    };
+                    workoutPlanItems.Add(workoutPlanItem);
+                }
+            }
+            return workoutPlanItems;
+        }
+
         public AntrenamentZilnic GetAntrenamentZilnicByDate(int userID, DateTime data)
         {
             var ant =  (AntrenamentZilnic)_context.AntrenamentZilnics.FirstOrDefault(az => az.UserID == userID && az.Data.Value.Date == data.Date);

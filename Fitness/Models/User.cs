@@ -20,13 +20,13 @@ namespace Fitness.Models
         public string UserType { get; set; }
         public string PhysicalCondition { get; set; }
 
+        private readonly FitnessDBDataContext _context;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public User()
         {
             _context = new FitnessDBDataContext();
         }
-
-        private readonly FitnessDBDataContext _context;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public User GetUser(string name)
         {

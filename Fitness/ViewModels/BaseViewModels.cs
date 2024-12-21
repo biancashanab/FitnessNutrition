@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fitness.Views;
+using Fitness.Models;
 
 namespace Fitness.ViewModels
 {

@@ -11,11 +11,21 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
+    public struct MealPlanItem
+    {
+        public string Day { get; set; }
+        public string Breakfast { get; set; }
+        public string Lunch { get; set; }
+        public string Dinner { get; set; }
+        public string Snack { get; set; }
+    };
+
     public class DailyMealPlan : INotifyPropertyChanged
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public DateTime Date { get; set; }
+
         private readonly FitnessDBDataContext _context;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -121,6 +131,7 @@ namespace Fitness.Models
                     (retId, ret) => ret)
                 .ToList();
         }
+
         public PlanAlimentarZilnic GetPlanAlimentarByDate(int userID, DateTime data)
         {
             var pln = (PlanAlimentarZilnic)_context.PlanAlimentarZilnics.FirstOrDefault(az => az.UserID == userID && az.Data == data.Date);
@@ -129,5 +140,49 @@ namespace Fitness.Models
             else
                 return null;
         }
+
+        public ObservableCollection<MealPlanItem> GetMealPlansForRange(int userID, DateTime startDate, DateTime endDate)
+        {
+            ObservableCollection<MealPlanItem> mealPlanItems = new ObservableCollection<MealPlanItem>();
+
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                var meals = GetPlanAlimentarZilnic(userID, date);
+
+                var dailyMeal = new MealPlanItem
+                {
+                    Day = date.ToString("dddd, dd MMM yyyy"),
+                    Breakfast = meals.FirstOrDefault(m => m.TipMasa == "Mic Dejun")?.Nume ?? "N/A",
+                    Lunch = meals.FirstOrDefault(m => m.TipMasa == "Pranz")?.Nume ?? "N/A",
+                    Dinner = meals.FirstOrDefault(m => m.TipMasa == "Cina")?.Nume ?? "N/A",
+                    Snack = meals.FirstOrDefault(m => m.TipMasa == "Gustare")?.Nume ?? "N/A"
+                };
+                mealPlanItems.Add(dailyMeal);
+            }
+            return mealPlanItems;
+        }
+
+        public List<DateTime> GetAllPlanDatesForUser(int userID)
+        {
+            try
+            {
+                var dates = _context.PlanAlimentarZilnics
+                    .Where(paz => paz.UserID == userID)
+                    .Select(paz => paz.Data.Date)
+                    .Distinct()
+                    .OrderBy(date => date) // Sortează datele în ordine crescătoare
+                    .ToList();
+
+                return dates;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Exception occurred: {ex.Message}");
+                Console.WriteLine("[ERROR] Stack Trace:");
+                Console.WriteLine(ex.StackTrace);
+                return new List<DateTime>();
+            }
+        }
+
     }
 }

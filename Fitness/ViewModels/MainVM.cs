@@ -10,12 +10,15 @@ using System.Windows.Input;
 using Fitness.Views;
 using Fitness.Models;
 using System.Windows.Navigation;
+using System.Windows;
 
 namespace Fitness.ViewModels
 {
     public class MainVM : BaseViewModel
     {
+        private User _user;
         private UserControl _currentUC;
+
         public UserControl CurrentUC
         {
             get => _currentUC;
@@ -33,7 +36,7 @@ namespace Fitness.ViewModels
         public ICommand Click_UserCommand { get; }
         public NavigationService ContentFrame { get; }
 
-        public MainVM()
+        public MainVM(User user)
         {
             LogoutCommand = new RelayCommand(Logout);
             Click_AcasaCommand = new RelayCommand(Click_Acasa);
@@ -41,11 +44,13 @@ namespace Fitness.ViewModels
             Click_NotificariCommand = new RelayCommand(Click_Notificari);
             Click_UserCommand = new RelayCommand(Click_User);
 
-            CurrentUC = new HomeUC(); 
+            CurrentUC = new HomeUC();
+            _user = user;
         }
 
         private void Logout()
         {
+            _user = null;
             var mainWindow = System.Windows.Application.Current.MainWindow as MainWindow;
             mainWindow.MainContent.Content = new LoginUC();
         }
@@ -62,7 +67,7 @@ namespace Fitness.ViewModels
 
         private void Click_User()
         {
-            CurrentUC = new UserUC();
+            CurrentUC = new UserUC(_user);
         }
 
         private void Click_Acasa()

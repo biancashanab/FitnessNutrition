@@ -4,74 +4,257 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Fitness.Views"
+             xmlns:vm="clr-namespace:Fitness.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#80aaff" Offset="0"/>
+            <GradientStop Color="#FFB06AB3" Offset="1"/>
+        </LinearGradientBrush>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#FF4060FC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF5A77DD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#FF3B57B3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Your Stats"
-                Foreground="White"
-                HorizontalAlignment="Center"
-                FontSize="22"
-                FontWeight="Bold"
-                       Margin="0,5,0,0"
-                />
-        
-            <StackPanel Orientation="Horizontal"
-                    Margin="20,10,20,20">
+        <Rectangle HorizontalAlignment="Center" 
+                   Height="432" Width="653"
+                   Margin="0,58,0,0" 
+                   Stroke="White" 
+                   Fill="White"
+                   Opacity="0.8"
+                   VerticalAlignment="Top" 
+                   RadiusX="30"
+                   RadiusY="30"/>
+        <Ellipse HorizontalAlignment="Center" 
+                 Height="119" Width="127"
+                 Margin="0,1,0,0" 
+                 Stroke="White" 
+                 Fill="White" 
+                 VerticalAlignment="Top" />
+        <Image HorizontalAlignment="Left" 
+               Height="101"  Width="106"
+               Margin="299,10,0,0" 
+               VerticalAlignment="Top" Source="/Views/user.png"/>
 
-                <Border Width="660" 
-                    Height="260">
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top"
+              Margin="42,111,0,0" Width="634" Height="363">
 
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,1" Opacity="0.8">
-                            <GradientStop Color="#6CBEC7" Offset="0"/>
-                            <GradientStop Color="DarkBlue" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <Border.Clip>
-                        <RectangleGeometry RadiusX="60"
-                                       RadiusY="60"
-                                       Rect="0,0,660,260"/>
-                    </Border.Clip>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                    <Grid>
+            <!-- Contenutul principal al UserControl-ului -->
+            <ScrollViewer VerticalAlignment="Center" Height="363" Margin="-10,0,0,0">
+                <Grid>
+                    <Grid Height="209" VerticalAlignment="Top">
 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Informații despre utilizator -->
+                        <TextBlock Grid.Row="0" Text="Nume:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+
+                        <TextBlock Grid.Row="1" Text="Sex:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Sex}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+
+                        <TextBlock Grid.Row="2" Text="Înălțime:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Height}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+
+                        <TextBlock Grid.Row="3" Text="Greutate:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Weight}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+
+                        <TextBlock Grid.Row="4" Text="Tip Utilizator:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding UserType}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
                     </Grid>
-                </Border>
 
+                    <!-- Meniu pentru planul alimentar -->
+                    <Rectangle HorizontalAlignment="Center" 
+                               Height="202" Width="627"
+                               Margin="0,214,0,0" 
+                               Stroke="LightBlue" 
+                               Fill="LightBlue"
+                               VerticalAlignment="Top" 
+                               RadiusX="30"
+                               RadiusY="30"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" 
+                               Margin="0,214,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
+                               Text="Plan Alimentar" />
+                    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
+                              Margin="0,235,0,0" Width="627" Height="194"
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False"
+                              HeadersVisibility="Column" 
+                              BorderBrush="Transparent" 
+                              Background="Transparent"
+                              BorderThickness="1"
+                              ItemsSource="{Binding WeeklyMealPlan}">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Height" Value="30"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ziua" Binding="{Binding Day}" Width="125">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Mic Dejun" Binding="{Binding Breakfast}" Width="137">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Prânz" Binding="{Binding Lunch}" Width="140">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Cină" Binding="{Binding Dinner}" Width="136">
+                            <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Gustare" Binding="{Binding Snack}" Width="85">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
+                    <!-- Meniu pentru planul de antrenament -->
+                    <Rectangle HorizontalAlignment="Center" 
+                                Height="300" Width="563"
+                                Margin="0,465,0,0" 
+                                Stroke="LightBlue" 
+                                Fill="LightBlue"
+                                VerticalAlignment="Top" 
+                                RadiusX="30"
+                                RadiusY="30"/>
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" 
+                               Margin="235,470,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
+                               Text="Plan Antrenament" />
+                    <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
+                              Margin="0,495,0,0" Width="563" Height="260"
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False"
+                              HeadersVisibility="Column" 
+                              BorderBrush="Transparent" 
+                              Background="Transparent"
+                              BorderThickness="1"
+                               ItemsSource="{Binding WeeklyWorkoutPlan}">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Height" Value="30"/>
+                            </Style>
+                        </DataGrid.Resources>
 
-            </StackPanel>
-            <StackPanel>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ziua" Binding="{Binding Day}" Width="125" >
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Exercitiu" Binding="{Binding Name}" Width="275">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightGray"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Repetari" Binding="{Binding Repeat}" Width="78">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Durata" Binding="{Binding Duration}" Width="77">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
+                    <Button Content="Update Infos" 
+                             Style="{StaticResource ModernButton}" 
+                             Command="{Binding SettingsCommand}" 
+                             Margin="0,780,0,20"/>
 
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="Margin" Value="15,0,0,0"/>
-                    </Style>
-                </StackPanel.Resources>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
 
-                <StackPanel Orientation="Horizontal" Margin="20,0,20,20">
-                    <Border Width="320"
-                        Height="170"
-                        Background="#0172D3"
-                        CornerRadius="10"
-                        Margin="0"
-                        />
-                    <Border Width="320"
-                        Height="170"
-                        Background="#0192D3"
-                        CornerRadius="10"
-                        />
-                </StackPanel>
-
-
-
-
-            </StackPanel>
-
-
-        </StackPanel>
-        <Border/>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fitness.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fitness.Models;
+using Fitness.ViewModels;
 
 namespace Fitness.Views
 {
@@ -20,9 +23,10 @@ namespace Fitness.Views
     /// </summary>
     public partial class UserUC : UserControl
     {
-        public UserUC()
+        public UserUC(User user)
         {
             InitializeComponent();
+            DataContext = new UserVM(user);
         }
     }
 }

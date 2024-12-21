@@ -18,6 +18,7 @@ namespace Fitness.Models
         public int UserID { get; set; }
         public DateTime DataInceput { get; set; }
         public DateTime DataSfarsit { get; set; }
+
         private readonly FitnessDBDataContext _context;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -74,7 +75,6 @@ namespace Fitness.Models
             _context.SubmitChanges();
         }
 
-
         public List<PlanAlimentarZilnic> GetPlanAlimentarSaptamanal(int userID, DateTime data)
         {
                 DateTime endDate = data.AddDays(7);
@@ -87,6 +87,21 @@ namespace Fitness.Models
                             && paz.Data >= data
                             && paz.Data <= endDate
                         select paz).ToList();
+        }
+
+        public ObservableCollection<MealPlanItem> GetWeeklyMealPlanForDisplay(int userID, DateTime startDate)
+        {
+            var weeklyMeals = GetPlanAlimentarSaptamanal(userID, startDate); 
+            ObservableCollection<MealPlanItem> mealPlanItems = new ObservableCollection<MealPlanItem>();
+
+            var mealPlans = new DailyMealPlan().GetMealPlansForRange(userID, startDate, startDate.AddDays(6));
+
+            foreach (var plan in mealPlans)
+            {
+                mealPlanItems.Add(plan);
+            }
+
+            return mealPlanItems;
         }
 
         public int getSize()

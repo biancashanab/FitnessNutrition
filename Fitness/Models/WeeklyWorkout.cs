@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Linq;
-using System.Globalization;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Fitness.Models;
@@ -17,7 +20,6 @@ namespace Fitness.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Name { get; set; }
-
 
         private readonly FitnessDBDataContext _context;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,6 +41,23 @@ namespace Fitness.Models
             return currentDate.AddDays(daysUntilSunday);
         }
 
+        public ObservableCollection<WorkoutPlanItem> GetWeeklyWorkoutPlanForDisplay(int userID, DateTime startDate)
+        {
+            var workoutPlans = new DailyWorkout().GetDailyWorkout(userID, startDate);
+            ObservableCollection<WorkoutPlanItem> workoutPlanItems = new ObservableCollection<WorkoutPlanItem>();
+
+            foreach (var plan in workoutPlans)
+            {
+                workoutPlanItems.Add(new WorkoutPlanItem
+                {
+                    Day = plan.Day,
+                    Name = plan.Name,
+                    Repeat = plan.Repeat,
+                    Duration = plan.Duration
+                });
+            }
+            return workoutPlanItems;
+        }
 
         public List<AntrenamentZilnic> GetAntrenamentSaptamanal(int userID, DateTime data)
         {
@@ -56,7 +75,6 @@ namespace Fitness.Models
                     (azId, az) => az)
                 .ToList();
         }
-
 
         public List<string> GenereazaGrupeMusculare(int numarZile)
         {

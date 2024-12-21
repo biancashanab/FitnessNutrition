@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\WelcomeVM.cs" />
     <Compile Include="Views\HomeUC.xaml.cs">
       <DependentUpon>HomeUC.xaml</DependentUpon>
@@ -211,12 +212,14 @@
     <Resource Include="Poze\sport.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Views\user.png" />
     <Resource Include="Poze\meal.png" />
     <Resource Include="Poze\meal_click.png" />
     <Resource Include="Poze\workout.png" />
     <Resource Include="Poze\workout_click.png" />
     <Resource Include="Poze\supplements.png" />
     <Resource Include="Poze\supplements_click.png" />
+    <Resource Include="Poze\user.png" />
     <Content Include="SQLQuery1.sql" />
     <Resource Include="Views\meal.png" />
   </ItemGroup>

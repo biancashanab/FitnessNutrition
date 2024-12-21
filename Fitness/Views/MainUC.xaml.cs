@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Fitness.Models;
 using Fitness.ViewModels;
 
 namespace Fitness.Views
@@ -21,10 +22,10 @@ namespace Fitness.Views
     /// </summary>
     public partial class MainUC : UserControl
     {
-        public MainUC()
+        public MainUC(User user)
         {
             InitializeComponent();
-            this.DataContext = new ViewModels.MainVM();
+            this.DataContext = new ViewModels.MainVM(user);
         }
 
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
