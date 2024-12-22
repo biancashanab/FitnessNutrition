@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\SuplementsVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\WelcomeVM.cs" />
     <Compile Include="Views\HomeUC.xaml.cs">
@@ -105,6 +106,9 @@
     </Compile>
     <Compile Include="Views\MainUC.xaml.cs">
       <DependentUpon>MainUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SuplementsUC.xaml.cs">
+      <DependentUpon>SuplementsUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserUC.xaml.cs">
       <DependentUpon>UserUC.xaml</DependentUpon>
@@ -133,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SuplementsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

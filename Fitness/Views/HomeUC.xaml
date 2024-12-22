@@ -12,7 +12,9 @@
         <vm:HomeVM/>
     </UserControl.DataContext>
     <Grid Margin="15,0,0,0">
-        <StackPanel>
+        <ContentControl Name="DynamicContent" Content="{Binding CurrentUC}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+
+        <StackPanel x:Name="Main_content" Visibility="{Binding MainContentVisibility}">
             <TextBlock Text="Discover"
                    Foreground="White"
                    HorizontalAlignment="Left"
@@ -55,12 +57,7 @@
                 </Border>
 
                 <Border
-                Opacity="0.8"
-                Width="210"
-                Height="200"
-                CornerRadius="10"
-                Margin="30,0,20,0">
-
+                Opacity="0.8" Width="210"  Height="200"  CornerRadius="10"  Margin="30,0,20,0">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
                             <GradientStop Color="#ffccff" Offset="0"/>
@@ -116,7 +113,7 @@
                         Height="150"
                         Background="#4e99ff"
                         CornerRadius="10">
-                        <Button x:Name="meal_btn_Copy" HorizontalAlignment="Center"
+                        <Button x:Name="workout_btn" HorizontalAlignment="Center"
                             Width="150" Margin="0,10,0,10" FontSize="16"
                             BorderThickness="0,0,0,0"
                             Command="{Binding NavigateToWorkoutCommand}" Content="">
@@ -145,7 +142,7 @@
                         Height="150"
                         Background="#ecff4e"
                         CornerRadius="10" >
-                        <Button x:Name="meal_btn_Copy1" HorizontalAlignment="Center"
+                        <Button x:Name="suplements_btn" HorizontalAlignment="Center"
                             Width="150" Margin="0,10,0,10" FontSize="16"
                             BorderThickness="0,0,0,0"
                             Command="{Binding NavigateToSupplementsCommand}" Content="">

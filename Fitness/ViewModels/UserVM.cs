@@ -131,7 +131,7 @@ namespace Fitness.ViewModels
 
         public void LoadWeeklyWorkoutPlan(DateTime startOfWeek)
         {
-           WeeklyWorkoutPlan = WorkoutService.GetWeeklyWorkoutPlanForDisplay(1, startOfWeek);
+           WeeklyWorkoutPlan = WorkoutService.GetWeeklyWorkoutPlanForDisplay(_user.Id, startOfWeek);
         }
 
         public UserVM(User user)
