@@ -23,28 +23,8 @@ namespace Fitness
     {
         public MainWindow()
         {
-
             InitializeComponent();
             LoadWelcomeScreen();
-
-
-            var wv = new WeeklyWorkout();
-
-            if (wv.getSize() < 2)
-            {
-                wv.CreareAntrenamentSaptamanal(3, 30, 1);
-                wv.CreareAntrenamentSaptamanal(6, 100, 1);
-            }
-
-            var wp = new WeeklyMealPlan();
-
-            if (wp.getSize() < 2)
-            {
-                wp.CrearePlanAlimentarSaptamanal(1500, 1);
-                wp.CrearePlanAlimentarSaptamanal(3000, 1);
-
-            }
-
         }
 
         private void LoadWelcomeScreen()
@@ -62,9 +42,6 @@ namespace Fitness
             if (e.ButtonState == MouseButtonState.Pressed)
                 this.DragMove();
         }
-
-      
-
     }
 
 }

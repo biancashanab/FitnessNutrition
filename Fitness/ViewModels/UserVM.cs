@@ -11,6 +11,7 @@ using Fitness.Models;
 using System.Globalization;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace Fitness.ViewModels
 {
@@ -19,12 +20,33 @@ namespace Fitness.ViewModels
         private User _user;
         private ObservableCollection<MealPlanItem> _weeklyMealPlan;
         private ObservableCollection<WorkoutPlanItem> _weeklyWorkoutPlan;
+        public ICommand SettingsCommand { get; }
+        private UserControl _currentUC;
+        private Visibility _mainContentVisibility = Visibility.Visible;
 
         public WeeklyMealPlan MealPlanService { get; set; } 
         public WeeklyWorkout WorkoutService { get; set; }
 
+        public UserControl CurrentUC
+        {
+            get => _currentUC;
+            set
+            {
+                _currentUC = value;
+                OnPropertyChanged(nameof(CurrentUC));
+            }
+        }
 
-        // Proprietăți pentru legare în UI
+        public Visibility MainContentVisibility
+        {
+            get => _mainContentVisibility;
+            set
+            {
+                _mainContentVisibility = value;
+                OnPropertyChanged(nameof(MainContentVisibility));
+            }
+        }
+
         public string Name
         {
             get => _user.Name; 
@@ -103,6 +125,19 @@ namespace Fitness.ViewModels
             }
         }
 
+        public string Activity
+        {
+            get => _user.Activity;
+            set
+            {
+                if (_user.Activity != value)
+                {
+                    _user.Activity = value;
+                    OnPropertyChanged(nameof(Activity));
+                }
+            }
+        }
+
         public ObservableCollection<MealPlanItem> WeeklyMealPlan
         {
             get { return _weeklyMealPlan; }
@@ -123,6 +158,16 @@ namespace Fitness.ViewModels
             }
         }
 
+        private void HideMainContent()
+        {
+            MainContentVisibility = Visibility.Collapsed;
+        }
+
+        private void Settings()
+        {
+            HideMainContent();
+            CurrentUC = new SettingsUC(_user);
+        }
 
         public void LoadWeeklyMealPlan(DateTime startOfWeek)
         {
@@ -141,7 +186,7 @@ namespace Fitness.ViewModels
             WorkoutService = new WeeklyWorkout();
 
             DateTime startOfWeek = WeeklyWorkout.ClosestMondayFromPast(DateTime.Now);
-
+            SettingsCommand = new RelayCommand(Settings);
             LoadWeeklyMealPlan(startOfWeek);
             LoadWeeklyWorkoutPlan(startOfWeek);
         }
@@ -158,6 +203,7 @@ namespace Fitness.ViewModels
                 OnPropertyChanged(nameof(Weight));
                 OnPropertyChanged(nameof(UserType));
                 OnPropertyChanged(nameof(PhysicalCondition));
+                OnPropertyChanged(nameof(Activity));
             }
         }
     }

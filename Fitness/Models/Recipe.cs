@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -159,5 +160,26 @@ namespace Fitness.Models
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+        public ObservableCollection<Recipe> GetAllRecipes()
+        {
+            var recipes = new ObservableCollection<Recipe>(
+                _context.Retetes.Select(r => new Recipe
+            {
+                Id = r.ID,
+                Name = r.Nume,
+                Calories = (int)r.Calorii,
+                Carbohydrates = (decimal)r.Carbohidrati,
+                Proteins = (decimal)r.Proteine,
+                Fats = (decimal)r.Grasimi,
+                Ingredients = r.Ingrediente,
+                MealType = r.TipMasa
+            }).ToList()
+            );
+
+            return recipes;
+        }
+
     }
+
 }

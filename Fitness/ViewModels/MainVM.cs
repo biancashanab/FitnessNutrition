@@ -44,8 +44,8 @@ namespace Fitness.ViewModels
             Click_NotificariCommand = new RelayCommand(Click_Notificari);
             Click_UserCommand = new RelayCommand(Click_User);
 
-            CurrentUC = new HomeUC();
             _user = user;
+            CurrentUC = new HomeUC(_user);
         }
 
         private void Logout()
@@ -57,12 +57,17 @@ namespace Fitness.ViewModels
 
         private void Click_Setari()
         {
-           // CurrentUC = new SetariUC();
+           CurrentUC = new SettingsUC(_user);
         }
 
         private void Click_Notificari()
         {
-           // CurrentUC = new NotificariUC();
+           if(_user.UserType == "Utilizator")
+            CurrentUC = new NotificationsUC(_user);
+           if(_user.UserType == "Nutritionist")
+                CurrentUC = new NutritionistNotificationsUC(_user);
+           if(_user.UserType == "Administrator")
+                CurrentUC = new AdminNotificationsUC(_user);
         }
 
         private void Click_User()
@@ -72,7 +77,7 @@ namespace Fitness.ViewModels
 
         private void Click_Acasa()
         {
-            CurrentUC = new HomeUC();
+            CurrentUC = new HomeUC(_user);
         }
     }
 }

@@ -103,5 +103,25 @@ namespace Fitness.Models
 
             return randomExercises;
         }
+
+        public ObservableCollection<Exercise> GetAllExercises()
+        {
+            var exercises = new ObservableCollection<Exercise>
+                ( _context.Exercitiis.Select(e => new Exercise
+            {
+                Id = e.ID,
+                ExerciseName = e.DenumireExercitiu,
+                Repetitions = (int)e.Repetari,
+                MuscleGroup = e.GrupaMusculara,
+                Sets = (int)e.Seturi,
+                Description = e.Descriere,
+                EstimatedExecutionTime = (int)e.TimpEstimareExecutie
+            }).ToList()
+            );
+
+            return exercises;
+        }
+
+
     }
 }

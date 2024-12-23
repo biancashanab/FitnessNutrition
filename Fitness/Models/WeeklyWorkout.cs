@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Fitness.Models;
 
 namespace Fitness.Models
@@ -43,18 +44,20 @@ namespace Fitness.Models
 
         public ObservableCollection<WorkoutPlanItem> GetWeeklyWorkoutPlanForDisplay(int userID, DateTime startDate)
         {
-            var workoutPlans = new DailyWorkout().GetDailyWorkout(userID, startDate);
             ObservableCollection<WorkoutPlanItem> workoutPlanItems = new ObservableCollection<WorkoutPlanItem>();
-
-            foreach (var plan in workoutPlans)
+            for (int i = 0; i < 7; ++i)
             {
-                workoutPlanItems.Add(new WorkoutPlanItem
+                var WorkoutPlan = new DailyWorkout().GetDailyWorkout(userID, startDate.AddDays(i));
+                foreach (var plan in WorkoutPlan)
                 {
-                    Day = plan.Day,
-                    Name = plan.Name,
-                    Repeat = plan.Repeat,
-                    Duration = plan.Duration
-                });
+                    workoutPlanItems.Add(new WorkoutPlanItem
+                    {
+                        Day = plan.Day,
+                        Name = plan.Name,
+                        Repeat = plan.Repeat,
+                        Duration = plan.Duration
+                    });
+                }
             }
             return workoutPlanItems;
         }
@@ -160,6 +163,110 @@ namespace Fitness.Models
                     AntrenamentSaptamanalID = antrenamentSaptamanal.ID
                 });
             }
+            _context.AntrenamentSaptamanals.InsertOnSubmit(antrenamentSaptamanal);
+            _context.SubmitChanges();
+        }
+
+        public void CopyAntrenamentSaptamanal(int oldUserID, int newUserID)
+        {
+            try
+            {
+                // Step 1: Retrieve the original AntrenamentSaptamanal for the old user
+                var originalAntrenament = _context.AntrenamentSaptamanals
+                    .FirstOrDefault(a => a.UserID == oldUserID);
+
+                if (originalAntrenament == null)
+                {
+                    throw new Exception("Antrenamentul săptămânal nu a fost găsit.");
+                }
+
+                // Step 2: Create a new AntrenamentSaptamanal for the new user
+                var newAntrenamentSaptamanal = new AntrenamentSaptamanal
+                {
+                    UserID = newUserID,
+                    DataInceput = originalAntrenament.DataInceput, // Adjust dates if necessary
+                    DataSfarsit = originalAntrenament.DataSfarsit, // Adjust dates if necessary
+                    DenumireAntrenamentSaptamanal = $"{originalAntrenament.DenumireAntrenamentSaptamanal} - Copie",
+                    AntrenamentSaptamanal_Zilnics = new EntitySet<AntrenamentSaptamanal_Zilnic>()
+                };
+
+                // Insert the new AntrenamentSaptamanal into the context to generate its ID
+                _context.AntrenamentSaptamanals.InsertOnSubmit(newAntrenamentSaptamanal);
+                _context.SubmitChanges(); // Submit to generate ID for newAntrenamentSaptamanal
+
+                // Step 3: Iterate through each linked AntrenamentZilnic in the original weekly plan
+                foreach (var originalZilnicLink in originalAntrenament.AntrenamentSaptamanal_Zilnics)
+                {
+                    // Retrieve the original AntrenamentZilnic
+                    var originalZilnic = _context.AntrenamentZilnics
+                        .FirstOrDefault(z => z.ID == originalZilnicLink.AntrenamentZilnicID);
+
+                    if (originalZilnic == null)
+                    {
+                        throw new Exception($"Antrenamentul zilnic cu ID-ul {originalZilnicLink.AntrenamentZilnicID} nu a fost găsit.");
+                    }
+
+                    // Step 4: Clone the AntrenamentZilnic for the new user
+                    var newZilnic = new AntrenamentZilnic
+                    {
+                        UserID = newUserID,
+                        DenumireAntrenament = originalZilnic.DenumireAntrenament,
+                        Descriere = originalZilnic.Descriere,
+                        Data = originalZilnic.Data,
+                        ExercitiiAntrenamentZilnics = new EntitySet<ExercitiiAntrenamentZilnic>()
+                    };
+
+                    // Insert the new AntrenamentZilnic into the context to generate its ID
+                    _context.AntrenamentZilnics.InsertOnSubmit(newZilnic);
+                    _context.SubmitChanges(); // Submit to generate ID for newZilnic
+
+                    // Step 5: Clone each ExercitiiAntrenamentZilnic linked to the original AntrenamentZilnic
+                    foreach (var originalExercise in originalZilnic.ExercitiiAntrenamentZilnics)
+                    {
+                        var newExercise = new ExercitiiAntrenamentZilnic
+                        {
+                            ExercitiuID = originalExercise.ExercitiuID,
+                            AntrenamentZilnicID = newZilnic.ID // Correctly associate with the new AntrenamentZilnic
+                        };
+
+                        // Add the new exercise association to the new AntrenamentZilnic
+                        newZilnic.ExercitiiAntrenamentZilnics.Add(newExercise);
+                        _context.ExercitiiAntrenamentZilnics.InsertOnSubmit(newExercise);
+                    }
+
+                    // Step 6: Link the new AntrenamentZilnic to the new AntrenamentSaptamanal
+                    var newZilnicLink = new AntrenamentSaptamanal_Zilnic
+                    {
+                        AntrenamentSaptamanalID = newAntrenamentSaptamanal.ID, // Newly generated ID
+                        AntrenamentZilnicID = newZilnic.ID // Newly generated ID
+                    };
+                    newAntrenamentSaptamanal.AntrenamentSaptamanal_Zilnics.Add(newZilnicLink);
+                    _context.AntrenamentSaptamanal_Zilnics.InsertOnSubmit(newZilnicLink);
+                }
+
+                // Step 7: Submit all changes to save the new associations
+                _context.SubmitChanges(); // Save all changes
+
+                // Notify the user of successful copy operation
+                MessageBox.Show("Antrenamentul săptămânal a fost copiat cu succes!");
+            }
+            catch (Exception ex)
+            {
+                // Handle and notify any errors that occur during the copy process
+                MessageBox.Show($"Eroare la copierea antrenamentului săptămânal: {ex.Message}");
+            }
+        }
+            
+        public void Add(int UserID, DateTime date)
+        {
+            var nume = "Antrenament Săptămânal";
+            var antrenamentSaptamanal = new AntrenamentSaptamanal
+            {
+                UserID = UserID,
+                DataInceput = ClosestMondayFromPast(DateTime.Now),
+                DataSfarsit = ClosestSundayFromFuture(DateTime.Now),
+                DenumireAntrenamentSaptamanal = nume,
+            };
             _context.AntrenamentSaptamanals.InsertOnSubmit(antrenamentSaptamanal);
             _context.SubmitChanges();
         }

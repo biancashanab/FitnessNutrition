@@ -23,7 +23,7 @@ namespace Fitness.Models
             _context = new FitnessDBDataContext();
         }
 
-        void addWeight(string username, DateTime date, decimal weight)
+        public void addWeight(string username, DateTime date, decimal weight)
         {
             var userId = _context.Utilizatoris.Where(u => u.Name == username)
                 .Select(u => u.ID).FirstOrDefault();

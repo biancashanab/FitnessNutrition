@@ -86,6 +86,7 @@
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\DailyMeanPlan.cs" />
     <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\Supplement.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WeeklyMealPlan.cs" />
     <Compile Include="Models\WeeklyWorkout.cs" />
@@ -94,10 +95,16 @@
     <Compile Include="ViewModels\HomeVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
+    <Compile Include="ViewModels\NotificationsVM.cs" />
+    <Compile Include="ViewModels\NutritionistNotificationsVM.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\SettingsVM.cs" />
     <Compile Include="ViewModels\SuplementsVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\WelcomeVM.cs" />
+    <Compile Include="Views\AdminNotificationsUC.xaml.cs">
+      <DependentUpon>AdminNotificationsUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeUC.xaml.cs">
       <DependentUpon>HomeUC.xaml</DependentUpon>
     </Compile>
@@ -106,6 +113,15 @@
     </Compile>
     <Compile Include="Views\MainUC.xaml.cs">
       <DependentUpon>MainUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotificationsUC.xaml.cs">
+      <DependentUpon>NotificationsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NutritionistNotificationsUC.xaml.cs">
+      <DependentUpon>NutritionistNotificationsUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsUC.xaml.cs">
+      <DependentUpon>SettingsUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SuplementsUC.xaml.cs">
       <DependentUpon>SuplementsUC.xaml</DependentUpon>
@@ -128,6 +144,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AdminNotificationsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HomeUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +157,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NutritionistNotificationsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -228,6 +260,8 @@
     <Resource Include="Poze\supplements.png" />
     <Resource Include="Poze\supplements_click.png" />
     <Resource Include="Poze\user.png" />
+    <Resource Include="Image1.png" />
+    <Resource Include="Poze\notif.png" />
     <Content Include="SQLQuery1.sql" />
     <Resource Include="Views\meal.png" />
   </ItemGroup>

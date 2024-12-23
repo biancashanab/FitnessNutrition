@@ -7,7 +7,6 @@
              xmlns:vm="clr-namespace:Fitness.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
-
     <UserControl.Resources>
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#80aaff" Offset="0"/>
@@ -46,6 +45,13 @@
     </UserControl.Resources>
 
     <Grid>
+        <Button Content="Update Infos" 
+            Style="{StaticResource ModernButton}" 
+            Command="{Binding SettingsCommand}" 
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Margin="0,10,50,20"/>   
+
         <Rectangle HorizontalAlignment="Center" 
                    Height="432" Width="653"
                    Margin="0,58,0,0" 
@@ -74,17 +80,19 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Contenutul principal al UserControl-ului -->
             <ScrollViewer VerticalAlignment="Center" Height="363" Margin="-10,0,0,0">
                 <Grid>
-                    <Grid Height="209" VerticalAlignment="Top">
+       
+                    <Grid Height="289" VerticalAlignment="Top">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="40" />
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -92,7 +100,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Informații despre utilizator -->
                         <TextBlock Grid.Row="0" Text="Nume:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
 
@@ -107,22 +114,29 @@
 
                         <TextBlock Grid.Row="4" Text="Tip Utilizator:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
                         <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding UserType}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+                        
+                        <TextBlock Grid.Row="5" Text="Conditie Fizica:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding PhysicalCondition}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+                    
+                        <TextBlock Grid.Row="6" Text="Activitate:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" Foreground="Black" Margin="10"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Activity}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Foreground="Black" Margin="10"/>
+
                     </Grid>
 
-                    <!-- Meniu pentru planul alimentar -->
                     <Rectangle HorizontalAlignment="Center" 
                                Height="202" Width="627"
-                               Margin="0,214,0,0" 
+                               Margin="0,314,0,0" 
                                Stroke="LightBlue" 
                                Fill="LightBlue"
                                VerticalAlignment="Top" 
                                RadiusX="30"
                                RadiusY="30"/>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" 
-                               Margin="0,214,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
+                               Margin="0,314,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
                                Text="Plan Alimentar" />
+                    
                     <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
-                              Margin="0,235,0,0" Width="627" Height="194"
+                              Margin="0,335,0,0" Width="627" Height="194"
                               AutoGenerateColumns="False" 
                               CanUserAddRows="False"
                               HeadersVisibility="Column" 
@@ -182,20 +196,19 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Meniu pentru planul de antrenament -->
                     <Rectangle HorizontalAlignment="Center" 
                                 Height="300" Width="563"
-                                Margin="0,465,0,0" 
+                                Margin="0,565,0,0" 
                                 Stroke="LightBlue" 
                                 Fill="LightBlue"
                                 VerticalAlignment="Top" 
                                 RadiusX="30"
                                 RadiusY="30"/>
                     <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" 
-                               Margin="235,470,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
+                               Margin="235,570,0,0" FontSize="16" FontWeight="Bold" Foreground="Black"
                                Text="Plan Antrenament" />
                     <DataGrid HorizontalAlignment="Center" VerticalAlignment="Top"
-                              Margin="0,495,0,0" Width="563" Height="260"
+                              Margin="0,595,0,0" Width="563" Height="260"
                               AutoGenerateColumns="False" 
                               CanUserAddRows="False"
                               HeadersVisibility="Column" 
@@ -247,10 +260,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Button Content="Update Infos" 
-                             Style="{StaticResource ModernButton}" 
-                             Command="{Binding SettingsCommand}" 
-                             Margin="0,780,0,20"/>
+                   
 
                 </Grid>
             </ScrollViewer>

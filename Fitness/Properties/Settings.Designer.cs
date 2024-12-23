@@ -66,5 +66,16 @@ namespace Fitness.Properties {
                 return ((string)(this["FitnessNutritieDBConnectionString3"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SPIRIDUSUL;Initial Catalog=FitnessNutritieDB;Integrated Security=True" +
+            ";Encrypt=True;TrustServerCertificate=True")]
+        public string FitnessNutritieDBConnectionString4 {
+            get {
+                return ((string)(this["FitnessNutritieDBConnectionString4"]));
+            }
+        }
     }
 }

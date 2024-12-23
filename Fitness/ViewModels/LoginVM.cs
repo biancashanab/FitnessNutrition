@@ -95,9 +95,9 @@ namespace Fitness.ViewModels
                 // Crearea unui nou utilizator
                 user.AddUser(Username, Password);
                 MessageBox.Show("User successfully registered!");
-
+                var dbUser = user.GetUser(Username); // Get user from database
                 var mainWindow = System.Windows.Application.Current.MainWindow as MainWindow;
-                mainWindow.MainContent.Content = new MainUC(user);
+                mainWindow.MainContent.Content = new MainUC(dbUser);
             }
             catch (Exception ex)
             {

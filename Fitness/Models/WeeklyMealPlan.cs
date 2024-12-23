@@ -9,6 +9,8 @@ using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace Fitness.Models
 {
@@ -77,21 +79,21 @@ namespace Fitness.Models
 
         public List<PlanAlimentarZilnic> GetPlanAlimentarSaptamanal(int userID, DateTime data)
         {
-                DateTime endDate = data.AddDays(7);
-                return (from pas in _context.PlanAlimentarSaptamanals
-                        join pasz in _context.PlanAlimentarSaptamanal_Zilnics
-                            on pas.ID equals pasz.PlanAlimentarSaptamanalID
-                        join paz in _context.PlanAlimentarZilnics
-                            on pasz.PlanAlimentarZilnicID equals paz.ID
-                        where pas.UserID == userID
-                            && paz.Data >= data
-                            && paz.Data <= endDate
-                        select paz).ToList();
+            DateTime endDate = data.AddDays(7);
+            return (from pas in _context.PlanAlimentarSaptamanals
+                    join pasz in _context.PlanAlimentarSaptamanal_Zilnics
+                        on pas.ID equals pasz.PlanAlimentarSaptamanalID
+                    join paz in _context.PlanAlimentarZilnics
+                        on pasz.PlanAlimentarZilnicID equals paz.ID
+                    where pas.UserID == userID
+                        && paz.Data >= data
+                        && paz.Data <= endDate
+                    select paz).ToList();
         }
 
         public ObservableCollection<MealPlanItem> GetWeeklyMealPlanForDisplay(int userID, DateTime startDate)
         {
-            var weeklyMeals = GetPlanAlimentarSaptamanal(userID, startDate); 
+            var weeklyMeals = GetPlanAlimentarSaptamanal(userID, startDate);
             ObservableCollection<MealPlanItem> mealPlanItems = new ObservableCollection<MealPlanItem>();
 
             var mealPlans = new DailyMealPlan().GetMealPlansForRange(userID, startDate, startDate.AddDays(6));
@@ -102,6 +104,107 @@ namespace Fitness.Models
             }
 
             return mealPlanItems;
+        }
+        
+        public void CopyPlanAlimentarSaptamanal(int oldUserID, int newUserID)
+        {
+            try
+            {
+                // Step 1: Retrieve the original PlanAlimentarSaptamanal
+                var originalPlan = _context.PlanAlimentarSaptamanals
+                    .FirstOrDefault(p => p.UserID == oldUserID);
+
+                if (originalPlan == null)
+                {
+                    throw new Exception($"Plan alimentar săptămânal nu a fost găsit.");
+                }
+
+                // Step 2: Create a new PlanAlimentarSaptamanal for the new user
+                var newPlanAlimentarSaptamanal = new PlanAlimentarSaptamanal
+                {
+                    UserID = newUserID,
+                    Nume = $"{originalPlan.Nume} - Copie",
+                    DataInceput = originalPlan.DataInceput, // Optionally adjust dates
+                    DataSfarsit = originalPlan.DataSfarsit
+                };
+
+                // Insert the new PlanAlimentarSaptamanal and submit changes to generate ID
+                _context.PlanAlimentarSaptamanals.InsertOnSubmit(newPlanAlimentarSaptamanal);
+                _context.SubmitChanges();
+
+                // Step 3: Iterate through each linked PlanAlimentarZilnic
+                foreach (var originalZilnicLink in originalPlan.PlanAlimentarSaptamanal_Zilnics)
+                {
+                    var originalZilnic = _context.PlanAlimentarZilnics
+                        .FirstOrDefault(z => z.ID == originalZilnicLink.PlanAlimentarZilnicID);
+
+                    if (originalZilnic == null)
+                    {
+                        throw new Exception($"Plan alimentar zilnic cu ID-ul {originalZilnicLink.PlanAlimentarZilnicID} nu a fost găsit.");
+                    }
+
+                    // Step 4: Clone the PlanAlimentarZilnic
+                    var newZilnic = new PlanAlimentarZilnic
+                    {
+                        Data = originalZilnic.Data,
+                        Nume = originalZilnic.Nume,
+                        UserID = newUserID
+                    };
+
+                    // Insert the new PlanAlimentarZilnic and submit changes to generate ID
+                    _context.PlanAlimentarZilnics.InsertOnSubmit(newZilnic);
+                    _context.SubmitChanges();
+
+                    // Step 5: Clone RetetePlanAlimentarZilnic links
+                    var originalReteteLinks = _context.RetetePlanAlimentarZilnics
+                        .Where(rpz => rpz.PlanAlimentarZilnicID == originalZilnic.ID)
+                        .ToList();
+
+                    foreach (var originalReteteLink in originalReteteLinks)
+                    {
+                        var newReteteLink = new RetetePlanAlimentarZilnic
+                        {
+                            ReteteID = originalReteteLink.ReteteID,
+                            PlanAlimentarZilnicID = newZilnic.ID
+                        };
+                        _context.RetetePlanAlimentarZilnics.InsertOnSubmit(newReteteLink);
+                    }
+
+                    // Step 6: Link the new PlanAlimentarZilnic to the new PlanAlimentarSaptamanal
+                    var newZilnicLink = new PlanAlimentarSaptamanal_Zilnic
+                    {
+                        PlanAlimentarSaptamanalID = newPlanAlimentarSaptamanal.ID,
+                        PlanAlimentarZilnicID = newZilnic.ID
+                    };
+                    _context.PlanAlimentarSaptamanal_Zilnics.InsertOnSubmit(newZilnicLink);
+                }
+
+                // Step 7: Submit all changes to the database
+                _context.SubmitChanges();
+
+                // Notify the user of success
+                MessageBox.Show("Planul alimentar săptămânal a fost copiat cu succes!");
+            }
+            catch (Exception ex)
+            {
+                // Handle and notify any errors that occur during the copy process
+                MessageBox.Show($"Eroare la copierea planului alimentar săptămânal: {ex.Message}");
+            }
+        }
+
+        public void Add(int UserID, DateTime date)
+        {
+            var nume = "Antrenament Săptămânal";
+            var planAlimentarSaptamanal = new PlanAlimentarSaptamanal
+            {
+                UserID = UserID,
+                DataInceput = WeeklyWorkout.ClosestMondayFromPast(DateTime.Now),
+                DataSfarsit = WeeklyWorkout.ClosestSundayFromFuture(DateTime.Now),
+                Nume = nume,
+                PlanAlimentarSaptamanal_Zilnics = new EntitySet<PlanAlimentarSaptamanal_Zilnic>()
+            };
+            _context.PlanAlimentarSaptamanals.InsertOnSubmit(planAlimentarSaptamanal);
+            _context.SubmitChanges();
         }
 
         public int getSize()

@@ -1,253 +1,367 @@
-﻿CREATE TABLE Utilizatori (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(100) NOT NULL,
-    HashedPassword NVARCHAR(255) NOT NULL,
-    Sex NVARCHAR(16) CHECK (Sex IN ('Masculin', 'Feminin', 'Unspecified')) NULL,
-    Height DECIMAL(5,2),
-    Kilograms DECIMAL(5,2),
-    PhysicalCondition NVARCHAR(50),
-    UserType NVARCHAR(20) CHECK (UserType IN ('Utilizator', 'Nutritionist', 'Administrator')) NOT NULL
+﻿
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Utilizatori' AND xtype='U')
+CREATE TABLE Utilizatori (
+ID INT PRIMARY KEY IDENTITY(1,1),
+Name NVARCHAR(100) NOT NULL,
+HashedPassword NVARCHAR(255) NOT NULL,
+Sex NVARCHAR(16) CHECK (Sex IN ('Masculin', 'Feminin', 'Unspecified')) NULL,
+Height DECIMAL(5,2),
+Kilograms DECIMAL(5,2),
+PhysicalCondition NVARCHAR(50),
+Activity NVARCHAR(30) CHECK (Activity IN ('Sedentary', 'Lightly active', 'Moderately active', 'Very Active', 'Extremely Active')),
+UserType NVARCHAR(20) CHECK (UserType IN ('Utilizator', 'Nutritionist', 'Administrator')) NOT NULL
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Retete' AND xtype='U')
 CREATE TABLE Retete (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Calorii INT NOT NULL,
-    Carbohidrati DECIMAL(5,2) NOT NULL,
-    Proteine DECIMAL(5,2) NOT NULL,
-    Grasimi DECIMAL(5,2) NOT NULL,
-    Nume NVARCHAR(200) NOT NULL,
-    Ingrediente NVARCHAR(MAX) NOT NULL,
-    TipMasa NVARCHAR(20) NOT NULL CHECK (TipMasa IN ('Mic Dejun', 'Pranz', 'Cina', 'Gustare'))
+ID INT PRIMARY KEY IDENTITY(1,1),
+Calorii INT NOT NULL,
+Carbohidrati DECIMAL(5,2) NOT NULL,
+Proteine DECIMAL(5,2) NOT NULL,
+Grasimi DECIMAL(5,2) NOT NULL,
+Nume NVARCHAR(200) NOT NULL,
+Ingrediente NVARCHAR(MAX) NOT NULL,
+TipMasa NVARCHAR(20) NOT NULL CHECK (TipMasa IN ('Mic Dejun', 'Pranz', 'Cina', 'Gustare'))
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='PlanAlimentarZilnic' AND xtype='U')
 CREATE TABLE PlanAlimentarZilnic (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Data DATE NOT NULL,
-    Nume NVARCHAR(100) NOT NULL,
-    UserID INT NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
+ID INT PRIMARY KEY IDENTITY(1,1),
+Data DATE NOT NULL,
+Nume NVARCHAR(100) NOT NULL,
+UserID INT NOT NULL,
+FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='PlanAlimentarSaptamanal' AND xtype='U')
 CREATE TABLE PlanAlimentarSaptamanal (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Nume NVARCHAR(100) NOT NULL,
-	DataInceput DATE,
-    DataSfarsit DATE,
-    UserID INT NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
+ID INT PRIMARY KEY IDENTITY(1,1),
+Nume NVARCHAR(100) NOT NULL,
+DataInceput DATE,
+DataSfarsit DATE,
+UserID INT NOT NULL,
+FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='PlanAlimentarSaptamanal_Zilnic' AND xtype='U')
 CREATE TABLE PlanAlimentarSaptamanal_Zilnic (
-    PlanAlimentarSaptamanalID INT,
-    PlanAlimentarZilnicID INT,
-    PRIMARY KEY (PlanAlimentarSaptamanalID, PlanAlimentarZilnicID),
-    FOREIGN KEY (PlanAlimentarSaptamanalID) REFERENCES PlanAlimentarSaptamanal(ID),
-    FOREIGN KEY (PlanAlimentarZilnicID) REFERENCES PlanAlimentarZilnic(ID)
+PlanAlimentarSaptamanalID INT,
+PlanAlimentarZilnicID INT,
+PRIMARY KEY (PlanAlimentarSaptamanalID, PlanAlimentarZilnicID),
+FOREIGN KEY (PlanAlimentarSaptamanalID) REFERENCES PlanAlimentarSaptamanal(ID),
+FOREIGN KEY (PlanAlimentarZilnicID) REFERENCES PlanAlimentarZilnic(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='RetetePlanAlimentarZilnic' AND xtype='U')
 CREATE TABLE RetetePlanAlimentarZilnic (
-    ReteteID INT,
-    PlanAlimentarZilnicID INT,
-    PRIMARY KEY (ReteteID, PlanAlimentarZilnicID),
-    FOREIGN KEY (ReteteID) REFERENCES Retete(ID),
-    FOREIGN KEY (PlanAlimentarZilnicID) REFERENCES PlanAlimentarZilnic(ID)
+ReteteID INT,
+PlanAlimentarZilnicID INT,
+PRIMARY KEY (ReteteID, PlanAlimentarZilnicID),
+FOREIGN KEY (ReteteID) REFERENCES Retete(ID),
+FOREIGN KEY (PlanAlimentarZilnicID) REFERENCES PlanAlimentarZilnic(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Exercitii' AND xtype='U')
 CREATE TABLE Exercitii (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    DenumireExercitiu NVARCHAR(100),
-    Repetari INT,
-    GrupaMusculara NVARCHAR(100),
-    Seturi INT,
-    Descriere NVARCHAR(100),
-    TimpEstimareExecutie INT
+ID INT PRIMARY KEY IDENTITY(1,1),
+DenumireExercitiu NVARCHAR(100),
+Repetari INT,
+GrupaMusculara NVARCHAR(100),
+Seturi INT,
+Descriere NVARCHAR(100),
+TimpEstimareExecutie INT
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='AntrenamentZilnic' AND xtype='U')
 CREATE TABLE AntrenamentZilnic (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    DenumireAntrenament NVARCHAR(100),
-    Descriere NVARCHAR(255),
-    Data DATE,
-    UserID INT NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
+ID INT PRIMARY KEY IDENTITY(1,1),
+DenumireAntrenament NVARCHAR(100),
+Descriere NVARCHAR(255),
+Data DATE,
+UserID INT NOT NULL,
+FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='ExercitiiAntrenamentZilnic' AND xtype='U')
 CREATE TABLE ExercitiiAntrenamentZilnic (
-    ExercitiuID INT,
-    AntrenamentZilnicID INT,
-    FOREIGN KEY (ExercitiuID) REFERENCES Exercitii(ID),
-    FOREIGN KEY (AntrenamentZilnicID) REFERENCES AntrenamentZilnic(ID),
-    PRIMARY KEY (ExercitiuID, AntrenamentZilnicID)
+ExercitiuID INT,
+AntrenamentZilnicID INT,
+FOREIGN KEY (ExercitiuID) REFERENCES Exercitii(ID),
+FOREIGN KEY (AntrenamentZilnicID) REFERENCES AntrenamentZilnic(ID),
+PRIMARY KEY (ExercitiuID, AntrenamentZilnicID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='AntrenamentSaptamanal' AND xtype='U')
 CREATE TABLE AntrenamentSaptamanal (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    DenumireAntrenamentSaptamanal NVARCHAR(100),
-    Descriere NVARCHAR(255),
-    DataInceput DATE,
-    DataSfarsit DATE,
-    UserID INT NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
+ID INT PRIMARY KEY IDENTITY(1,1),
+DenumireAntrenamentSaptamanal NVARCHAR(100),
+Descriere NVARCHAR(255),
+DataInceput DATE,
+DataSfarsit DATE,
+UserID INT NOT NULL,
+FOREIGN KEY (UserID) REFERENCES Utilizatori(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='AntrenamentSaptamanal_Zilnic' AND xtype='U')
 CREATE TABLE AntrenamentSaptamanal_Zilnic (
-    AntrenamentSaptamanalID INT,
-    AntrenamentZilnicID INT,
-    PRIMARY KEY (AntrenamentSaptamanalID, AntrenamentZilnicID),
-    FOREIGN KEY (AntrenamentSaptamanalID) REFERENCES AntrenamentSaptamanal(ID),
-    FOREIGN KEY (AntrenamentZilnicID) REFERENCES AntrenamentZilnic(ID)
+AntrenamentSaptamanalID INT,
+AntrenamentZilnicID INT,
+PRIMARY KEY (AntrenamentSaptamanalID, AntrenamentZilnicID),
+FOREIGN KEY (AntrenamentSaptamanalID) REFERENCES AntrenamentSaptamanal(ID),
+FOREIGN KEY (AntrenamentZilnicID) REFERENCES AntrenamentZilnic(ID)
 );
 
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='IstoricGreutate' AND xtype='U')
 CREATE TABLE IstoricGreutate (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT NOT NULL FOREIGN KEY REFERENCES Utilizatori(ID),
-    Data DATE NOT NULL,
-    Greutate DECIMAL(5,2) NOT NULL
+ID INT PRIMARY KEY IDENTITY(1,1),
+UserID INT NOT NULL FOREIGN KEY REFERENCES Utilizatori(ID),
+Data DATE NOT NULL,
+Greutate DECIMAL(5,2) NOT NULL
 );
 GO
 
-
-CREATE PROCEDURE addPlanAlimentarZilnic
-    @UserID INT,
-    @Data DATE,
-    @Nume NVARCHAR(100),
-    @ReteteList NVARCHAR(MAX)
-AS
-BEGIN
-    INSERT INTO PlanAlimentarZilnic (UserID, Data, Nume)
-    VALUES (@UserID, @Data, @Nume);
-
-    DECLARE @PlanAlimentarZilnicID INT;
-    SET @PlanAlimentarZilnicID = SCOPE_IDENTITY();
-
-    DECLARE @RetetaID INT;
-    DECLARE @Pos INT = 1;
-    DECLARE @List NVARCHAR(MAX) = @ReteteList;
-
-    WHILE CHARINDEX(',', @List) > 0
-    BEGIN
-        SET @RetetaID = CAST(SUBSTRING(@List, 1, CHARINDEX(',', @List) - 1) AS INT);
-        SET @List = SUBSTRING(@List, CHARINDEX(',', @List) + 1, LEN(@List));
-        
-        INSERT INTO RetetePlanAlimentarZilnic (ReteteID, PlanAlimentarZilnicID)
-        VALUES (@RetetaID, @PlanAlimentarZilnicID);
-    END;
-
-    IF LEN(@List) > 0
-    BEGIN
-        SET @RetetaID = CAST(@List AS INT);
-        INSERT INTO RetetePlanAlimentarZilnic (ReteteID, PlanAlimentarZilnicID)
-        VALUES (@RetetaID, @PlanAlimentarZilnicID);
-    END;
-END;
+IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Suplimente' AND xtype='U')
+CREATE TABLE Suplimente(
+SupplementID INT IDENTITY(1,1) PRIMARY KEY,
+Name NVARCHAR(100) NOT NULL,
+Description NVARCHAR(MAX),
+Category NVARCHAR(50),
+Dosage NVARCHAR(100),
+Benefits NVARCHAR(MAX)
+);
 GO
 
-CREATE PROCEDURE addAntrenamentZilnic
-    @UserID INT,
-    @Data DATE,
-    @DenumireAntrenament NVARCHAR(100),
-    @Descriere NVARCHAR(255),
-    @ExercitiiList NVARCHAR(MAX)
-AS
-BEGIN
-    INSERT INTO AntrenamentZilnic (UserID, Data, DenumireAntrenament, Descriere)
-    VALUES (@UserID, @Data, @DenumireAntrenament, @Descriere);
+delete Retete;
+delete Exercitii;
+delete Suplimente;
 
-    DECLARE @AntrenamentZilnicID INT;
-    SET @AntrenamentZilnicID = SCOPE_IDENTITY();
+INSERT INTO Suplimente (Name, Description, Category, Dosage, Benefits) VALUES
+('Vitamin C',
+'A water-soluble vitamin essential for the growth, development, and repair of all body tissues. It''s involved in many body functions, including the formation of collagen, absorption of iron, the immune system, wound healing, and the maintenance of cartilage, bones, and teeth.',
+'Vitamins',
+'500 mg daily, preferably with meals.',
+'Boosts immunity, acts as a powerful antioxidant, aids in collagen synthesis, enhances iron absorption, and promotes wound healing.'),
+('Omega-3 Fish Oil',
+'Derived from the tissues of oily fish, this supplement is rich in eicosapentaenoic acid (EPA) and docosahexaenoic acid (DHA), types of omega-3 fatty acids that are crucial for brain function and cardiovascular health.',
+'Fatty Acids',
+'1000 mg daily, with food.',
+'Supports heart health by reducing triglycerides, lowers blood pressure, reduces inflammation, and may improve cognitive function.'),
+('Probiotic Complex',
+'A blend of live beneficial bacteria strains that support the natural balance of organisms in the intestines.',
+'Probiotics',
+'One capsule daily, on an empty stomach.',
+'Improves gut health, enhances digestion, boosts immune function, and may alleviate symptoms of certain digestive disorders.'),
+('Calcium Citrate',
+'A highly absorbable form of calcium, essential for maintaining strong bones and carrying out many important bodily functions.',
+'Minerals',
+'600 mg twice daily, with or without food.',
+'Strengthens bones and teeth, supports muscle function, aids in nerve transmission, and may help prevent osteoporosis.'),
+('Vitamin D3',
+'A fat-soluble vitamin that helps your body absorb calcium and phosphorus, essential for bone health.',
+'Vitamins',
+'2000 IU daily, with a meal.',
+'Supports bone health, boosts immunity, and may improve mood and reduce the risk of certain diseases.'),
+('Magnesium Glycinate',
+'A chelated form of magnesium known for its high absorption and gentle effect on the stomach.',
+'Minerals',
+'400 mg daily, preferably in the evening.',
+'Relieves muscle cramps, promotes relaxation, supports cardiovascular health, and aids in energy production.'),
+('Zinc Picolinate',
+'A highly bioavailable form of zinc, an essential trace element involved in numerous aspects of cellular metabolism.',
+'Minerals',
+'30 mg daily, with a meal.',
+'Supports immune function, aids in wound healing, supports DNA synthesis, and contributes to healthy skin and vision.'),
+('Coenzyme Q10',
+'A naturally occurring antioxidant that plays a vital role in energy production within cells.',
+'Antioxidants',
+'100 mg daily, with a meal.',
+'Enhances energy levels, supports heart health, and may reduce the frequency of migraines.'),
+('Turmeric Curcumin',
+'An herbal supplement containing curcumin, the active ingredient in turmeric, known for its anti-inflammatory and antioxidant properties.',
+'Herbal',
+'500 mg twice daily, with meals.',
+'Reduces inflammation, supports joint health, and may improve brain function and lower the risk of heart disease.'),
+('Melatonin',
+'A hormone that regulates sleep-wake cycles, commonly used to treat sleep disorders.',
+'Hormones',
+'3 mg before bedtime.',
+'Improves sleep quality, regulates circadian rhythm, and may alleviate jet lag.'),
+('B-Complex Vitamins',
+'A combination of essential B vitamins that play a vital role in maintaining good health and well-being.',
+'Vitamins',
+'One tablet daily, with a meal.',
+'Supports energy metabolism, reduces fatigue, and promotes healthy brain function and cell metabolism.'),
+('Iron Ferrous Sulfate',
+'An iron supplement used to treat or prevent low blood levels of iron (e.g., for anemia or during pregnancy).',
+'Minerals',
+'65 mg daily, on an empty stomach or with orange juice to enhance absorption.',
+'Treats iron deficiency anemia, improves oxygen transport in the body, and reduces fatigue associated with anemia.'),
+('Collagen Peptides',
+'Bioactive peptides derived from collagen protein, supporting skin elasticity and joint health.',
+'Proteins',
+'10 grams daily, dissolved in water or a beverage of choice.',
+'Improves skin elasticity, strengthens joints and bones, and supports hair and nail health.'),
+('Green Tea Extract',
+'A concentrated form of green tea leaves, rich in antioxidants called catechins.',
+'Herbal',
+'500 mg daily, with or without food.',
+'Boosts metabolism, provides antioxidants, supports brain health, and may aid in weight loss.'),
+('Echinacea Purpurea',
+'An herbal supplement traditionally used to support the immune system.',
+'Herbal',
+'400 mg twice daily, at the onset of symptoms.',
+'Enhances immune response, reduces the duration of colds, and may have anti-inflammatory effects.'),
+('L-Theanine',
+'An amino acid found primarily in green and black tea, known for promoting relaxation without drowsiness.',
+'Amino Acids',
+'200 mg daily, with or without food.',
+'Promotes relaxation, reduces stress, improves focus, and may enhance sleep quality.'),
+('Saw Palmetto',
+'An herbal extract from the fruit of the Serenoa repens tree, commonly used to support prostate health.',
+'Herbal',
+'320 mg daily, with food.',
+'Supports urinary function, may reduce symptoms of benign prostatic hyperplasia (BPH), and promotes hair health.'),
+('Glucosamine Chondroitin',
+'A combination supplement often used to support joint health and alleviate arthritis symptoms.',
+'Joint Health',
+'1500 mg/1200 mg daily, with meals.',
+'Maintains cartilage health, reduces joint pain, and may improve mobility in osteoarthritis.'),
+('Ashwagandha',
+'An adaptogenic herb used in traditional medicine to help the body cope with stress.',
+'Herbal',
+'500 mg twice daily, with meals.',
+'Reduces stress and anxiety, improves cognitive function, and may enhance physical performance.'),
+('Ginkgo Biloba',
+'An herbal supplement derived from the leaves of the Ginkgo tree, traditionally used to support cognitive function.',
+'Herbal',
+'120 mg daily, divided into two doses.',
+'Enhances memory, supports brain health, and may improve blood circulation.'),
+('Milk Thistle',
+'An herbal extract commonly used to support liver health, containing the active ingredient silymarin.',
+'Herbal',
+'150 mg twice daily, with meals.',
+'Promotes liver detoxification, supports liver cell regeneration, and provides antioxidant benefits.'),
+('Alpha Lipoic Acid',
+'A naturally occurring compound that functions as a potent antioxidant in the body.',
+'Antioxidants',
+'300 mg daily, preferably on an empty stomach.',
+'Reduces oxidative stress, supports nerve health, and may help regulate blood sugar levels'),
+('Whey Protein',
+'A fast-digesting protein derived from milk, rich in essential amino acids, particularly branched-chain amino acids (BCAAs), which support muscle repair and growth.',
+'Protein',
+'25 grams post-workout, mixed with water or milk.',
+'Promotes muscle protein synthesis, aids in recovery, and supports lean muscle mass development.'),
+('Creatine Monohydrate',
+'A naturally occurring compound that helps supply energy to muscle cells, enhancing strength and performance during high-intensity activities.',
+'Performance Enhancer',
+'5 grams daily, with water or a carbohydrate-rich beverage.',
+'Increases muscle strength and power, enhances performance in high-intensity exercises, and supports muscle growth.'),
+('Branched-Chain Amino Acids (BCAAs)',
+'Essential amino acids leucine, isoleucine, and valine that play a crucial role in muscle protein synthesis and energy production during workouts.',
+'Amino Acids',
+'5-10 grams before or during workouts.',
+'Reduces muscle soreness, decreases exercise fatigue, and stimulates muscle protein synthesis.'),
+('Beta-Alanine',
+'A non-essential amino acid that increases muscle carnosine levels, buffering lactic acid accumulation during intense exercise.',
+'Performance Enhancer',
+'2-5 grams daily, divided into two doses.',
+'Enhances muscular endurance, delays fatigue during high-intensity workouts, and improves performance.'),
+('L-Glutamine',
+'A conditionally essential amino acid that supports muscle recovery and immune function, especially during periods of intense training.',
+'Amino Acids',
+'5 grams post-workout, with water or a protein shake.',
+'Promotes muscle recovery, supports immune health, and aids in maintaining muscle mass during intense training.'),
+('Casein Protein',
+'A slow-digesting protein derived from milk, providing a sustained release of amino acids to support muscle repair during extended periods without food.',
+'Protein',
+'25 grams before bedtime, mixed with water or milk.',
+'Supports overnight muscle recovery, reduces muscle breakdown, and promotes satiety.'),
+('Citrulline Malate',
+'A compound that increases nitric oxide production, enhancing blood flow to muscles during exercise.',
+'Performance Enhancer',
+'6-8 grams 30 minutes before workouts.',
+'Improves exercise performance, reduces muscle soreness, and enhances muscle oxygenation.'),
+('Betaine Anhydrous',
+'A naturally occurring compound found in beets that supports muscle strength and power output.',
+'Performance Enhancer',
+'2.5 grams daily, with or without food.',
+'Enhances muscle strength, increases power output, and supports protein synthesis.'),
+('HMB (Beta-Hydroxy Beta-Methylbutyrate)',
+'A metabolite of leucine that helps reduce muscle protein breakdown and supports muscle mass maintenance.',
+'Muscle Preserver',
+'3 grams daily, divided into three doses.',
+'Reduces muscle breakdown, supports muscle mass maintenance, and aids in recovery.'),
+('ZMA (Zinc Magnesium Aspartate)',
+'A combination of zinc, magnesium, and vitamin B6 designed to support muscle recovery and improve sleep quality.',
+'Recovery Aid',
+'One serving before bedtime, on an empty stomach.',
+'Enhances muscle recovery, improves sleep quality, and supports anabolic hormone levels.'),
+('L-Carnitine',
+'An amino acid derivative that plays a role in energy production by transporting fatty acids into mitochondria.',
+'Fat Loss',
+'2 grams daily, with meals.',
+'Supports fat metabolism, enhances exercise performance, and may reduce muscle soreness.'),
+('Pre-Workout Formula',
+'A blend of ingredients designed to boost energy, focus, and performance during workouts.',
+'Performance Enhancer',
+'One serving 30 minutes before workouts.',
+'Increases energy levels, enhances focus, and improves exercise performance.'),
+('Post-Workout Recovery Blend',
+'A combination of proteins, carbohydrates, and amino acids formulated to support recovery after intense exercise.',
+'Recovery Aid',
+'One serving immediately after workouts.',
+'Promotes muscle glycogen replenishment, supports muscle repair, and reduces recovery time.'),
+('Nitric Oxide Booster',
+'Supplements that increase nitric oxide levels, enhancing blood flow to muscles during exercise.',
+'Performance Enhancer',
+'One serving 30 minutes before workouts.',
+'Improves muscle pumps, enhances nutrient delivery, and supports endurance.'),
+('Electrolyte Complex',
+'A blend of essential minerals that maintain hydration and muscle function during intense workouts.',
+'Hydration Support',
+'One serving during or after workouts.',
+'Maintains hydration, supports muscle function, and prevents cramps.'),
+('BCAA Energy Drink',
+'A ready-to-drink beverage containing BCAAs and caffeine to support energy and recovery during workouts.',
+'Amino Acids',
+'One can during workouts.',
+'Provides energy boost, supports muscle recovery, and reduces fatigue.'),
+('Fish Oil (Omega-3 Fatty Acids)',
+'Rich in EPA and DHA, essential fatty acids that support overall health and reduce inflammation.',
+'Health Support',
+'1000 mg daily, with meals.',
+'Reduces inflammation, supports heart health, and aids in joint health.'),
+('Multivitamin for Athletes',
+'A comprehensive blend of vitamins and minerals tailored to meet the nutritional needs of active individuals.',
+'Health Support',
+'One tablet daily, with a meal.',
+'Fills nutritional gaps, supports overall health, and enhances energy levels.'),
+('Joint Support Formula',
+'A combination of glucosamine, chondroitin, and MSM designed to support joint health and mobility.',
+'Joint Health',
+'One serving daily, with meals.',
+'Supports joint health, reduces discomfort, and enhances mobility.'),
+('Greens Supplement',
+'A powdered blend of vegetables, fruits, and superfoods to support overall health and nutrient intake.',
+'Health Support',
+'One scoop daily, mixed with water or a smoothie.',
+'Enhances nutrient intake, supports digestion, and boosts energy levels.'),
+('Protein Bars',
+'Convenient, high-protein snacks designed to support muscle recovery and curb hunger.',
+'Protein',
+'One bar as a snack or post-workout.',
+'Provides protein for muscle repair, satisfies hunger, and supports energy levels.'),
+('Meal Replacement Shake',
+'A nutritionally balanced shake designed to replace a meal, providing proteins, carbohydrates, fats, vitamins, and minerals.',
+'Nutrition Support',
+'One serving as a meal replacement.',
+'Supports weight management, provides balanced nutrition, and aids in muscle maintenance.'),
+('Caffeine Pills',
+'A convenient form of caffeine to boost energy and focus during workouts.',
+'Performance Enhancer',
+'200 mg 30 minutes before workouts.',
+'Increases alertness, enhances focus, and boosts exercise performance.');
 
-    DECLARE @ExercitiuID INT;
-    DECLARE @Pos INT = 1;
-    DECLARE @List NVARCHAR(MAX) = @ExercitiiList;
-
-    WHILE CHARINDEX(',', @List) > 0
-    BEGIN
-        SET @ExercitiuID = CAST(SUBSTRING(@List, 1, CHARINDEX(',', @List) - 1) AS INT);
-        SET @List = SUBSTRING(@List, CHARINDEX(',', @List) + 1, LEN(@List));
-
-        INSERT INTO ExercitiiAntrenamentZilnic (ExercitiuID, AntrenamentZilnicID)
-        VALUES (@ExercitiuID, @AntrenamentZilnicID);
-    END;
-
-    IF LEN(@List) > 0
-    BEGIN
-        SET @ExercitiuID = CAST(@List AS INT);
-        INSERT INTO ExercitiiAntrenamentZilnic (ExercitiuID, AntrenamentZilnicID)
-        VALUES (@ExercitiuID, @AntrenamentZilnicID);
-    END;
-END;
-GO
-
-CREATE PROCEDURE addPlanAlimentarSaptamanal
-    @UserID INT,
-    @Nume NVARCHAR(100),
-    @PlanurileZilniceList NVARCHAR(MAX) 
-AS
-BEGIN
-    INSERT INTO PlanAlimentarSaptamanal (UserID, Nume)
-    VALUES (@UserID, @Nume);
-
-    DECLARE @PlanAlimentarSaptamanalID INT;
-    SET @PlanAlimentarSaptamanalID = SCOPE_IDENTITY();
-
-    DECLARE @PlanZilnicID INT;
-    DECLARE @Pos INT = 1;
-    DECLARE @List NVARCHAR(MAX) = @PlanurileZilniceList;
-
-    WHILE CHARINDEX(',', @List) > 0
-    BEGIN
-        SET @PlanZilnicID = CAST(SUBSTRING(@List, 1, CHARINDEX(',', @List) - 1) AS INT);
-        SET @List = SUBSTRING(@List, CHARINDEX(',', @List) + 1, LEN(@List));
-        
-        INSERT INTO PlanAlimentarSaptamanal_Zilnic (PlanAlimentarSaptamanalID, PlanAlimentarZilnicID)
-        VALUES (@PlanAlimentarSaptamanalID, @PlanZilnicID);
-    END;
-
-    IF LEN(@List) > 0
-    BEGIN
-        SET @PlanZilnicID = CAST(@List AS INT);
-        INSERT INTO PlanAlimentarSaptamanal_Zilnic (PlanAlimentarSaptamanalID, PlanAlimentarZilnicID)
-        VALUES (@PlanAlimentarSaptamanalID, @PlanZilnicID);
-    END;
-END;
-GO
-
-CREATE PROCEDURE addAntrenamentSaptamanal
-    @UserID INT,
-    @DenumireAntrenamentSaptamanal NVARCHAR(100),
-    @Descriere NVARCHAR(255),
-    @DataInceput DATE,
-    @DataSfarsit DATE,
-    @AntrenamenteZilniceList NVARCHAR(MAX) 
-AS
-BEGIN
-    INSERT INTO AntrenamentSaptamanal (UserID, DenumireAntrenamentSaptamanal, Descriere, DataInceput, DataSfarsit)
-    VALUES (@UserID, @DenumireAntrenamentSaptamanal, @Descriere, @DataInceput, @DataSfarsit);
-
-    DECLARE @AntrenamentSaptamanalID INT;
-    SET @AntrenamentSaptamanalID = SCOPE_IDENTITY();
-
-    DECLARE @AntrenamentZilnicID INT;
-    DECLARE @Pos INT = 1;
-    DECLARE @List NVARCHAR(MAX) = @AntrenamenteZilniceList;
-
-    WHILE CHARINDEX(',', @List) > 0
-    BEGIN
-        SET @AntrenamentZilnicID = CAST(SUBSTRING(@List, 1, CHARINDEX(',', @List) - 1) AS INT);
-        SET @List = SUBSTRING(@List, CHARINDEX(',', @List) + 1, LEN(@List));
-
-        INSERT INTO AntrenamentSaptamanal_Zilnic (AntrenamentSaptamanalID, AntrenamentZilnicID)
-        VALUES (@AntrenamentSaptamanalID, @AntrenamentZilnicID);
-    END;
-
-    IF LEN(@List) > 0
-    BEGIN
-        SET @AntrenamentZilnicID = CAST(@List AS INT);
-        INSERT INTO AntrenamentSaptamanal_Zilnic (AntrenamentSaptamanalID, AntrenamentZilnicID)
-        VALUES (@AntrenamentSaptamanalID, @AntrenamentZilnicID);
-    END;
-END;
-GO
 
 INSERT INTO Exercitii (DenumireExercitiu, Repetari, GrupaMusculara, Seturi, Descriere, TimpEstimareExecutie)
 VALUES
@@ -341,211 +455,71 @@ GO
 
 INSERT INTO Retete (Calorii, Carbohidrati, Proteine, Grasimi, Nume, Ingrediente, TipMasa)
 VALUES
-    (350, 50.00, 20.00, 5.00, 'Fulgi de ovaz cu lapte','Fulgi de ovaz (50g), Lapte (200ml), Fructe de padure (100g)', 'Mic Dejun'),
-    (400, 60.00, 15.00, 8.00, 'Omletă cu spanac și roșii', 'Omleta (3 oua), Spanac (50g), Rosii (100g)', 'Mic Dejun'),
-    (300, 40.00, 25.00, 7.00, 'Iaurt grecesc cu miere și nuci', 'Iaurt grecesc (200g), Miere (10g), Nuci (30g)', 'Mic Dejun'),
-    (450, 55.00, 30.00, 10.00, 'Smoothie proteic', 'Banana (3), Lapte (200ml), Pudra proteica (20g)', 'Mic Dejun'),
-    (500, 70.00, 20.00, 12.00, 'Toast cu avocado și ou', 'Paine integrala (2 felii), Avocado (100g), Oua (2 buc)', 'Mic Dejun'),
-    (400, 50.00, 25.00, 9.00, 'Brioșe de ovăz și fructe', 'Briose de ovaz (2 buc), Fructe (100g)', 'Mic Dejun'),
-    (450, 65.00, 10.00, 7.00, 'Cereale integrale cu lapte', 'Cereale integrale (50g), Lapte (200ml)', 'Mic Dejun'),
-    (350, 45.00, 20.00, 8.00, 'Toast cu unt de arahide și banane', 'Paine integrala (2 felii), Unt de arahide (10 gm), Banane (1)', 'Mic Dejun'),
-    (400, 50.00, 25.00, 9.00, 'Clatite integrale cu sirop', 'Fina integrala (100g), Oua (2), Apa (10ml), Sirop de artar', 'Mic Dejun'),
-    (300, 40.00, 15.00, 5.00, 'Batoane de granola', 'Batoane de granola (2 buc)', 'Mic Dejun'),
-	(420, 55.00, 25.00, 10.00, 'Briose cu banane', ' Faina(100g), Oua(2 buc), Lapte(50ml), Banane(2 buc)', 'Mic Dejun'),
-    (410, 58.00, 26.00, 9.00, 'Clatite de ovaz', 'Ovaz (100g), Oua (2), Apa (10ml) Sirop de arțar', 'Mic Dejun'),
-    (440, 60.00, 25.00, 8.00, 'Iaurt cu fructe', 'Fructe proaspete (200g), Iaurt (150g)', 'Mic Dejun'),
-    (500, 65.00, 28.00, 12.00, 'Sandwich cu ou fiert', 'Paine integrala(2 felii), Oua (2 ouă), Salata verde', 'Mic Dejun'),
-    (390, 40.00, 20.00, 10.00, 'Granola cu Lapte', 'Granola (50g), Lapte (200ml)', 'Mic Dejun'),
+(350, 50.00, 20.00, 5.00, 'Fulgi de ovaz cu lapte','Fulgi de ovaz (50g), Lapte (200ml), Fructe de padure (100g)', 'Mic Dejun'),
+(400, 60.00, 15.00, 8.00, 'Omletă cu spanac și roșii', 'Omleta (3 oua), Spanac (50g), Rosii (100g)', 'Mic Dejun'),
+(300, 40.00, 25.00, 7.00, 'Iaurt grecesc cu miere și nuci', 'Iaurt grecesc (200g), Miere (10g), Nuci (30g)', 'Mic Dejun'),
+(450, 55.00, 30.00, 10.00, 'Smoothie proteic', 'Banana (3), Lapte (200ml), Pudra proteica (20g)', 'Mic Dejun'),
+(500, 70.00, 20.00, 12.00, 'Toast cu avocado și ou', 'Paine integrala (2 felii), Avocado (100g), Oua (2 buc)', 'Mic Dejun'),
+(400, 50.00, 25.00, 9.00, 'Brioșe de ovăz și fructe', 'Briose de ovaz (2 buc), Fructe (100g)', 'Mic Dejun'),
+(450, 65.00, 10.00, 7.00, 'Cereale integrale cu lapte', 'Cereale integrale (50g), Lapte (200ml)', 'Mic Dejun'),
+(350, 45.00, 20.00, 8.00, 'Toast cu unt de arahide și banane', 'Paine integrala (2 felii), Unt de arahide (10 gm), Banane (1)', 'Mic Dejun'),
+(400, 50.00, 25.00, 9.00, 'Clatite integrale cu sirop', 'Fina integrala (100g), Oua (2), Apa (10ml), Sirop de artar', 'Mic Dejun'),
+(300, 40.00, 15.00, 5.00, 'Batoane de granola', 'Batoane de granola (2 buc)', 'Mic Dejun'),
+(420, 55.00, 25.00, 10.00, 'Briose cu banane', ' Faina(100g), Oua(2 buc), Lapte(50ml), Banane(2 buc)', 'Mic Dejun'),
+(410, 58.00, 26.00, 9.00, 'Clatite de ovaz', 'Ovaz (100g), Oua (2), Apa (10ml) Sirop de arțar', 'Mic Dejun'),
+(440, 60.00, 25.00, 8.00, 'Iaurt cu fructe', 'Fructe proaspete (200g), Iaurt (150g)', 'Mic Dejun'),
+(500, 65.00, 28.00, 12.00, 'Sandwich cu ou fiert', 'Paine integrala(2 felii), Oua (2 ouă), Salata verde', 'Mic Dejun'),
+(390, 40.00, 20.00, 10.00, 'Granola cu Lapte', 'Granola (50g), Lapte (200ml)', 'Mic Dejun'),
 
-	(500, 60.00, 35.00, 15.00, 'Piept de pui cu orez și broccoli', 'Piept de pui (150g), Orez (150g), Broccoli (100g)', 'Pranz'),
-    (600, 80.00, 40.00, 20.00, 'Salată cu ton și quinoa', 'Salata (100g), Ton(50g), Rosii(100g), Quinoa (100g), Legume', 'Pranz'),
-    (700, 90.00, 50.00, 25.00, 'Paste cu carne și sos de roșii', 'Paste integrale (100g), Sos de rosii (100g), Carne macinata (100g)', 'Pranz'),
-    (550, 75.00, 30.00, 12.00, 'Burger din curcan', 'carne curcan(150g), Ceapa(15g), Rosii(20g), Castraveti murati(10g), Chifle integrale (1)', 'Pranz'),
-    (650, 85.00, 40.00, 18.00, 'Supă de legume și pâine integrală', 'Legume la alegere: rosii, telina, cartofi, dovlecei(300ml), Paine integrala (50g)', 'Pranz'),
-    (500, 70.00, 30.00, 15.00, 'Taco cu carne și salată', 'Carne de porc (150g), Lipie integrala (1 felii), Salata (50g)', 'Pranz'),
-    (600, 75.00, 35.00, 25.00, 'Pizza integrală cu salată', 'Aluat (150g), Sos de rosii(30g), Mozzarella Light(50g), Sunca din piept de pui(50g) Salata', 'Pranz'),
-    (700, 90.00, 45.00, 20.00, 'Friptură de vită cu piure', 'Carne de vita (150g), Cartofi (150g), Lapte(25ml)', 'Pranz'),
-    (600, 70.00, 50.00, 15.00, 'Wrap cu pui și salată', 'Carne de pui (150g), Sos de smantana(15g), Castraveti murati(15g), Lipie integrala(2 felii), Salata verde (100g), Rosii(100g)', 'Pranz'),
-    (800, 100.00, 55.00, 25.00, 'Bol de orez cu legume și tofu', 'Orez (100g), Legume:morcov, mazare, ceapa (50g), Tofu (300g)', 'Pranz'),
-	(700, 80.00, 45.00, 22.00, 'Lasagna vegetariana', 'Vinete (100g), Dovelcei (100g), Ceapa (30g), Praz (20g), Sos bechamel (200ml)', 'Pranz'),
-    (600, 70.00, 40.00, 20.00, 'Risotto cu ciuperci', 'Orez (250g), Ciuperci (60g)', 'Pranz'),
-    (500, 65.00, 25.00, 10.00, 'Pasta cu pesto ', 'Pate(200g), Pesto(100g)', 'Pranz'),
-    (700, 100.00, 55.00, 20.00, 'Paste cu legume si branza', 'Paste(150g), Legume:Ardei, Rosii, Ceapa(100g), Branza feta(50g)', 'Pranz'),
-    (750, 90.00, 40.00, 22.00, 'Pasta cu ton', 'Paste (200g), Ton(100g), Ceapa(20g), Sos de rosii(200ml)', 'Pranz'),
+(500, 60.00, 35.00, 15.00, 'Piept de pui cu orez și broccoli', 'Piept de pui (150g), Orez (150g), Broccoli (100g)', 'Pranz'),
+(600, 80.00, 40.00, 20.00, 'Salată cu ton și quinoa', 'Salata (100g), Ton(50g), Rosii(100g), Quinoa (100g), Legume', 'Pranz'),
+(700, 90.00, 50.00, 25.00, 'Paste cu carne și sos de roșii', 'Paste integrale (100g), Sos de rosii (100g), Carne macinata (100g)', 'Pranz'),
+(550, 75.00, 30.00, 12.00, 'Burger din curcan', 'carne curcan(150g), Ceapa(15g), Rosii(20g), Castraveti murati(10g), Chifle integrale (1)', 'Pranz'),
+(650, 85.00, 40.00, 18.00, 'Supă de legume și pâine integrală', 'Legume la alegere: rosii, telina, cartofi, dovlecei(300ml), Paine integrala (50g)', 'Pranz'),
+(500, 70.00, 30.00, 15.00, 'Taco cu carne și salată', 'Carne de porc (150g), Lipie integrala (1 felii), Salata (50g)', 'Pranz'),
+(600, 75.00, 35.00, 25.00, 'Pizza integrală cu salată', 'Aluat (150g), Sos de rosii(30g), Mozzarella Light(50g), Sunca din piept de pui(50g) Salata', 'Pranz'),
+(700, 90.00, 45.00, 20.00, 'Friptură de vită cu piure', 'Carne de vita (150g), Cartofi (150g), Lapte(25ml)', 'Pranz'),
+(600, 70.00, 50.00, 15.00, 'Wrap cu pui și salată', 'Carne de pui (150g), Sos de smantana(15g), Castraveti murati(15g), Lipie integrala(2 felii), Salata verde (100g), Rosii(100g)', 'Pranz'),
+(800, 100.00, 55.00, 25.00, 'Bol de orez cu legume și tofu', 'Orez (100g), Legume:morcov, mazare, ceapa (50g), Tofu (300g)', 'Pranz'),
+(700, 80.00, 45.00, 22.00, 'Lasagna vegetariana', 'Vinete (100g), Dovelcei (100g), Ceapa (30g), Praz (20g), Sos bechamel (200ml)', 'Pranz'),
+(600, 70.00, 40.00, 20.00, 'Risotto cu ciuperci', 'Orez (250g), Ciuperci (60g)', 'Pranz'),
+(500, 65.00, 25.00, 10.00, 'Pasta cu pesto ', 'Pate(200g), Pesto(100g)', 'Pranz'),
+(700, 100.00, 55.00, 20.00, 'Paste cu legume si branza', 'Paste(150g), Legume:Ardei, Rosii, Ceapa(100g), Branza feta(50g)', 'Pranz'),
+(750, 90.00, 40.00, 22.00, 'Pasta cu ton', 'Paste (200g), Ton(100g), Ceapa(20g), Sos de rosii(200ml)', 'Pranz'),
 
-	(400, 45.00, 25.00, 15.00, 'Somon cu legume', 'Somon (100g), Legume (150g)', 'Cina'),
-    (600, 80.00, 40.00, 25.00, 'Tocana de legume și pâine integrală', 'Legume: Cartofi, Morcov, Ceapa, (200g), Paine integrala (50g)', 'Cina'),
-    (700, 90.00, 50.00, 20.00, 'Pui cu curry și orez', 'Carne de Pui (150g), Curry (5g), Orez (150g)', 'Cina'),
-    (500, 60.00, 35.00, 15.00, 'Chili con carne', 'Carne de proc (100g), Fasole rosie (100g)', 'Cina'),
-    (550, 75.00, 30.00, 20.00, 'Peste cu quinoa', 'Peste (150g), Quinoa (100g)', 'Cina'),
-    (650, 80.00, 40.00, 25.00, 'Paste cu creveti', 'Pasta integrale (100g), Creveti (70g), Sos alb(100g)', 'Cina'),
-    (600, 70.00, 50.00, 18.00, 'Salata caldă cu năut', 'Naut (100g), măsline (2), roșii (100g), ceapa (20g), 1 legătură pătrunjel verde', 'Cina'),
-    (800, 100.00, 60.00, 30.00, 'Friptură de porc cu cartofi', 'Carne de porc (150g), Cartofi (150g)', 'Cina'),
-    (700, 85.00, 50.00, 20.00, 'Cuscus cu legume', 'Cuscus (100g), Morcov(50g), Pastarnac(50g)', 'Cina'),
-    (900, 110.00, 65.00, 25.00, 'Pui pe grătar cu salată', 'Piept de Pui (150g), Salata verde (80g), Rosii(80g), Castraveti(80g)', 'Cina'),
-    (450, 50.00, 30.00, 20.00, 'Peste la cuptor cu sparanghel', 'Peste (150g), Sparanghel (100g)', 'Cina'),
-    (600, 75.00, 40.00, 25.00, 'Friptura de curcan cu legume mexicane', 'Carne de curcan (200g), Legume:Porumb, Pastai, Ardei (150g)', 'Cina'),
-    (700, 90.00, 45.00, 30.00, 'Pizza vegetariana', 'Aluat(150g), Sos de rosii(40g), Mozzarella Light(80g), Ardei gras(30g), Rucola(20g), Porumb(20g)', 'Cina'),
-    (550, 70.00, 40.00, 20.00, 'Frittata cu legume ', 'Oua(3 buc), Brocolii(70g) Ardei gras(50g), Ceapa(20g), ', 'Cina'),
-    (600, 75.00, 40.00, 20.00, 'Pasta cu carne de vita', 'Carne de vita (150g), Paste(100g), Sos de rosii(100g)', 'Cina'),
+(400, 45.00, 25.00, 15.00, 'Somon cu legume', 'Somon (100g), Legume (150g)', 'Cina'),
+(600, 80.00, 40.00, 25.00, 'Tocana de legume și pâine integrală', 'Legume: Cartofi, Morcov, Ceapa, (200g), Paine integrala (50g)', 'Cina'),
+(700, 90.00, 50.00, 20.00, 'Pui cu curry și orez', 'Carne de Pui (150g), Curry (5g), Orez (150g)', 'Cina'),
+(500, 60.00, 35.00, 15.00, 'Chili con carne', 'Carne de proc (100g), Fasole rosie (100g)', 'Cina'),
+(550, 75.00, 30.00, 20.00, 'Peste cu quinoa', 'Peste (150g), Quinoa (100g)', 'Cina'),
+(650, 80.00, 40.00, 25.00, 'Paste cu creveti', 'Pasta integrale (100g), Creveti (70g), Sos alb(100g)', 'Cina'),
+(600, 70.00, 50.00, 18.00, 'Salata caldă cu năut', 'Naut (100g), măsline (2), roșii (100g), ceapa (20g), 1 legătură pătrunjel verde', 'Cina'),
+(800, 100.00, 60.00, 30.00, 'Friptură de porc cu cartofi', 'Carne de porc (150g), Cartofi (150g)', 'Cina'),
+(700, 85.00, 50.00, 20.00, 'Cuscus cu legume', 'Cuscus (100g), Morcov(50g), Pastarnac(50g)', 'Cina'),
+(900, 110.00, 65.00, 25.00, 'Pui pe grătar cu salată', 'Piept de Pui (150g), Salata verde (80g), Rosii(80g), Castraveti(80g)', 'Cina'),
+(450, 50.00, 30.00, 20.00, 'Peste la cuptor cu sparanghel', 'Peste (150g), Sparanghel (100g)', 'Cina'),
+(600, 75.00, 40.00, 25.00, 'Friptura de curcan cu legume mexicane', 'Carne de curcan (200g), Legume:Porumb, Pastai, Ardei (150g)', 'Cina'),
+(700, 90.00, 45.00, 30.00, 'Pizza vegetariana', 'Aluat(150g), Sos de rosii(40g), Mozzarella Light(80g), Ardei gras(30g), Rucola(20g), Porumb(20g)', 'Cina'),
+(550, 70.00, 40.00, 20.00, 'Frittata cu legume ', 'Oua(3 buc), Brocolii(70g) Ardei gras(50g), Ceapa(20g), ', 'Cina'),
+(600, 75.00, 40.00, 20.00, 'Pasta cu carne de vita', 'Carne de vita (150g), Paste(100g), Sos de rosii(100g)', 'Cina'),
 
-	(200, 30.00, 10.00, 5.00, 'Măr și iaurt', 'Mar (1), Iaurt (100g)', 'Gustare'),
-    (250, 20.00, 15.00, 6.00, 'Batoane de cereale', 'Batoane (2 buc)', 'Gustare'),
-    (150, 20.00, 10.00, 3.00, 'Fructe de pădure', 'Fructe de padure (150g)', 'Gustare'),
-    (300, 40.00, 15.00, 10.00, 'Migdale', 'Migdale (30g)', 'Gustare'),
-    (200, 25.00, 10.00, 8.00, 'Popcorn', 'Popcorn (50g)', 'Gustare'),
-    (250, 30.00, 10.00, 5.00, 'Iaurt grecesc cu miere', 'Iaurt grecesc (100g), Miere (10g)', 'Gustare'),
-    (180, 20.00, 8.00, 6.00, 'Brânză cottage', 'Branza cottage (100g)', 'Gustare'),
-    (220, 25.00, 12.00, 7.00, 'Banana', 'Banana (1)', 'Gustare'),
-    (280, 30.00, 10.00, 5.00, 'Nuci', 'Nuci (30g)', 'Gustare'),
-    (150, 15.00, 5.00, 2.00, 'Biscuiți integrali', 'Biscuiti integrali (2 buc)', 'Gustare'),
-	(180, 25.00, 10.00, 4.00, 'Iaurt cu fructe', 'Iaurt (100g), Fructe (100g)', 'Gustare'),
-    (220, 30.00, 12.00, 5.00, 'Hummus cu legume', 'Castravete (100g), Hummus (50g)', 'Gustare'),
-    (170, 25.00, 8.00, 4.00, 'Pere', 'Pere (1)', 'Gustare'),
-    (160, 15.00, 5.00, 4.00, 'Iaurt cu cereale ', 'Iaurt(150g), Cereale(50)g', 'Gustare'),
-    (190, 20.00, 9.00, 5.00, 'Cheesecake', 'Iaurt(100g), Branza(150g), Oua(2 buc), Zahar(50g)', 'Gustare');
+(200, 30.00, 10.00, 5.00, 'Măr și iaurt', 'Mar (1), Iaurt (100g)', 'Gustare'),
+(250, 20.00, 15.00, 6.00, 'Batoane de cereale', 'Batoane (2 buc)', 'Gustare'),
+(150, 20.00, 10.00, 3.00, 'Fructe de pădure', 'Fructe de padure (150g)', 'Gustare'),
+(300, 40.00, 15.00, 10.00, 'Migdale', 'Migdale (30g)', 'Gustare'),
+(200, 25.00, 10.00, 8.00, 'Popcorn', 'Popcorn (50g)', 'Gustare'),
+(250, 30.00, 10.00, 5.00, 'Iaurt grecesc cu miere', 'Iaurt grecesc (100g), Miere (10g)', 'Gustare'),
+(180, 20.00, 8.00, 6.00, 'Brânză cottage', 'Branza cottage (100g)', 'Gustare'),
+(220, 25.00, 12.00, 7.00, 'Banana', 'Banana (1)', 'Gustare'),
+(280, 30.00, 10.00, 5.00, 'Nuci', 'Nuci (30g)', 'Gustare'),
+(150, 15.00, 5.00, 2.00, 'Biscuiți integrali', 'Biscuiti integrali (2 buc)', 'Gustare'),
+(180, 25.00, 10.00, 4.00, 'Iaurt cu fructe', 'Iaurt (100g), Fructe (100g)', 'Gustare'),
+(220, 30.00, 12.00, 5.00, 'Hummus cu legume', 'Castravete (100g), Hummus (50g)', 'Gustare'),
+(170, 25.00, 8.00, 4.00, 'Pere', 'Pere (1)', 'Gustare'),
+(160, 15.00, 5.00, 4.00, 'Iaurt cu cereale ', 'Iaurt(150g), Cereale(50)g', 'Gustare'),
+(190, 20.00, 9.00, 5.00, 'Cheesecake', 'Iaurt(100g), Branza(150g), Oua(2 buc), Zahar(50g)', 'Gustare');
 GO
 
-SELECT * FROM Utilizatori;
-SELECT * FROM Exercitii;
 SELECT * FROM Retete;
-
-
-INSERT INTO Utilizatori (Name, HashedPassword, Sex, Height, Kilograms, PhysicalCondition, UserType)
-VALUES ('John Doe', 'hashedpass123', 'Masculin', 180.5, 75.5, 'Good', 'Utilizator');
-
-INSERT INTO Retete (Calorii, Carbohidrati, Proteine, Grasimi, Nume, Ingrediente, TipMasa)
-VALUES 
-(300, 40, 20, 10, 'Omleta', 'Oua, lapte, sare', 'Mic Dejun'),
-(500, 60, 30, 15, 'Piept de pui cu orez', 'Pui, orez, legume', 'Pranz'),
-(400, 45, 25, 12, 'Salata cu ton', 'Ton, salata verde, rosii', 'Cina');
-
-INSERT INTO Exercitii (DenumireExercitiu, Repetari, GrupaMusculara, Seturi, Descriere, TimpEstimareExecutie)
-VALUES 
-('Flotari', 15, 'Piept', 3, 'Flotari standard', 300),
-('Genuflexiuni', 20, 'Picioare', 4, 'Genuflexiuni standard', 400),
-('Abdomene', 25, 'Abdomen', 3, 'Abdomene clasice', 250);
-
-EXEC addPlanAlimentarZilnic 
-    @UserID = 1,
-    @Data = '2024-01-15',
-    @Nume = 'Plan Luni',
-    @ReteteList = '1,2,3';
-
-EXEC addPlanAlimentarZilnic 
-    @UserID = 1,
-    @Data = '2024-01-16',
-    @Nume = 'Plan Marti',
-    @ReteteList = '1,3';
-
-
-EXEC addPlanAlimentarSaptamanal
-    @UserID = 1,
-    @Nume = 'Plan Saptamana 1',
-    @PlanurileZilniceList = '1,2';
-
-EXEC addAntrenamentZilnic
-    @UserID = 1,
-    @Data = '2024-01-15',
-    @DenumireAntrenament = 'Antrenament Luni',
-    @Descriere = 'Antrenament full body',
-    @ExercitiiList = '1,2,3';
-
-
-EXEC addAntrenamentZilnic
-    @UserID = 1,
-    @Data = '2024-01-16',
-    @DenumireAntrenament = 'Antrenament Marti',
-    @Descriere = 'Antrenament upper body',
-    @ExercitiiList = '1,3';
-
-EXEC addAntrenamentSaptamanal
-    @UserID = 1,
-    @DenumireAntrenamentSaptamanal = 'Program Saptamanal 1',
-    @Descriere = 'Program complet saptamanal',
-    @DataInceput = '2024-01-15',
-    @DataSfarsit = '2024-01-21',
-    @AntrenamenteZilniceList = '1,2';
-
-SELECT 
-    paz.ID,
-    paz.Nume,
-    paz.Data,
-    r.Nume as ReteteNume,
-    r.TipMasa,
-    r.Calorii
-FROM PlanAlimentarZilnic paz
-JOIN RetetePlanAlimentarZilnic rpaz ON paz.ID = rpaz.PlanAlimentarZilnicID
-JOIN Retete r ON rpaz.ReteteID = r.ID
-WHERE paz.UserID = 1
-ORDER BY paz.Data;
-
-SELECT 
-    pas.Nume as NumePlanSaptamanal,
-    paz.Nume as NumePlanZilnic,
-    paz.Data,
-    r.Nume as NumeReteta
-FROM PlanAlimentarSaptamanal pas
-JOIN PlanAlimentarSaptamanal_Zilnic pasz ON pas.ID = pasz.PlanAlimentarSaptamanalID
-JOIN PlanAlimentarZilnic paz ON pasz.PlanAlimentarZilnicID = paz.ID
-JOIN RetetePlanAlimentarZilnic rpaz ON paz.ID = rpaz.PlanAlimentarZilnicID
-JOIN Retete r ON rpaz.ReteteID = r.ID
-WHERE pas.UserID = 1;
-
-
-SELECT 
-    az.DenumireAntrenament,
-    az.Data,
-    e.DenumireExercitiu,
-    e.Repetari,
-    e.Seturi
-FROM AntrenamentZilnic az
-JOIN ExercitiiAntrenamentZilnic eaz ON az.ID = eaz.AntrenamentZilnicID
-JOIN Exercitii e ON eaz.ExercitiuID = e.ID
-WHERE az.UserID = 1
-ORDER BY az.Data;
-
-DELETE AntrenamentSaptamanal_Zilnic;
-DELETE AntrenamentSaptamanal
-DELETE ExercitiiAntrenamentZilnic;
-DELETE AntrenamentZilnic;
-DELETE PlanAlimentarSaptamanal_Zilnic;
-DELETE PlanAlimentarSaptamanal;
-DELETE RetetePlanAlimentarZilnic;
-DELETE PlanAlimentarZilnic;
-
-
-SELECT * FROM AntrenamentZilnic;
-select * from AntrenamentSaptamanal;
-select * from PlanAlimentarZilnic;
-select * from PlanAlimentarSaptamanal;
-
-SELECT
-    asw.ID AS AntrenamentSaptamanalID,
-    asw.DenumireAntrenamentSaptamanal,
-    asw.DataInceput,
-    asw.DataSfarsit,
-    az.DenumireAntrenament AS AntrenamentZilnicDenumire,
-    az.Data AS AntrenamentZilnicData,
-    ex.ID AS ExercitiuID,
-    ex.DenumireExercitiu AS ExercitiuNume
-FROM AntrenamentSaptamanal_Zilnic asz
-INNER JOIN AntrenamentSaptamanal asw ON asz.AntrenamentSaptamanalID = asw.ID
-INNER JOIN AntrenamentZilnic az ON asz.AntrenamentZilnicID = az.ID
-LEFT JOIN ExercitiiAntrenamentZilnic eaz ON az.ID = eaz.AntrenamentZilnicID
-LEFT JOIN Exercitii ex ON eaz.ExercitiuID = ex.ID
-WHERE asw.ID > 0;
-
-SELECT 
-    u.Name,
-    COUNT(DISTINCT paz.ID) as TotalDailyMealPlans,
-    COUNT(DISTINCT pas.ID) as TotalWeeklyMealPlans,
-    COUNT(DISTINCT az.ID) as TotalDailyWorkouts,
-    COUNT(DISTINCT asap.ID) as TotalWeeklyWorkoutPlans
-FROM Utilizatori u
-LEFT JOIN PlanAlimentarZilnic paz ON u.ID = paz.UserID
-LEFT JOIN PlanAlimentarSaptamanal pas ON u.ID = pas.UserID
-LEFT JOIN AntrenamentZilnic az ON u.ID = az.UserID
-LEFT JOIN AntrenamentSaptamanal asap ON u.ID = asap.UserID
-WHERE u.ID = 1
-GROUP BY u.Name, u.ID;
+SELECT * FROM Exercitii;
+SELECT * FROM Suplimente;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
-    public struct MealPlanItem
+    public class MealPlanItem
     {
         public string Day { get; set; }
         public string Breakfast { get; set; }

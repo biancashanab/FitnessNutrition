@@ -21,14 +21,14 @@ namespace Fitness.Views
 {
     public partial class HomeUC : UserControl
     {
+        private User _user;
         public ChartValues<double> ChartValues { get; set; }
         public List<string> Labels { get; set; }
-        public HomeUC()
+        public HomeUC(User user)
         {
-            ChartValues = new ChartValues<double> { 3, 5, 7, 4, 6 };
-            Labels = new List<string> { "Jan", "Feb", "Mar", "Apr", "May" };
             InitializeComponent();
-            this.DataContext = new HomeVM();
+            _user = user;
+            this.DataContext = new HomeVM(_user);
         }
     }
 }

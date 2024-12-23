@@ -1,99 +1,284 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using Fitness.Models;
 
 namespace Fitness.ViewModels
 {
-    public class SuplementsVM : BaseViewModel
+    public class SuplementsVM : INotifyPropertyChanged
     {
+        // Event for property changes
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Private fields
+        private readonly FitnessDBDataContext _context;
         private string _pageTitle;
-        private ObservableCollection<string> _items;
+        private string _searchText;
+        private string _filterText;
 
-        public ICommand ShowRecipesCommand { get; }
-        public ICommand ShowExercisesCommand { get; }
-        public ICommand ShowSuplementsCommand { get; }
-
-        public SuplementsVM()
+        // Public Properties
+        private ObservableCollection<Supplement> _supplements;
+        public ObservableCollection<Supplement> Supplements
         {
-            PageTitle = "Recipes";
-            ShowRecipesCommand = new RelayCommand(ShowRecipes);
-            ShowExercisesCommand = new RelayCommand(ShowExercises);
-            ShowSuplementsCommand = new RelayCommand(ShowSuplements);
-
-            LoadRecipes();
+            get => _supplements;
+            set
+            {
+                if (_supplements != value)
+                {
+                    _supplements = value;
+                    OnPropertyChanged(nameof(Supplements));
+                }
+            }
         }
-        
+
         public string PageTitle
         {
             get => _pageTitle;
             set
             {
-                _pageTitle = value;
-                OnPropertyChanged(PageTitle);
+                if (_pageTitle != value)
+                {
+                    _pageTitle = value;
+                    OnPropertyChanged(nameof(PageTitle));
+                }
             }
         }
 
-        public ObservableCollection<string> Items
+        public string SearchText
         {
-            get => _items;
+            get => _searchText;
             set
             {
-                _items = value;
-                OnPropertyChanged(nameof(Items));
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged(nameof(SearchText));
+                    ApplySearch();
+                }
             }
         }
 
-
-        private void ShowRecipes()
+        public string FilterText
         {
-            PageTitle = "Recipes";
-            LoadRecipes();
-        }
-
-        private void ShowExercises()
-        {
-            PageTitle = "Exercises";
-            LoadExercises();
-        }
-
-        private void ShowSuplements()
-        {
-            PageTitle = "Supplements";
-            LoadSuplements();
-        }
-
-        // Încărcare date pentru fiecare categorie
-        private void LoadRecipes()
-        {
-            Items = new ObservableCollection<string>
+            get => _filterText;
+            set
             {
-                "Recipe 1: Chicken Salad",
-                "Recipe 2: Protein Shake",
-                "Recipe 3: Vegan Burger"
-            };
+                if (_filterText != value)
+                {
+                    _filterText = value;
+                    OnPropertyChanged(nameof(FilterText));
+                    ApplyFilter();
+                }
+            }
         }
 
-        private void LoadExercises()
+        // Commands
+        public ICommand EditItemCommand { get; }
+        public ICommand DeleteItemCommand { get; }
+        public ICommand SelectCategoryCommand { get; }
+
+        public SuplementsVM()
         {
-            Items = new ObservableCollection<string>
-            {
-                "Exercise 1: Push-ups",
-                "Exercise 2: Deadlifts",
-                "Exercise 3: Bench Press"
-            };
+            _context = new FitnessDBDataContext();
+            Supplements = new ObservableCollection<Supplement>();
+            EditItemCommand = new RelayCommand(EditSupplement, CanModifySupplement);
+            DeleteItemCommand = new RelayCommand(DeleteSupplement, CanModifySupplement);
+            SelectCategoryCommand = new RelayCommand<object>(SelectCategory);
+            PageTitle = "Content Manager";
+            LoadSupplements();
         }
 
-        private void LoadSuplements()
+        private void LoadSupplements()
         {
-            Items = new ObservableCollection<string>
+            try
             {
-                "Supplement 1: Whey Protein",
-                "Supplement 2: Creatine",
-                "Supplement 3: Omega-3"
-            };
+                var supplements = _context.Suplimentes.Select(s => new Supplement
+                {
+                    SupplementID = s.SupplementID,
+                    Name = s.Name,
+                    Description = s.Description,
+                    Category = s.Category,
+                    Dosage = s.Dosage,
+                    Benefits = s.Benefits
+                }).ToList();
+
+                Supplements = new ObservableCollection<Supplement>(supplements);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading supplements: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Command Methods
+
+        // Edit Supplement
+        private void EditSupplement(object parameter)
+        {
+            if (parameter is Supplement supplement)
+            {
+                supplement.Description += " (Edited)";
+                OnPropertyChanged(nameof(Supplements));
+
+                var dbSupplement = _context.Suplimentes.FirstOrDefault(s => s.SupplementID == supplement.SupplementID);
+                if (dbSupplement != null)
+                {
+                    dbSupplement.Description = supplement.Description;
+
+                    try
+                    {
+                        _context.SubmitChanges();
+                        MessageBox.Show("Supplement edited successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error editing supplement: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
+        private bool CanModifySupplement(object parameter)
+        {
+            return parameter is Supplement;
+        }
+
+        // Delete Supplement
+        private void DeleteSupplement(object parameter)
+        {
+            if (parameter is Supplement supplement)
+            {
+                var result = MessageBox.Show($"Are you sure you want to delete '{supplement.Name}'?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var dbSupplement = _context.Suplimentes.FirstOrDefault(s => s.SupplementID == supplement.SupplementID);
+                    if (dbSupplement != null)
+                    {
+                        _context.Suplimentes.DeleteOnSubmit(dbSupplement);
+
+                        try
+                        {
+                            _context.SubmitChanges();
+                            Supplements.Remove(supplement);
+                            MessageBox.Show("Supplement deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error deleting supplement: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Select Category Command
+        private void SelectCategory(object parameter)
+        {
+            if (parameter is string category)
+            {
+                try
+                {
+                    switch (category)
+                    {
+                        case "Recipes":
+                            var recipes = _context.Retetes.Select(r => new Supplement
+                            {
+                                SupplementID = r.ID,
+                                Name = r.Nume,
+                                Description = r.Ingrediente,
+                                Category = "Recipe",
+                                Dosage = r.Calorii.ToString(),
+                                Benefits = r.TipMasa
+                            }).ToList();
+
+                            Supplements = new ObservableCollection<Supplement>(recipes);
+                            break;
+
+                        case "Exercises":
+                            var exercises = _context.Exercitiis.Select(e => new Supplement
+                            {
+                                SupplementID = e.ID,
+                                Name = e.DenumireExercitiu,
+                                Description = e.Descriere,
+                                Category = "Exercise",
+                                Dosage = e.Repetari.ToString(),
+                                Benefits = e.Seturi.ToString()
+                            }).ToList();
+
+                            Supplements = new ObservableCollection<Supplement>(exercises);
+                            break;
+
+                        case "Supplements":
+                            LoadSupplements();
+                            break;
+
+                        default:
+                            MessageBox.Show("Unknown category selected.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error loading data for category '{category}': {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // Search Method
+        private void ApplySearch()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                LoadSupplements();
+                return;
+            }
+
+            var filteredSupplements = _context.Suplimentes
+                .Where(s => s.Name.Contains(SearchText) || s.Description.Contains(SearchText))
+                .Select(s => new Supplement
+                {
+                    SupplementID = s.SupplementID,
+                    Name = s.Name,
+                    Description = s.Description,
+                    Category = s.Category,
+                    Dosage = s.Dosage,
+                    Benefits = s.Benefits
+                }).ToList();
+
+            Supplements = new ObservableCollection<Supplement>(filteredSupplements);
+        }
+
+        // Filter Method
+        private void ApplyFilter()
+        {
+            if (string.IsNullOrWhiteSpace(FilterText))
+            {
+                LoadSupplements();
+                return;
+            }
+
+            var filteredSupplements = _context.Suplimentes
+                .Where(s => s.Category.Equals(FilterText, StringComparison.OrdinalIgnoreCase))
+                .Select(s => new Supplement
+                {
+                    SupplementID = s.SupplementID,
+                    Name = s.Name,
+                    Description = s.Description,
+                    Category = s.Category,
+                    Dosage = s.Dosage,
+                    Benefits = s.Benefits
+                }).ToList();
+
+            Supplements = new ObservableCollection<Supplement>(filteredSupplements);
+        }
+
+        // Helper Method to Raise PropertyChanged Event
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

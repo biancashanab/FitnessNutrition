@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fitness.Models
 {
-    public struct WorkoutPlanItem
+    public class WorkoutPlanItem
     {
         public string Day { get; set; }
         public string Name { get; set; }
