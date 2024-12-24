@@ -91,6 +91,7 @@
     <Compile Include="Models\WeeklyMealPlan.cs" />
     <Compile Include="Models\WeeklyWorkout.cs" />
     <Compile Include="Models\WeightHistory.cs" />
+    <Compile Include="ViewModels\AdminNotificationsVM.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
     <Compile Include="ViewModels\HomeVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />

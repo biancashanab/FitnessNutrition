@@ -93,7 +93,9 @@ namespace Fitness.ViewModels
         {
             var _weightHistoryModel = new WeightHistory();
             _weightHistoryModel.addWeight(_user.Name, DateTime.Now, NewWeight);
+            _user.UpdateWeight((int)NewWeight);
             LoadUserHistory();
+            Initialize();
         }
         public HomeVM(User user)
         {
@@ -122,10 +124,15 @@ namespace Fitness.ViewModels
             {
                 return;
             }
-            Calorie = CalculateDailyCalories(
+            if (CalculateDailyCalories(
                 CalculateBMR(_user.Height, _user.Weight, 20, _user.Sex),
-                _user.Activity
-            ).ToString();
+                _user.Activity) > 0)
+                Calorie = CalculateDailyCalories(
+                    CalculateBMR(_user.Height, _user.Weight, 20, _user.Sex),
+                    _user.Activity
+                ).ToString();
+            else
+                Calorie = "0";
         }
 
         public static double CalculateBMR(int HeightCm, int WeightKg, int Age, string Sex)

@@ -24,7 +24,7 @@ namespace Fitness.Views
         {
             InitializeComponent();
             _user = user;
-            
+            DataContext = new AdminNotificationsVM(_user);   
         }
     }
 }

@@ -523,3 +523,12 @@ GO
 SELECT * FROM Retete;
 SELECT * FROM Exercitii;
 SELECT * FROM Suplimente;
+SELECT * FROM Utilizatori;
+select * from PlanAlimentarSaptamanal;
+select * from PlanAlimentarSaptamanal_Zilnic;
+select * from PlanAlimentarZilnic;
+select * from RetetePlanAlimentarZilnic;
+select * from AntrenamentSaptamanal;
+select * from AntrenamentSaptamanal_Zilnic;
+select * from AntrenamentZilnic;
+select * from ExercitiiAntrenamentZilnic;
