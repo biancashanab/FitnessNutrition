@@ -184,20 +184,20 @@ namespace Fitness.ViewModels
         private void NavigateToMeal()
         {
             HideMainContent();
-            CurrentUC = new SuplementsUC();
+            CurrentUC = new SuplementsUC(0);
             
         }
 
         private void NavigateToWorkout()
         {
             HideMainContent();
-            CurrentUC = new SuplementsUC();
+            CurrentUC = new SuplementsUC(1);
         }
 
         private void NavigateToSupplements()
         {
             HideMainContent();
-            CurrentUC = new SuplementsUC();
+            CurrentUC = new SuplementsUC(2);
         }
     }
 }

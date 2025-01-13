@@ -52,12 +52,12 @@ namespace Fitness.ViewModels
 
         private void LoadAvailableMealPlans()
         {
-            AvailableMealPlans = MealPlanService.GetWeeklyMealPlanForDisplay(1, DateTime.Now);
+            AvailableMealPlans = MealPlanService.GetWeeklyMealPlanForDisplay(_user.GetUser("admin").Id, DateTime.Now);
         }
 
         private void LoadAvailableWorkoutPlans()
         {
-            AvailableWorkoutPlans = WorkoutService.GetWeeklyWorkoutPlanForDisplay(1, DateTime.Now);
+            AvailableWorkoutPlans = WorkoutService.GetWeeklyWorkoutPlanForDisplay(_user.GetUser("admin").Id, DateTime.Now);
         }
 
         private ICommand _modifyNameCommand;
@@ -281,7 +281,7 @@ namespace Fitness.ViewModels
             try
             {
                 var mp = new WeeklyMealPlan();
-                mp.CopyPlanAlimentarSaptamanal(1, _user.Id);
+                mp.CopyPlanAlimentarSaptamanal(_user.GetUser("admin").Id, _user.Id);
                 MessageBox.Show("Planul alimentar saptamanal a fost copiat cu succes");
             }
 
@@ -297,7 +297,7 @@ namespace Fitness.ViewModels
             try
             {
                 var wp = new WeeklyWorkout();
-                wp.CopyAntrenamentSaptamanal(1, _user.Id);
+                wp.CopyAntrenamentSaptamanal(_user.GetUser("admin").Id, _user.Id);
                 MessageBox.Show("Planul de antrenament săptămânal a fost copiat cu succes!");
             }
             catch (Exception ex)
@@ -330,12 +330,12 @@ namespace Fitness.ViewModels
 
         public ObservableCollection<string> MealOptions { get; } = new ObservableCollection<string>
             {
-                "Basic Meal Plan 1, 2000 kcal",
+                "Basic Meal Plan, 2000 kcal",
             };
 
         public ObservableCollection<string> WorkoutOptions { get; } = new ObservableCollection<string>
             {
-                "Basic Workout Plan 1, 3 Days/Week",
+                "Basic Workout Plan, 3 Days/Week",
             };
 
         public WeeklyMealPlan MealPlanService { get; set; }

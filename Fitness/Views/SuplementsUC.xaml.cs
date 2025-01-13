@@ -27,6 +27,12 @@ namespace Fitness.Views
             this.DataContext = new SuplementsVM();
         }
 
+        public SuplementsUC(int NUMBER)
+        {
+            InitializeComponent();
+            this.DataContext = new SuplementsVM(NUMBER);
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 

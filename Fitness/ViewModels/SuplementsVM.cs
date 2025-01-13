@@ -91,6 +91,18 @@ namespace Fitness.ViewModels
             LoadSupplements();
         }
 
+        public SuplementsVM(int NUMBER)
+        {
+            _context = new FitnessDBDataContext();
+            Supplements = new ObservableCollection<Supplement>();
+            EditItemCommand = new RelayCommand(EditSupplement, CanModifySupplement);
+            DeleteItemCommand = new RelayCommand(DeleteSupplement, CanModifySupplement);
+            SelectCategoryCommand = new RelayCommand<object>(SelectCategory);
+            PageTitle = "Content Manager";
+            SelectCategoryByNumber(NUMBER);
+           // LoadSupplements();
+        }
+
         private void LoadSupplements()
         {
             try
@@ -280,5 +292,63 @@ namespace Fitness.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        // New function that selects a category based on a number (0: Recipes, 1: Exercises, 2: Supplements)
+        private void SelectCategoryByNumber(int categoryNumber)
+        {
+            try
+            {
+                switch (categoryNumber)
+                {
+                    case 0: // Recipes
+                        var recipes = _context.Retetes.Select(r => new Supplement
+                        {
+                            SupplementID = r.ID,
+                            Name = r.Nume,
+                            Description = r.Ingrediente,
+                            Category = "Recipe",
+                            Dosage = r.Calorii.ToString(),
+                            Benefits = r.TipMasa
+                        }).ToList();
+
+                        Supplements = new ObservableCollection<Supplement>(recipes);
+                        break;
+
+                    case 1: // Exercises
+                        var exercises = _context.Exercitiis.Select(e => new Supplement
+                        {
+                            SupplementID = e.ID,
+                            Name = e.DenumireExercitiu,
+                            Description = e.Descriere,
+                            Category = "Exercise",
+                            Dosage = e.Repetari.ToString(),
+                            Benefits = e.Seturi.ToString()
+                        }).ToList();
+
+                        Supplements = new ObservableCollection<Supplement>(exercises);
+                        break;
+
+                    case 2: // Supplements
+                        LoadSupplements();
+                        break;
+
+                    default:
+                        MessageBox.Show("Invalid category number. Please use 0 for Recipes, 1 for Exercises, or 2 for Supplements.",
+                                        "Error",
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Warning);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data for category number '{categoryNumber}': {ex.Message}",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

@@ -56,7 +56,7 @@ namespace Fitness.Models
 
         public void AddPlanAlimentarSaptamanal(List<PlanAlimentarZilnic> planuriZilnice, int userID)
         {
-            var nume = "Antrenament Săptămânal";
+            var nume = "Plan Alimentar Saptamanal";
             var planAlimentarSaptamanal = new PlanAlimentarSaptamanal
             {
                 UserID = userID,

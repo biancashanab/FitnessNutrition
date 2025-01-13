@@ -24,6 +24,20 @@ namespace Fitness
         public MainWindow()
         {
             InitializeComponent();
+            var ww = new WeeklyWorkout();
+            var wm = new WeeklyMealPlan();
+            var u = new User();
+            u.AddUser("admin", "admin_password", "Administrator");
+            if (ww.getSize() < 1)
+            {
+                ww.CreareAntrenamentSaptamanal(3, 50, u.GetUser("admin").Id);
+                ww.CreareAntrenamentSaptamanal(5, 100, u.GetUser("admin").Id);
+            }
+            if (wm.getSize() < 1)
+            {
+                wm.CrearePlanAlimentarSaptamanal(1500, u.GetUser("admin").Id);
+                wm.CrearePlanAlimentarSaptamanal(3000, u.GetUser("admin").Id);
+            }
             LoadWelcomeScreen();
         }
 
