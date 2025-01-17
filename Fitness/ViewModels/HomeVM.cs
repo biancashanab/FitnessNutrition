@@ -97,6 +97,7 @@ namespace Fitness.ViewModels
             LoadUserHistory();
             Initialize();
         }
+
         public HomeVM(User user)
         {
             _user = user;

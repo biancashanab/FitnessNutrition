@@ -18,7 +18,7 @@
 
         <StackPanel x:Name="Main_content"
                     Visibility="{Binding MainContentVisibility}">
-            <TextBlock Text="Discover"
+            <TextBlock Text="Discover                                                              Weight History"
                        Foreground="White"
                        HorizontalAlignment="Left"
                        FontSize="22"
@@ -27,7 +27,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="20,0,20,10">
-                <Border Width="400"
+                <Border Width="403"
                         Height="200">
 
                     <Border.Background>
@@ -63,8 +63,8 @@
                 </Border>
 
                 <Border Opacity="0.8"
-                        Width="210"
-                        Height="227"
+                        Width="212"
+                        Height="196"
                         CornerRadius="10"
                         Margin="30,0,20,0">
                     <Border.Background>
@@ -77,24 +77,26 @@
                         </LinearGradientBrush>
                     </Border.Background>
 
-                    <StackPanel Margin="10">
-                        <TextBlock Text="Weight History"
-                                   Foreground="White"
-                                   FontSize="18"
-                                   FontWeight="Bold"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,0" />
+                    <StackPanel Margin="0">
 
                         <lvc:CartesianChart Height="151">
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries Values="{Binding WeightChartValues}"
                                                 Title="Weight"
-                                                PointGeometrySize="10" />
+                                                Foreground="Black"
+                                                PointGeometrySize="12" />
                             </lvc:CartesianChart.Series>
+
                             <lvc:CartesianChart.AxisX>
                                 <lvc:Axis Labels="{Binding WeightDates}"
+                                          Foreground="Black"
                                           Title="Date" />
                             </lvc:CartesianChart.AxisX>
+
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Foreground="Black"
+                                          Title="Weight" />
+                            </lvc:CartesianChart.AxisY>
                         </lvc:CartesianChart>
 
 
