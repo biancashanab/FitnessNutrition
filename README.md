@@ -21,5 +21,4 @@ precum monitorizarea progresului, creare de plan alimentar, tracking de calorii 
 - **Framework**: .NET Framework
 - **Interfață Grafică**: User Controls
 - **Arhitectură**: MVVM
-- **Interctiune cu Baza de date
-- ** : LINQ to SQL
+- **Interctiune cu Baza de date** : LINQ to SQL
